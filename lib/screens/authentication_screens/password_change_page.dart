@@ -24,7 +24,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundClr,
+      backgroundColor: backgroundColor,
       appBar: AppBackAppBar(onPressed: () {}),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -47,7 +47,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                       },
                       icon: Icon(
                         _isObscureNew ? Icons.visibility_off : Icons.visibility,
-                        color: textClr,
+                        color: textColor,
                         size: 25.sp,
                       ),
                     ),
@@ -67,7 +67,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                           _isObscureConfirm
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: textClr,
+                          color: textColor,
                           size: 25.sp,
                         )),
                     obscureText: _isObscureConfirm,

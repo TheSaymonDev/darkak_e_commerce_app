@@ -36,7 +36,7 @@ class SuccessfullyPage extends StatelessWidget {
                   Gap(28.h),
                   Text(
                     'Your Password has been changed successfully',
-                    style: myTextStyle(18.sp, FontWeight.normal, textClr),
+                    style: myTextStyle(18.sp, FontWeight.normal, textColor),
                   ),
                   Gap(40.h),
                 ],

@@ -18,7 +18,7 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundClr,
+      backgroundColor: backgroundColor,
       appBar: AppBackAppBar(onPressed: () {
         Get.back();
       }),
@@ -33,13 +33,13 @@ class ForgotPasswordPage extends StatelessWidget {
                   children: [
                     Text(
                       'Forgot password',
-                      style: myTextStyle(30.sp, FontWeight.bold, textClr),
+                      style: myTextStyle(30.sp, FontWeight.bold, textColor),
                     ),
                     Gap(18.h),
                     Text(
                       'Please enter your mobile number\nor email to received verification code',
                       style: myTextStyle(
-                          20.sp, FontWeight.normal, textClr.withOpacity(0.5)),
+                          20.sp, FontWeight.normal, textColor.withOpacity(0.5)),
                     ),
                     Gap(50.h),
                     AppTextFormField(

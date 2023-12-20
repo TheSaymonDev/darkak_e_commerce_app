@@ -4,14 +4,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-TextStyle myTextStyle(double fSize, FontWeight fWeight, Color clr) {
+TextStyle myTextStyle(double fSize, FontWeight fWeight, Color clr, {TextDecoration? decoration}) {
   return TextStyle(
-      fontSize: fSize,
-      fontWeight: fWeight,
-      color: clr,
-      fontFamily: 'Gumela Arabic',
-      height: 1
+    fontSize: fSize,
+    fontWeight: fWeight,
+    color: clr,
+    fontFamily: 'Gumela Arabic',
+    height: 1,
+    decoration: decoration,
   );
+}
+
+BoxDecoration shadowDecoration() {
+  return BoxDecoration(boxShadow: [
+    BoxShadow(
+      color: greyColor.withOpacity(0.3),
+      spreadRadius: 1,
+      blurRadius: 1,
+      offset: const Offset(0, 1),
+    ),
+  ], shape: BoxShape.circle, color: backgroundColor);
 }
 
 myToastMessage({required String message}) {
@@ -20,8 +32,8 @@ myToastMessage({required String message}) {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 4,
-      backgroundColor: greenClr,
-      textColor: backgroundClr,
+      backgroundColor: orangeColor,
+      textColor: backgroundColor,
       fontSize: 16);
 }
 
@@ -30,8 +42,8 @@ PinTheme pinTheme() {
     shape: PinCodeFieldShape.box,
     borderRadius: BorderRadius.circular(4.r),
     borderWidth: 1.w,
-    inactiveFillColor: backgroundClr,
-    selectedFillColor: backgroundClr,
+    inactiveFillColor: backgroundColor,
+    selectedFillColor: backgroundColor,
     fieldHeight: 46.h,
     fieldWidth: 46.w,
     activeColor: Color(0xffDDDDDD),
@@ -42,11 +54,11 @@ PinTheme pinTheme() {
 
 DropdownButton<String> customDropDownButton(
     {required void Function(String?)? onChanged,
-      required List<DropdownMenuItem<String>>? items}) {
+    required List<DropdownMenuItem<String>>? items}) {
   return DropdownButton(
     icon: Icon(
       Icons.keyboard_arrow_down,
-      color: greenClr,
+      color: orangeColor,
     ),
     iconSize: 30.sp,
     elevation: 4,
@@ -61,6 +73,8 @@ DropdownButton<String> customDropDownButton(
 BoxDecoration decorationStyle() {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(12.r),
-    color: filledClr,
+    color: filledColor,
   );
 }
+
+const String takaSign = '৳';

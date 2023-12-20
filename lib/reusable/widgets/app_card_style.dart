@@ -11,7 +11,7 @@ class AppCardStyle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      shadowColor: backgroundClr,
+      shadowColor: backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.r),
       ),
@@ -20,7 +20,7 @@ class AppCardStyle extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4.r),
-            color: backgroundClr
+            color: backgroundColor
         ),
         child: child,
       ),

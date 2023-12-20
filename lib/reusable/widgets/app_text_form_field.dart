@@ -29,21 +29,21 @@ class AppTextFormField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(labelText, style: myTextStyle(20.sp, FontWeight.normal, textClr.withOpacity(0.5)),),
+          Text(labelText, style: myTextStyle(20.sp, FontWeight.normal, textColor.withOpacity(0.5)),),
           Expanded(
             child: TextFormField(
               readOnly: readOnly,
               controller: controller,
               obscureText: obscureText,
               validator: validator,
-              cursorColor: textClr,
+              cursorColor: textColor,
               keyboardType: keyBoardType,
               decoration: InputDecoration(
                   suffixIcon: Padding(
                     padding: EdgeInsets.only(right: 8.w),
                     child: suffixIcon,
                   ),
-                  fillColor: backgroundClr,
+                  fillColor: backgroundColor,
                   filled: true,
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(width: 2, color: orangeColor)),

@@ -23,10 +23,10 @@ class AppSignInWithButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundClr,
-            shadowColor: backgroundClr,
+          backgroundColor: backgroundColor,
+            shadowColor: backgroundColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r),
-              side: BorderSide(color: textClr.withOpacity(0.1))
+              side: BorderSide(color: textColor.withOpacity(0.1))
             ),
         ),
         child: Row(
@@ -40,7 +40,7 @@ class AppSignInWithButton extends StatelessWidget {
             Gap(40.w),
             Text(
               name,
-              style: myTextStyle(20.sp, FontWeight.normal, textClr),
+              style: myTextStyle(20.sp, FontWeight.normal, textColor),
             )
           ],
         ),

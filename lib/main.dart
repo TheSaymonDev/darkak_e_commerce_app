@@ -1,9 +1,4 @@
-import 'package:e_commerce_app/screens/authentication_screens/forgot_password_page.dart';
-import 'package:e_commerce_app/screens/authentication_screens/password_change_page.dart';
-import 'package:e_commerce_app/screens/authentication_screens/sign_in_page.dart';
-import 'package:e_commerce_app/screens/authentication_screens/sign_up_page.dart';
-import 'package:e_commerce_app/screens/authentication_screens/successfully_page.dart';
-import 'package:e_commerce_app/screens/authentication_screens/verification_page.dart';
+
 import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:e_commerce_app/screens/onboarding_screens/onboarding_page.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +24,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: OnboardingPage(),
+      child: BottomNavBarPage(),
     );
   }
 }

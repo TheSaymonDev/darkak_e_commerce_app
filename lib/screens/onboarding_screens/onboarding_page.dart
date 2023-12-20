@@ -24,7 +24,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundClr,
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(bottom: 30.h),
@@ -43,12 +43,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       Gap(100.h),
                       Text(
                         'Start Your Journey',
-                        style: myTextStyle(25.sp, FontWeight.bold, textClr),
+                        style: myTextStyle(25.sp, FontWeight.bold, textColor),
                       ),
                       Gap(18.h),
                       Text(
                         'Lorem ipsum simply dummy text of the printing and typesetting industry',
-                        style: myTextStyle(20.sp, FontWeight.normal, textClr),
+                        style: myTextStyle(20.sp, FontWeight.normal, textColor),
                         textAlign: TextAlign.center,
                       ),
                     ],

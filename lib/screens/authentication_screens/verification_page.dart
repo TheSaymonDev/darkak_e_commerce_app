@@ -16,7 +16,7 @@ class VerificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundClr,
+      backgroundColor: backgroundColor,
       appBar: AppBackAppBar(onPressed: () {}),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -29,7 +29,7 @@ class VerificationPage extends StatelessWidget {
                   children: [
                     Text(
                       'Verification',
-                      style: myTextStyle(30.sp, FontWeight.bold, textClr),
+                      style: myTextStyle(30.sp, FontWeight.bold, textColor),
                     ),
                     Gap(18.h),
                     Text(
@@ -37,7 +37,7 @@ class VerificationPage extends StatelessWidget {
                       style: myTextStyle(
                         20.sp,
                         FontWeight.normal,
-                        textClr.withOpacity(0.5),
+                        textColor.withOpacity(0.5),
                       ),
                     ),
                     Gap(35.h),
@@ -58,7 +58,7 @@ class VerificationPage extends StatelessWidget {
                       children: [
                         Text(
                           "Didn't received a code?",
-                          style: myTextStyle(20.sp, FontWeight.normal, textClr),
+                          style: myTextStyle(20.sp, FontWeight.normal, textColor),
                         ),
                         TextButton(
                             onPressed: () {},

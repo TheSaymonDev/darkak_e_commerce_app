@@ -33,7 +33,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundClr,
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -54,12 +54,12 @@ class _SignInPageState extends State<SignInPage> {
                     children: [
                       Text(
                         'Welcome',
-                        style: myTextStyle(30.sp, FontWeight.bold, textClr),
+                        style: myTextStyle(30.sp, FontWeight.bold, textColor),
                       ),
                       Gap(10.h),
                       Text(
                         'Sign in to Continue',
-                        style: myTextStyle(20.sp, FontWeight.normal, textClr),
+                        style: myTextStyle(20.sp, FontWeight.normal, textColor),
                       ),
                       Gap(55.h),
                       AppTextFormField(
@@ -82,7 +82,7 @@ class _SignInPageState extends State<SignInPage> {
                               isObscure
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: textClr,
+                              color: textColor,
                               size: 25.sp,
                             )),
                         obscureText: isObscure,
@@ -97,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
                               child: Text(
                                 'Forgot Password?',
                                 style: myTextStyle(
-                                    20.sp, FontWeight.normal, textClr),
+                                    20.sp, FontWeight.normal, textColor),
                               ))),
                       Gap(20.h),
                       AppOrangeButton(
@@ -113,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
                 Gap(30.h),
                 Text(
                   '- OR -',
-                  style: myTextStyle(20.sp, FontWeight.normal, textClr),
+                  style: myTextStyle(20.sp, FontWeight.normal, textColor),
                 ),
                 Gap(30.h),
                 AppSignInWithButton(
@@ -130,7 +130,7 @@ class _SignInPageState extends State<SignInPage> {
                   children: [
                     Text(
                       "Don't have an account?",
-                      style: myTextStyle(20.sp, FontWeight.normal, textClr),
+                      style: myTextStyle(20.sp, FontWeight.normal, textColor),
                     ),
                     TextButton(
                         onPressed: () {

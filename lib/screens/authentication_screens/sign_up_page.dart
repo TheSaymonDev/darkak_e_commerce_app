@@ -34,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundClr,
+      backgroundColor: backgroundColor,
       appBar: AppBackAppBar(onPressed: (){
         Get.back();
       },),
@@ -54,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Sign Up', style: myTextStyle(30.sp, FontWeight.bold, textClr),),
+                    Text('Sign Up', style: myTextStyle(30.sp, FontWeight.bold, textColor),),
                     Gap(40.h),
                     AppTextFormField(
                       labelText: 'Name',
@@ -83,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           },
                           icon: Icon(
                             isObscure ? Icons.visibility_off : Icons.visibility,
-                            color: textClr,
+                            color: textColor,
                             size: 25.sp,
                           )),
                       obscureText: isObscure,
@@ -96,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               Gap(30.h),
-              Text('- OR -', style: myTextStyle(20.sp, FontWeight.normal, textClr),),
+              Text('- OR -', style: myTextStyle(20.sp, FontWeight.normal, textColor),),
               Gap(30.h),
               AppSignInWithButton(
                   onPressed: () {},
@@ -112,7 +112,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: [
                   Text(
                     "Already have account?",
-                    style: myTextStyle(20.sp, FontWeight.normal, textClr),
+                    style: myTextStyle(20.sp, FontWeight.normal, textColor),
                   ),
                   TextButton(
                       onPressed: () {

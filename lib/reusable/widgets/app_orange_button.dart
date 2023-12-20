@@ -23,7 +23,7 @@ class AppOrangeButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: orangeColor,
-          foregroundColor: textClr,
+          foregroundColor: textColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6.r),
           ),
@@ -31,7 +31,7 @@ class AppOrangeButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonName,
-          style: myTextStyle(20.sp, FontWeight.bold, backgroundClr),
+          style: myTextStyle(20.sp, FontWeight.bold, backgroundColor),
         ),
       ),
     );

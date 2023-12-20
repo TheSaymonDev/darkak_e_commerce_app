@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/reusable/colors.dart';
-import 'package:e_commerce_app/reusable/styles.dart';
 import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_pages/cart_page.dart';
 import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_pages/favourite_page.dart';
 import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_pages/home_page.dart';
@@ -9,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BottomNavBarPage extends StatefulWidget {
-  BottomNavBarPage({super.key});
+  const BottomNavBarPage({super.key});
 
   @override
   State<BottomNavBarPage> createState() => _BottomNavBarPageState();
@@ -18,17 +17,18 @@ class BottomNavBarPage extends StatefulWidget {
 class _BottomNavBarPageState extends State<BottomNavBarPage> {
   int _currentIndex = 0;
 
-  List<Widget> _widgetList = [
-    HomePage(),
-    ShopPage(),
-    CartPage(),
-    FavouritePage(),
+  final List<Widget> _widgetList = [
+    const HomePage(),
+    const ShopPage(),
+    const CartPage(),
+    const FavouritePage(),
     UserAccountPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
@@ -64,7 +64,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
           : Icon(
               icon,
               size: 25.sp,
-              color: textClr,
+              color: textColor,
             ),
       label: _currentIndex == index ? '' : label,
     );
