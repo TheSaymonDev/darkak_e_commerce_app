@@ -1,9 +1,11 @@
 import 'package:e_commerce_app/models/product_model.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
+import 'package:e_commerce_app/screens/product_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class AppProductSectorCard extends StatefulWidget {
   const AppProductSectorCard({super.key, required this.productList});
@@ -39,29 +41,34 @@ class _AppProductSectorCardState extends State<AppProductSectorCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 240.h,
-                    width: 180.w,
-                    alignment: Alignment.topRight,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        image: DecorationImage(
-                            image: AssetImage(
-                                productList.imgUrl),
-                            fit: BoxFit.cover)),
-                    child: IconButton(
-                        onPressed: () {
-                          productList.toggleFavorite();
-                          setState(() {});
-                        },
-                        icon: Icon(
-                          Icons.favorite,
-                          size: 30.sp,
-                        ),
-                        color:
-                        productList.isFavourite == true
-                            ? orangeColor
-                            : backgroundColor),
+                  InkWell(
+                    onTap: (){
+                      Get.to(const ProductDetailsPage());
+                    },
+                    child: Container(
+                      height: 240.h,
+                      width: 180.w,
+                      alignment: Alignment.topRight,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.r),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  productList.imgUrl),
+                              fit: BoxFit.cover)),
+                      child: IconButton(
+                          onPressed: () {
+                            productList.toggleFavorite();
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            Icons.favorite,
+                            size: 30.sp,
+                          ),
+                          color:
+                          productList.isFavourite == true
+                              ? orangeColor
+                              : backgroundColor),
+                    ),
                   ),
                   Text(
                     productList.productName,

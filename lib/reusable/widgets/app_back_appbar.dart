@@ -13,7 +13,6 @@ class AppBackAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor,
       leading: IconButton(
         onPressed: onPressed,
         icon: const Icon(Icons.keyboard_arrow_left),

@@ -26,6 +26,17 @@ BoxDecoration shadowDecoration() {
   ], shape: BoxShape.circle, color: backgroundColor);
 }
 
+BoxDecoration shadowDecoration1() {
+  return BoxDecoration(boxShadow: [
+    BoxShadow(
+      color: greyColor.withOpacity(0.3),
+      spreadRadius: 1,
+      blurRadius: 1,
+      offset: const Offset(0, 1),
+    ),
+  ], borderRadius: BorderRadius.circular(50.r), color: backgroundColor);
+}
+
 myToastMessage({required String message}) {
   return Fluttertoast.showToast(
       msg: message,

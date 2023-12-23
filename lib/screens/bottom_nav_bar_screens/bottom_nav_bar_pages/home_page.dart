@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/data/best_selling.dart';
+import 'package:e_commerce_app/data/flash_sale.dart';
 import 'package:e_commerce_app/data/just_for_you.dart';
 import 'package:e_commerce_app/data/new_arrival.dart';
 import 'package:e_commerce_app/data/recent_added.dart';
@@ -265,6 +266,8 @@ class _HomePageState extends State<HomePage> {
                     separatorBuilder: (context, index) => Gap(38.w),
                     itemCount: CouponCodeModel.couponCodeList.length),
               ),
+              Gap(16.h),
+              AppProductSectorCard(productList: flashSaleProductList),
               Gap(16.h),
               _productSectorName(sectorName: 'Best Selling'),
               Gap(8.h),
