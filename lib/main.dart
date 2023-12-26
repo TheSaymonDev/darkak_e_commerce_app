@@ -1,7 +1,4 @@
-
-import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:e_commerce_app/screens/onboarding_screens/onboarding_page.dart';
-import 'package:e_commerce_app/screens/product_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -25,7 +22,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: OnboardingPage(),
+      child: const OnboardingPage(),
     );
   }
 }

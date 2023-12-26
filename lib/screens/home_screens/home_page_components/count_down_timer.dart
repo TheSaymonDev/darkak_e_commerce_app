@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-class AppCountdownTimer extends StatelessWidget {
+class CountDownTimer extends StatelessWidget {
   final Duration duration;
 
-  const AppCountdownTimer({super.key, required this.duration});
+  const CountDownTimer({super.key, required this.duration});
 
   @override
   Widget build(BuildContext context) {

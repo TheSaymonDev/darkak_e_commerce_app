@@ -9,8 +9,8 @@ class AppSearchTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40.h,
-      width: 328.w,
+      height: 50.h,
+      width: double.infinity.w,
       child: TextField(
         onTap: (){},
         textAlign: TextAlign.start,
@@ -20,12 +20,13 @@ class AppSearchTextFormField extends StatelessWidget {
             fillColor: filledColor,
             filled: true,
             prefixIcon: Icon(Icons.search, size: 25.sp, color: orangeColor,),
+            contentPadding: EdgeInsets.only(bottom: 10.h),
             border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(50.r)
             )
         ),
-        textAlignVertical: TextAlignVertical.center,
+
       ),
     );
   }

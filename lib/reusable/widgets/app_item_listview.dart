@@ -1,22 +1,22 @@
 import 'package:e_commerce_app/models/product_model.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/screens/product_details_page.dart';
+import 'package:e_commerce_app/screens/product_details_screen/product_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class AppProductSectorCard extends StatefulWidget {
-  const AppProductSectorCard({super.key, required this.productList});
+class AppItemListView extends StatefulWidget {
+  const AppItemListView({super.key, required this.productList});
 
   final List<ProductModel> productList;
 
   @override
-  State<AppProductSectorCard> createState() => _AppProductSectorCardState();
+  State<AppItemListView> createState() => _AppItemListViewState();
 }
 
-class _AppProductSectorCardState extends State<AppProductSectorCard> {
+class _AppItemListViewState extends State<AppItemListView> {
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _AppProductSectorCardState extends State<AppProductSectorCard> {
                 children: [
                   InkWell(
                     onTap: (){
-                      Get.to(const ProductDetailsPage());
+                      Get.to( ProductDetailsPage());
                     },
                     child: Container(
                       height: 240.h,

@@ -11,6 +11,10 @@ class ProductReviewModel {
       required this.rating,
       required this.isLiked});
 
+  void toggleHelpful(){
+    isLiked =! isLiked;
+  }
+
   static List<ProductReviewModel> productReviewList = [
     ProductReviewModel(
         profileImage: 'assets/images/profile-photo.png',

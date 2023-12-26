@@ -3,6 +3,7 @@ import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
 import 'package:e_commerce_app/reusable/widgets/app_back_appbar.dart';
 import 'package:e_commerce_app/reusable/widgets/app_orange_button.dart';
+import 'package:e_commerce_app/screens/product_details_screen/product_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,9 +18,20 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  double _height = 476.h;
+  final double _height = 400.h;
   bool _showMore = false;
   int _quantity = 1;
+
+  String _productSize = 'S';
+  final List<String> _items = ['S', 'M', 'L', 'XL', 'XXL'];
+
+  List<String> variousProductList = [
+    'assets/images/black.png',
+    'assets/images/blue.png',
+    'assets/images/red.png',
+    'assets/images/yellow.png',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,17 +92,21 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: List.generate(
-                                          4,
-                                          (index) => Container(
-                                            height: 90.h,
-                                            width: 90.w,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(16.r),
-                                              image: const DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/product-img.png'),
-                                                  fit: BoxFit.cover),
+                                          variousProductList.length,
+                                          (index) => InkWell(
+                                            onTap: () {},
+                                            child: Container(
+                                              height: 90.h,
+                                              width: 90.w,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(16.r),
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        variousProductList[
+                                                            index]),
+                                                    fit: BoxFit.cover),
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -106,7 +122,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     SliverToBoxAdapter(
                       child: Container(
-                        margin: EdgeInsets.only(top: 20.h),
+                        margin: EdgeInsets.only(top: 16.h),
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +144,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 ),
                               ],
                             ),
-                            Gap(30.h),
+                            Gap(16.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -140,11 +156,25 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         style: myTextStyle(15.sp,
                                             FontWeight.normal, textColor),
                                       ),
-                                      Spacer(),
-                                      Text(
-                                        'XL',
+                                      const Spacer(),
+                                      DropdownButton(
+                                        underline: const SizedBox(
+                                          height: 0,
+                                        ),
                                         style: myTextStyle(
                                             15.sp, FontWeight.bold, textColor),
+                                        items: _items.map((String item) {
+                                          return DropdownMenuItem(
+                                            value: item,
+                                            child: Text(item),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            _productSize = newValue!;
+                                          });
+                                        },
+                                        value: _productSize,
                                       ),
                                     ],
                                   ),
@@ -157,7 +187,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         style: myTextStyle(15.sp,
                                             FontWeight.normal, textColor),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       InkWell(
                                         onTap: () {},
                                         child: Container(
@@ -166,7 +196,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(8.r),
-                                              color: Colors.deepPurple),
+                                              color: textColor),
                                         ),
                                       )
                                     ],
@@ -174,7 +204,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 ),
                               ],
                             ),
-                            Gap(30.h),
+                            Gap(16.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -234,13 +264,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 ),
                               ],
                             ),
-                            Gap(30.h),
+                            Gap(16.h),
                             Text(
                               'Details',
                               style: myTextStyle(
                                   20.sp, FontWeight.bold, textColor),
                             ),
-                            Gap(16.h),
+                            Gap(8.h),
                             Column(
                               children: [
                                 Text(
@@ -274,10 +304,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   20.sp, FontWeight.bold, textColor),
                             ),
                             Gap(8.h),
-                            Text(
-                              'Write your review',
-                              style: myTextStyle(
-                                  20.sp, FontWeight.normal, orangeColor),
+                            InkWell(
+                              onTap: () {},
+                              child: Text(
+                                'Write your review',
+                                style: myTextStyle(
+                                    20.sp, FontWeight.normal, orangeColor),
+                              ),
                             ),
                             Gap(30.h),
                           ],
@@ -373,12 +406,23 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                   FontWeight.normal, textColor),
                                             ),
                                             Gap(4.w),
-                                            SizedBox(
-                                              height: 20.h,
-                                              width: 22.w,
-                                              child: SvgPicture.asset(
-                                                'assets/images/liked-icon.svg',
-                                                fit: BoxFit.cover,
+                                            InkWell(
+                                              onTap: () {
+                                                productReview.toggleHelpful();
+                                                setState(() {});
+                                              },
+                                              child: SizedBox(
+                                                height: 20.h,
+                                                width: 22.w,
+                                                child: SvgPicture.asset(
+                                                  color:
+                                                      productReview.isLiked ==
+                                                              true
+                                                          ? null
+                                                          : greyColor,
+                                                  'assets/images/liked-icon.svg',
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             )
                                           ],
@@ -507,6 +551,23 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       child: child,
     );
   }
+
+  // void _showDropDownButton() {
+  //   DropdownButton(
+  //     items: _items.map((String item) {
+  //       return DropdownMenuItem(
+  //         value: item,
+  //         child: Text(item),
+  //       );
+  //     }).toList(),
+  //     onChanged: (String? newValue) {
+  //       setState(() {
+  //         _dropDownValue = newValue!;
+  //       });
+  //     },
+  //     value: _dropDownValue,
+  //   );
+  // }
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {

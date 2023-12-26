@@ -3,6 +3,7 @@ import 'package:e_commerce_app/reusable/styles.dart';
 import 'package:e_commerce_app/reusable/widgets/app_back_appbar.dart';
 import 'package:e_commerce_app/reusable/widgets/app_card_style.dart';
 import 'package:e_commerce_app/reusable/widgets/app_orange_button.dart';
+import 'package:e_commerce_app/screens/authentication_screens/password_change_page.dart';
 import 'package:e_commerce_app/screens/authentication_screens/successfully_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,7 +73,7 @@ class VerificationPage extends StatelessWidget {
                     Gap(35.h),
                     AppOrangeButton(
                         onPressed: () {
-                          Get.to(const SuccessfullyPage());
+                          Get.to(const PasswordChangePage());
                         },
                         buttonName: 'CONTINUE',
                         width: double.infinity.w)

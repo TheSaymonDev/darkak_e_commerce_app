@@ -1,9 +1,9 @@
 import 'package:e_commerce_app/reusable/colors.dart';
-import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_pages/cart_page.dart';
-import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_pages/favourite_page.dart';
-import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_pages/home_page.dart';
-import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_pages/shop_page.dart';
-import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_pages/user_account_page.dart';
+import 'package:e_commerce_app/screens/cart_screen/cart_page.dart';
+import 'package:e_commerce_app/screens/wishlist_screen/favourite_page.dart';
+import 'package:e_commerce_app/screens/home_screens/home_page.dart';
+import 'package:e_commerce_app/screens/shop_screen/shop_page.dart';
+import 'package:e_commerce_app/screens/profile_screens/user_account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,7 +22,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
     const ShopPage(),
     const CartPage(),
     const FavouritePage(),
-    UserAccountPage(),
+    const UserAccountPage(),
   ];
 
   @override

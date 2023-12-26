@@ -3,6 +3,7 @@ class ProductModel {
   int productPrice, productDiscount;
   double productRating;
   bool isFavourite;
+
   ProductModel({
     required this.imgUrl,
     required this.productName,
