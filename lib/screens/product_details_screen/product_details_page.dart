@@ -1,9 +1,7 @@
+import 'package:e_commerce_app/models/product_model.dart';
 import 'package:e_commerce_app/models/product_review_model.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/reusable/widgets/app_back_appbar.dart';
-import 'package:e_commerce_app/reusable/widgets/app_orange_button.dart';
-import 'package:e_commerce_app/screens/product_details_screen/product_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,7 +9,12 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsPage extends StatefulWidget {
-  const ProductDetailsPage({super.key});
+
+  const ProductDetailsPage({super.key, required this.imgUrl, required this.productName, required this.productPrice, required this.productDiscount, required this.productRating});
+
+  final String imgUrl, productName;
+  final int productPrice, productDiscount;
+  final double productRating;
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
@@ -43,7 +46,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           child: Column(
             children: [
               Expanded(
-                flex: 9,
                 child: CustomScrollView(
                   slivers: [
                     SliverPersistentHeader(
@@ -53,10 +55,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         minHeight: 196.h,
                         maxHeight: _height,
                         child: Container(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             image: DecorationImage(
                                 image:
-                                    AssetImage('assets/images/product-img.png'),
+                                    AssetImage(widget.imgUrl),
                                 fit: BoxFit.cover),
                           ),
                           child: LayoutBuilder(
@@ -92,7 +94,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: List.generate(
-                                          variousProductList.length,
+                                          4,
                                           (index) => InkWell(
                                             onTap: () {},
                                             child: Container(
@@ -103,8 +105,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                     BorderRadius.circular(16.r),
                                                 image: DecorationImage(
                                                     image: AssetImage(
-                                                        variousProductList[
-                                                            index]),
+                                                        widget.imgUrl),
                                                     fit: BoxFit.cover),
                                               ),
                                             ),
@@ -132,7 +133,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'Linen Fashionable Ready Stitched',
+                                    widget.productName,
                                     style: myTextStyle(
                                         25.sp, FontWeight.bold, textColor),
                                   ),
@@ -252,10 +253,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       Icon(
                                         Icons.star,
                                         size: 20.sp,
-                                        color: yellowColor,
+                                        color: widget.productRating < 4.5
+                                            ? greyColor
+                                            : yellowColor,
                                       ),
                                       Text(
-                                        'Ratting',
+                                        widget.productRating.toString(),
                                         style: myTextStyle(20.sp,
                                             FontWeight.normal, textColor),
                                       ),
@@ -491,24 +494,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           ),
                           Text(
                             'Store',
-                            style: myTextStyle(
-                                20.sp, FontWeight.normal, textColor),
-                          ),
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.chat,
-                            size: 30.sp,
-                            color: orangeColor,
-                          ),
-                          Text(
-                            'Chat',
                             style: myTextStyle(
                                 20.sp, FontWeight.normal, textColor),
                           ),

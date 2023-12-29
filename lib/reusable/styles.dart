@@ -89,3 +89,4 @@ BoxDecoration decorationStyle() {
 }
 
 const String takaSign = '৳';
+

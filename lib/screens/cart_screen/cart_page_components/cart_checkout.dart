@@ -19,7 +19,7 @@ class CartCheckout extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
-            spreadRadius: 3,
+            spreadRadius: 0,
             blurRadius: 3,
             offset: const Offset(0, -3), // Offset for top shadow
           ),

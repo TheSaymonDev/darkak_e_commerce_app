@@ -10,7 +10,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class AppItemGridView extends StatefulWidget {
-   const AppItemGridView({super.key, required this.productList, required this.physics});
+  const AppItemGridView(
+      {super.key, required this.productList, required this.physics});
 
   final List<ProductModel> productList;
   final ScrollPhysics physics;
@@ -20,7 +21,6 @@ class AppItemGridView extends StatefulWidget {
 }
 
 class _AppItemGridViewState extends State<AppItemGridView> {
-
   @override
   Widget build(BuildContext context) {
     return MasonryGridView.count(
@@ -28,100 +28,122 @@ class _AppItemGridViewState extends State<AppItemGridView> {
       physics: widget.physics,
       crossAxisCount: 2,
       mainAxisSpacing: 26.h,
-      crossAxisSpacing: 38.w,
+      crossAxisSpacing: 30.w,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
         final productList = widget.productList[index];
         final discountAmount =
-            (productList.productPrice *
-                productList.productDiscount) /
-                100;
-        final discountPrice =
-            productList.productPrice -
-                discountAmount.toInt();
-        return SizedBox(
-          height: 316.h,
-          width: 180.w,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: (){
-                  Get.to( const ProductDetailsPage());
-                },
-                child: Container(
-                  height: 240.h,
-                  width: 180.w,
-                  alignment: Alignment.topRight,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      image: DecorationImage(
-                          image: AssetImage(
-                              productList.imgUrl),
-                          fit: BoxFit.cover)),
-                  child: IconButton(
-                      onPressed: () {
+            (productList.productPrice * productList.productDiscount) / 100;
+        final discountPrice = productList.productPrice - discountAmount.toInt();
+        return Card(
+          color: backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Container(
+            height: 324.h,
+            width: 184.w,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.r),
+                color: backgroundColor),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Get.to(() => ProductDetailsPage(
+                        imgUrl: productList.imgUrl,
+                        productName: productList.productName,
+                        productPrice: productList.productPrice,
+                        productDiscount: productList.productDiscount,
+                        productRating: productList.productRating));
+                  },
+                  child: Container(
+                    height: 230.h,
+                    width: double.infinity.w,
+                    alignment: Alignment.topRight,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.r),
+                        image: DecorationImage(
+                            image: AssetImage(productList.imgUrl),
+                            fit: BoxFit.cover)),
+                    child: InkWell(
+                      onTap: () {
                         productList.toggleFavorite();
                         setState(() {});
                       },
-                      icon: Icon(
-                        Icons.favorite,
-                        size: 30.sp,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 8.h, right: 8.w),
+                        height: 32.h,
+                        width: 32.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: backgroundColor),
+                        child: Icon(
+                          productList.isFavourite == true
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          size: 24.sp,
+                          color: orangeColor,
+                        ),
                       ),
-                      color:
-                      productList.isFavourite == true
-                          ? orangeColor
-                          : backgroundColor),
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                productList.productName,
-                style: myTextStyle(
-                    20.sp, FontWeight.normal, textColor),
-              ),
-              Text(
-                '$takaSign${productList.productPrice}',
-                style: myTextStyle(
-                    20.sp, FontWeight.normal, orangeColor),
-              ),
-              Row(
-                children: [
-                  Text(
-                    discountPrice.toString(),
-                    style: myTextStyle(
-                        15.sp, FontWeight.normal, greyColor,
-                        decoration: TextDecoration.lineThrough),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        productList.productName,
+                        style: myTextStyle(20.sp, FontWeight.normal, textColor),
+                      ),
+                      Text(
+                        '$takaSign${productList.productPrice}',
+                        style:
+                            myTextStyle(20.sp, FontWeight.normal, orangeColor),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            discountPrice.toString(),
+                            style: myTextStyle(
+                                15.sp, FontWeight.normal, greyColor,
+                                decoration: TextDecoration.lineThrough),
+                          ),
+                          Gap(10.w),
+                          Text(
+                            '-${productList.productDiscount.toString()}%',
+                            style: myTextStyle(
+                                15.sp, FontWeight.normal, greyColor),
+                          ),
+                          const Spacer(),
+                          Icon(
+                            Icons.star,
+                            color: productList.productRating < 4.5
+                                ? greyColor
+                                : yellowColor,
+                            size: 20.sp,
+                          ),
+                          Text(
+                            productList.productRating.toString(),
+                            style: myTextStyle(
+                                20.sp, FontWeight.normal, textColor),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  Gap(10.w),
-                  Text(
-                    '-${productList.productDiscount.toString()}%',
-                    style: myTextStyle(
-                        15.sp, FontWeight.normal, greyColor),
-                  ),
-                  const Spacer(),
-                  Icon(
-                    Icons.star,
-                    color:
-                    productList.productRating < 4.5
-                        ? greyColor
-                        : yellowColor,
-                    size: 20.sp,
-                  ),
-                  Text(
-                    productList.productRating
-                        .toString(),
-                    style: myTextStyle(
-                        20.sp, FontWeight.normal, textColor),
-                  )
-                ],
-              ),
-            ],
+                )
+              ],
+            ),
           ),
         );
       },
-      itemCount:
-      widget.productList.length,
+      itemCount: widget.productList.length,
     );
   }
 }

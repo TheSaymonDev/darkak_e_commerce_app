@@ -1,7 +1,7 @@
-import 'package:e_commerce_app/models/categories_model.dart';
+import 'package:e_commerce_app/models/all_products.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/screens/category_and_sub_category_screens/category_page/category_page.dart';
+import 'package:e_commerce_app/screens/category_and_sub_category_screens/sub_category/sub_category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,14 +21,13 @@ class ProductCategories extends StatelessWidget {
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            final categoriesList =
-            CategoriesModel.categoriesList[index];
+            final categoriesList = Category.categoryList[index];
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
                   onTap: (){
-                    Get.to(const CategoryPage());
+                    Get.to(()=>SubCategoryPage(subCategoryProductList: categoriesList.categoryProductList));
                   },
                   child: Container(
                     height: 60.h,
@@ -38,12 +37,12 @@ class ProductCategories extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: shadowDecoration(),
                     child: SvgPicture.asset(
-                      categoriesList.iconUrl,
+                      categoriesList.categoryImage,
                     ),
                   ),
                 ),
                 Text(
-                  categoriesList.name,
+                  categoriesList.categoryName,
                   style: myTextStyle(
                       20.sp, FontWeight.normal, textColor),
                 )
@@ -51,7 +50,7 @@ class ProductCategories extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) => Gap(24.w),
-          itemCount: CategoriesModel.categoriesList.length),
+          itemCount: Category.categoryList.length),
     );
   }
 }
