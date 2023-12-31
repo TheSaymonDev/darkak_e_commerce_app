@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/models/all_products.dart';
+import 'package:e_commerce_app/models/home_categories_model.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
 import 'package:e_commerce_app/screens/category_and_sub_category_screens/sub_category/sub_category_page.dart';

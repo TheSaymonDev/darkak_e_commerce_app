@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/data/favourite.dart';
-import 'package:e_commerce_app/data/recommended.dart';
+import 'package:e_commerce_app/data/various_sectors/recommended.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/reusable/widgets/app_item_gridview.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_product_item_gridview.dart';
 import 'package:e_commerce_app/screens/filter_and_sort_screens/filter_page.dart';
 import 'package:e_commerce_app/screens/wishlist_screen/favourite_page_components/favourite_items.dart';
 import 'package:e_commerce_app/screens/wishlist_screen/favourite_page_components/filter_and_sorting.dart';
@@ -47,7 +47,7 @@ class _FavouritePageState extends State<FavouritePage> {
                       style: myTextStyle(25.sp, FontWeight.bold, textColor),
                     ),
                     Gap(16.h),
-                    AppItemGridView(productList: recommendedProductList, physics: const NeverScrollableScrollPhysics(),)
+                    CustomProductItemGridView(productList: recommendedProductList, physics: const NeverScrollableScrollPhysics(),)
                   ],
                 ),
               ),

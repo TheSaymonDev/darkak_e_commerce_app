@@ -1,9 +1,10 @@
-import 'package:e_commerce_app/models/all_products.dart';
+import 'package:e_commerce_app/models/home_categories_model.dart';
 import 'package:e_commerce_app/models/product_model.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/reusable/widgets/app_item_gridview.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_product_item_gridview.dart';
 import 'package:e_commerce_app/reusable/widgets/app_search_text_form_field.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_appbar/appbar_searchview_with_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -39,19 +40,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.keyboard_arrow_left,
-            size: 25.sp,
-            color: orangeColor,
-          ),
-        ),
-        title: const AppSearchTextFormField(),
-      ),
+      appBar: AppbarSearchviewWithBack(onPressedBack: (){Get.back();}, onTapSearch: (){}),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
@@ -107,7 +96,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
             ),
             Gap(16.h),
             Expanded(
-              child: AppItemGridView(
+              child: CustomProductItemGridView(
                 productList: widget.subCategoryProductList[_currentIndex]
                     .subCategoryProductList,
                 physics: const ScrollPhysics(),

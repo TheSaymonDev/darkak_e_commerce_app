@@ -1,11 +1,11 @@
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
 import 'package:e_commerce_app/reusable/validator.dart';
-import 'package:e_commerce_app/reusable/widgets/app_back_appbar.dart';
-import 'package:e_commerce_app/reusable/widgets/app_card_style.dart';
-import 'package:e_commerce_app/reusable/widgets/app_orange_button.dart';
-import 'package:e_commerce_app/reusable/widgets/app_sign_in_with_button.dart';
-import 'package:e_commerce_app/reusable/widgets/app_text_form_field.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_card_style.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_orange_button.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_sign_in_with_button.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_text_form_field.dart';
 import 'package:e_commerce_app/screens/authentication_screens/sign_in_page.dart';
 import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:flutter/material.dart';
@@ -35,11 +35,11 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBackAppBar(onPressed: (){
-        Get.back();
-      },),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
+      appBar: AppbarTextviewWithBack(onPressedBack: (){Get.back();}),
+      body: Container(
+        height: double.infinity.h,
+        width: double.infinity.w,
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,28 +50,28 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: 110.w,
               ),
               Gap(40.h),
-              AppCardStyle(
+              CustomCardStyle(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Sign Up', style: myTextStyle(30.sp, FontWeight.bold, textColor),),
                     Gap(40.h),
-                    AppTextFormField(
+                    CustomTextFormField(
                       labelText: 'Name',
                       controller: _nameController,
                       validator: nameValidator,
                     ),
                     Gap(35.h),
-                    AppTextFormField(
+                    CustomTextFormField(
                       labelText: 'Mobile Number',
                       controller: _mobileController,
                       keyBoardType: TextInputType.phone,
                     ),
                     Gap(35.h),
-                    AppTextFormField(
+                    CustomTextFormField(
                         labelText: 'Email', controller: _emailController, validator: emailValidator,),
                     Gap(35.h),
-                    AppTextFormField(
+                    CustomTextFormField(
                       labelText: 'Password',
                       controller: _passwordController,
                       validator: passwordValidator,
@@ -89,8 +89,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: isObscure,
                     ),
                     Gap(38.h),
-                    AppOrangeButton(onPressed: () {
-                      Get.to(BottomNavBarPage());
+                    CustomOrangeButton(onPressed: () {
+                      Get.to(()=>const BottomNavBarPage());
                     }, buttonName: 'SIGN UP', width: double.infinity.w,)
                   ],
                 ),
@@ -98,15 +98,16 @@ class _SignUpPageState extends State<SignUpPage> {
               Gap(30.h),
               Text('- OR -', style: myTextStyle(20.sp, FontWeight.normal, textColor),),
               Gap(30.h),
-              AppSignInWithButton(
+              CustomSignInWithButton(
                   onPressed: () {},
                   imgUrl: 'assets/images/facebook.svg',
                   name: 'Sign In with Facebook'),
               Gap(10.h),
-              AppSignInWithButton(
+              CustomSignInWithButton(
                   onPressed: () {},
                   imgUrl: 'assets/images/google.svg',
                   name: 'Sign In with Google'),
+              Gap(16.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -114,16 +115,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     "Already have account?",
                     style: myTextStyle(20.sp, FontWeight.normal, textColor),
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Get.to(const SignInPage());
-                      },
-                      child: Text(
-                        'Login',
-                        style: myTextStyle(20.sp, FontWeight.normal, orangeColor),
-                      )),
+                  Gap(8.w),
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(()=>const SignInPage());
+                    },
+                    child: Text(
+                      'Login',
+                      style: myTextStyle(20.sp, FontWeight.bold, orangeColor),
+                    ),
+                  )
                 ],
               ),
+              Gap(32.h),
             ],
           ),
         ),

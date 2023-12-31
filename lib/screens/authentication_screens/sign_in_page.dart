@@ -1,10 +1,10 @@
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
 import 'package:e_commerce_app/reusable/validator.dart';
-import 'package:e_commerce_app/reusable/widgets/app_card_style.dart';
-import 'package:e_commerce_app/reusable/widgets/app_orange_button.dart';
-import 'package:e_commerce_app/reusable/widgets/app_sign_in_with_button.dart';
-import 'package:e_commerce_app/reusable/widgets/app_text_form_field.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_card_style.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_orange_button.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_sign_in_with_button.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_text_form_field.dart';
 import 'package:e_commerce_app/screens/authentication_screens/forgot_password_page.dart';
 import 'package:e_commerce_app/screens/authentication_screens/sign_up_page.dart';
 import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
@@ -23,11 +23,8 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final _identifierController = TextEditingController();
-
   final _passwordController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
-
   bool isObscure = true;
 
   @override
@@ -35,11 +32,12 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+        child: Container(
+          height: double.infinity.h,
+          width: double.infinity.w,
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Gap(30.h),
                 SvgPicture.asset(
@@ -48,7 +46,7 @@ class _SignInPageState extends State<SignInPage> {
                   width: 110.w,
                 ),
                 Gap(40.h),
-                AppCardStyle(
+                CustomCardStyle(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -62,13 +60,13 @@ class _SignInPageState extends State<SignInPage> {
                         style: myTextStyle(20.sp, FontWeight.normal, textColor),
                       ),
                       Gap(55.h),
-                      AppTextFormField(
+                      CustomTextFormField(
                         labelText: 'Email or Mobile',
                         controller: _identifierController,
                         validator: identifierValidator,
                       ),
                       Gap(35.h),
-                      AppTextFormField(
+                      CustomTextFormField(
                         labelText: 'Password',
                         controller: _passwordController,
                         validator: passwordValidator,
@@ -88,21 +86,27 @@ class _SignInPageState extends State<SignInPage> {
                         obscureText: isObscure,
                       ),
                       Gap(20.h),
-                      Align(
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => ForgotPasswordPage(),
+                          );
+                        },
+                        child: Align(
                           alignment: Alignment.centerRight,
-                          child: TextButton(
-                              onPressed: () {
-                                Get.to(ForgotPasswordPage());
-                              },
-                              child: Text(
-                                'Forgot Password?',
-                                style: myTextStyle(
-                                    20.sp, FontWeight.normal, textColor),
-                              ))),
-                      Gap(20.h),
-                      AppOrangeButton(
+                          child: Text(
+                            'Forgot Password?',
+                            style: myTextStyle(
+                                20.sp, FontWeight.normal, textColor),
+                          ),
+                        ),
+                      ),
+                      Gap(30.h),
+                      CustomOrangeButton(
                         onPressed: () {
-                          Get.to(BottomNavBarPage());
+                          Get.to(
+                            () => const BottomNavBarPage(),
+                          );
                         },
                         buttonName: 'SIGN IN',
                         width: double.infinity.w,
@@ -116,15 +120,16 @@ class _SignInPageState extends State<SignInPage> {
                   style: myTextStyle(20.sp, FontWeight.normal, textColor),
                 ),
                 Gap(30.h),
-                AppSignInWithButton(
+                CustomSignInWithButton(
                     onPressed: () {},
                     imgUrl: 'assets/images/facebook.svg',
                     name: 'Sign In with Facebook'),
                 Gap(10.h),
-                AppSignInWithButton(
+                CustomSignInWithButton(
                     onPressed: () {},
                     imgUrl: 'assets/images/google.svg',
                     name: 'Sign In with Google'),
+                Gap(30.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -132,15 +137,14 @@ class _SignInPageState extends State<SignInPage> {
                       "Don't have an account?",
                       style: myTextStyle(20.sp, FontWeight.normal, textColor),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Get.to(SignUpPage());
-                        },
-                        child: Text(
-                          'Create Account',
-                          style: myTextStyle(
-                              20.sp, FontWeight.normal, orangeColor),
-                        )),
+                    Gap(8.w),
+                    GestureDetector(
+                      onTap: (){Get.to(()=>const SignUpPage());},
+                      child: Text(
+                        'Create Account',
+                        style: myTextStyle(20.sp, FontWeight.bold, orangeColor),
+                      ),
+                    ),
                   ],
                 ),
               ],

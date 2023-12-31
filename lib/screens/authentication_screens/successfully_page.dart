@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/reusable/widgets/app_card_style.dart';
-import 'package:e_commerce_app/reusable/widgets/app_orange_button.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_card_style.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_orange_button.dart';
 import 'package:e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,12 +14,15 @@ class SuccessfullyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(left: 25.w, right: 25.w, bottom: 25.h),
+      backgroundColor: backgroundColor,
+      body: Container(
+        height: double.infinity.h,
+        width: double.infinity.w,
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
           children: [
             const Spacer(),
-            AppCardStyle(
+            CustomCardStyle(
               child: Column(
                 children: [
                   Gap(40.h),
@@ -43,10 +46,11 @@ class SuccessfullyPage extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            AppOrangeButton(
+            CustomOrangeButton(
                 onPressed: () {
-                  Get.to(BottomNavBarPage());
+                  Get.to(()=>const BottomNavBarPage());
                 }, buttonName: 'DONE', width: double.infinity.w),
+            Gap(32.h)
           ],
         ),
       ),

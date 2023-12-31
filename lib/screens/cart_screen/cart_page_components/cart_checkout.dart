@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/models/cart_product_item_model.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/reusable/widgets/app_orange_button.dart';
+import 'package:e_commerce_app/reusable/widgets/custom_orange_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -41,7 +41,7 @@ class CartCheckout extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          AppOrangeButton(
+          CustomOrangeButton(
               onPressed: () {}, buttonName: 'Checkout', width: 146.w)
         ],
       ),

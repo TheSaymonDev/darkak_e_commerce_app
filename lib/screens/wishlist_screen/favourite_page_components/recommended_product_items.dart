@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/recommended.dart';
+import 'package:e_commerce_app/data/various_sectors/recommended.dart';
 import 'package:e_commerce_app/reusable/colors.dart';
 import 'package:e_commerce_app/reusable/styles.dart';
 import 'package:flutter/material.dart';
