@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/models/product_model.dart';
+import 'package:darkak_e_commerce_app/models/product_model.dart';
 
 List<ProductModel> favouriteProductList = [
   ProductModel(

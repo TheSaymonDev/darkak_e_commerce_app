@@ -1,10 +1,10 @@
-import 'package:e_commerce_app/reusable/colors.dart';
-import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/reusable/widgets/custom_card_style.dart';
-import 'package:e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:e_commerce_app/reusable/widgets/custom_orange_button.dart';
-import 'package:e_commerce_app/reusable/widgets/custom_text_form_field.dart';
-import 'package:e_commerce_app/screens/authentication_screens/verification_page.dart';
+import 'package:darkak_e_commerce_app/reusable/colors.dart';
+import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_text_form_field.dart';
+import 'package:darkak_e_commerce_app/screens/authentication_screens/verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

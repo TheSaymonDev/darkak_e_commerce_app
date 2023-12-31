@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/screens/cart_screen/cart_page_components/cart_checkout.dart';
-import 'package:e_commerce_app/screens/cart_screen/cart_page_components/cart_items.dart';
-import 'package:e_commerce_app/screens/cart_screen/cart_page_components/cart_total_cost.dart';
+import 'package:darkak_e_commerce_app/screens/cart_screen/cart_page_components/cart_checkout.dart';
+import 'package:darkak_e_commerce_app/screens/cart_screen/cart_page_components/cart_items.dart';
+import 'package:darkak_e_commerce_app/screens/cart_screen/cart_page_components/cart_total_cost.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

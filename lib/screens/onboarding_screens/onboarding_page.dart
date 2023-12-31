@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:e_commerce_app/reusable/colors.dart';
-import 'package:e_commerce_app/reusable/styles.dart';
-import 'package:e_commerce_app/reusable/widgets/custom_orange_button.dart';
-import 'package:e_commerce_app/screens/authentication_screens/sign_in_page.dart';
+import 'package:darkak_e_commerce_app/reusable/colors.dart';
+import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
+import 'package:darkak_e_commerce_app/screens/authentication_screens/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

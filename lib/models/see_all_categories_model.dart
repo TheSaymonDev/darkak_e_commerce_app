@@ -1,10 +1,10 @@
-import 'package:e_commerce_app/data/myProduct/bag.dart';
-import 'package:e_commerce_app/data/myProduct/borka.dart';
-import 'package:e_commerce_app/data/myProduct/hijab.dart';
-import 'package:e_commerce_app/data/myProduct/saree.dart';
-import 'package:e_commerce_app/data/myProduct/shalwar.dart';
-import 'package:e_commerce_app/data/myProduct/watch.dart';
-import 'package:e_commerce_app/models/product_model.dart';
+import 'package:darkak_e_commerce_app/data/myProduct/bag.dart';
+import 'package:darkak_e_commerce_app/data/myProduct/borka.dart';
+import 'package:darkak_e_commerce_app/data/myProduct/hijab.dart';
+import 'package:darkak_e_commerce_app/data/myProduct/saree.dart';
+import 'package:darkak_e_commerce_app/data/myProduct/shalwar.dart';
+import 'package:darkak_e_commerce_app/data/myProduct/watch.dart';
+import 'package:darkak_e_commerce_app/models/product_model.dart';
 
 class Category {
   String categoriesName, categoriesImageUrl;
