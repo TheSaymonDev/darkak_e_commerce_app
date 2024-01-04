@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="87" height="50" viewBox="0 0 87 50">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_4540" data-name="Rectangle 4540" width="22.991" height="12.128" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Credit_Card" data-name="Credit Card" transform="translate(0.193 0.354)">
+    <g id="BG" transform="translate(-0.193 -0.354)" fill="none" stroke="#ebebeb" stroke-width="0.5">
+      <rect width="87" height="50" rx="4" stroke="none"/>
+      <rect x="0.25" y="0.25" width="86.5" height="49.5" rx="3.75" fill="none"/>
+    </g>
+    <text id="wallet" transform="translate(33.807 16.646)" font-size="20" font-family="GumelaArabic-Regular, Gumela Arabic"><tspan x="0" y="14">wallet</tspan></text>
+    <g id="Group_8953" data-name="Group 8953" transform="translate(5.533 18.646)">
+      <rect id="Rectangle_4539" data-name="Rectangle 4539" width="22.991" height="12.128" transform="translate(0 0)" fill="#004b63"/>
+      <g id="Group_8952" data-name="Group 8952" transform="translate(0 0)">
+        <g id="Group_8951" data-name="Group 8951" clip-path="url(#clip-path)">
+          <path id="Path_5575" data-name="Path 5575" d="M1.892,6.622h0a4.85,4.85,0,0,0,4.85-4.85h10.7a4.85,4.85,0,0,0,4.85,4.85,4.85,4.85,0,0,0-4.85,4.85H6.742a4.85,4.85,0,0,0-4.85-4.85" transform="translate(-0.596 -0.558)" fill="#4feba4"/>
+          <path id="Path_5576" data-name="Path 5576" d="M14.457,11.58a5.05,5.05,0,1,1,5.05-5.05,5.05,5.05,0,0,1-5.05,5.05" transform="translate(-2.962 -0.467)" fill="#004b63"/>
+          <path id="Path_5577" data-name="Path 5577" d="M27.109,9.553a1.3,1.3,0,1,1,1.3-1.3,1.3,1.3,0,0,1-1.3,1.3" transform="translate(-8.127 -2.191)" fill="#004b63"/>
+          <path id="Path_5578" data-name="Path 5578" d="M4.786,9.553a1.3,1.3,0,1,1,1.3-1.3,1.3,1.3,0,0,1-1.3,1.3" transform="translate(-1.098 -2.191)" fill="#004b63"/>
+          <path id="Path_5579" data-name="Path 5579" d="M17.1,8.631a.52.52,0,0,0-.173-.4,1.551,1.551,0,0,0-.574-.285,4.769,4.769,0,0,1-.626-.236,1.133,1.133,0,0,1-.744-1.055,1.025,1.025,0,0,1,.323-.779,1.447,1.447,0,0,1,.874-.362V4.892h.511V5.52a1.308,1.308,0,0,1,.858.421,1.337,1.337,0,0,1,.3.908h-.773a.836.836,0,0,0-.18-.567.618.618,0,0,0-.49-.207.712.712,0,0,0-.479.149.529.529,0,0,0-.173.425.5.5,0,0,0,.171.4,1.712,1.712,0,0,0,.58.284,5.27,5.27,0,0,1,.642.249,1.658,1.658,0,0,1,.393.261,1.035,1.035,0,0,1,.245.338,1.08,1.08,0,0,1,.086.448,1.007,1.007,0,0,1-.33.782,1.546,1.546,0,0,1-.921.354v.556h-.508V9.764a1.536,1.536,0,0,1-.972-.4,1.231,1.231,0,0,1-.34-.907h.776a.742.742,0,0,0,.2.556.79.79,0,0,0,.573.2.854.854,0,0,0,.554-.157.513.513,0,0,0,.19-.417" transform="translate(-4.662 -1.541)" fill="#4feba4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

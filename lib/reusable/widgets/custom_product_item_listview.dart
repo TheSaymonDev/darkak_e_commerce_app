@@ -46,7 +46,7 @@ class _CustomProductItemListViewState extends State<CustomProductItemListView> {
                     InkWell(
                       onTap: () {
                         Get.to(() => ProductDetailsPage(
-                            imgUrl: productList.imgUrl,
+                            productImagePath: productList.imgUrl,
                             productName: productList.productName,
                             productPrice: productList.productPrice,
                             productDiscount: productList.productDiscount,
