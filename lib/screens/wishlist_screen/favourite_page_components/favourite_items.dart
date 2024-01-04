@@ -1,7 +1,7 @@
-import 'package:darkak_e_commerce_app/data/favourite.dart';
-import 'package:darkak_e_commerce_app/models/cart_product_item_model.dart';
+import 'package:darkak_e_commerce_app/data/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -35,7 +35,7 @@ class _FavouriteItemState extends State<FavouriteItem> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4.r),
                     image: DecorationImage(
-                      image: AssetImage(favouriteProductList[index].imgUrl),
+                      image: AssetImage(demoProductList[index].productImagePath),
                     ),
                   ),
                   child: IconButton(
@@ -53,12 +53,12 @@ class _FavouriteItemState extends State<FavouriteItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      favouriteProductList[index].productName,
+                      demoProductList[index].productName,
                       style: myTextStyle(
                           25.sp, FontWeight.normal, textColor),
                     ),
                     Text(
-                      '$takaSign${favouriteProductList[index].productPrice.toString()}',
+                      '$takaSign${demoProductList[index].productPrice.toString()}',
                       style: myTextStyle(
                           20.sp, FontWeight.normal, orangeColor),
                     ),
@@ -97,11 +97,11 @@ class _FavouriteItemState extends State<FavouriteItem> {
           );
         },
         separatorBuilder: (context, index) => Gap(16.h),
-        itemCount: favouriteProductList.length);
+        itemCount: demoProductList.length);
   }
 
   void _unFavouriteItem(int index) {
-    favouriteProductList.removeAt(index);
+    demoProductList.removeAt(index);
     setState(() {
     });
   }

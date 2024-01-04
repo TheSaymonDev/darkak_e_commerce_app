@@ -1,9 +1,4 @@
-import 'package:darkak_e_commerce_app/data/myProduct/bag.dart';
-import 'package:darkak_e_commerce_app/data/myProduct/borka.dart';
-import 'package:darkak_e_commerce_app/data/myProduct/hijab.dart';
-import 'package:darkak_e_commerce_app/data/myProduct/saree.dart';
-import 'package:darkak_e_commerce_app/data/myProduct/shalwar.dart';
-import 'package:darkak_e_commerce_app/data/myProduct/watch.dart';
+import 'package:darkak_e_commerce_app/data/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/models/product_model.dart';
 
 class Category {
@@ -105,40 +100,40 @@ class SubCategory {
     SubCategory(
         subCategoryName: 'Saree',
         subCategoryImageUrl: 'assets/images/saree.jpg',
-        productList: sareeList),
+        productList: demoProductList),
     SubCategory(
         subCategoryName: 'Shalwar',
         subCategoryImageUrl: 'assets/images/shalwar.jpg',
-        productList: shalwarList),
+        productList: demoProductList),
   ];
   static List<SubCategory> muslimWearList = [
     SubCategory(
         subCategoryName: 'Hijab',
         subCategoryImageUrl: 'assets/images/hijab.jpg',
-        productList: hijabList),
+        productList: demoProductList),
     SubCategory(
         subCategoryName: 'Borka',
         subCategoryImageUrl: 'assets/images/borka.jpg',
-        productList: borkaList),
+        productList: demoProductList),
   ];
   static List<SubCategory> watchesList = [
     SubCategory(
         subCategoryName: 'Casio',
         subCategoryImageUrl: 'assets/images/watch.jpg',
-        productList: watchList),
+        productList: demoProductList),
     SubCategory(
         subCategoryName: 'Rolex',
         subCategoryImageUrl: 'assets/images/watch.jpg',
-        productList: watchList),
+        productList: demoProductList),
   ];
   static List<SubCategory> bagsList = [
     SubCategory(
         subCategoryName: 'Max',
         subCategoryImageUrl: 'assets/images/bag.jpg',
-        productList: bagList),
+        productList: demoProductList),
     SubCategory(
         subCategoryName: 'Cat',
         subCategoryImageUrl: 'assets/images/bag.jpg',
-        productList: bagList),
+        productList: demoProductList),
   ];
 }

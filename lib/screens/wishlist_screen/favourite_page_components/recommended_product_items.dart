@@ -1,6 +1,7 @@
-import 'package:darkak_e_commerce_app/data/various_sectors/recommended.dart';
+import 'package:darkak_e_commerce_app/data/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -24,10 +25,10 @@ class _RecommendedProductItemsState extends State<RecommendedProductItems> {
       crossAxisSpacing: 38.w,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        final productList = recommendedProductList[index];
+        final productList = demoProductList[index];
         final discountAmount =
             (productList.productPrice *
-                productList.productDiscount) /
+                productList.discounts) /
                 100;
         final discountPrice =
             productList.productPrice -
@@ -51,7 +52,7 @@ class _RecommendedProductItemsState extends State<RecommendedProductItems> {
                       borderRadius: BorderRadius.circular(8.r),
                       image: DecorationImage(
                           image: AssetImage(
-                              productList.imgUrl),
+                              productList.productImagePath),
                           fit: BoxFit.cover)),
                   child: IconButton(
                       onPressed: () {
@@ -88,7 +89,7 @@ class _RecommendedProductItemsState extends State<RecommendedProductItems> {
                   ),
                   Gap(10.w),
                   Text(
-                    '-${productList.productDiscount.toString()}%',
+                    '-${productList.discounts.toString()}%',
                     style: myTextStyle(
                         15.sp, FontWeight.normal, greyColor),
                   ),
@@ -113,7 +114,7 @@ class _RecommendedProductItemsState extends State<RecommendedProductItems> {
           ),
         );
       },
-      itemCount: recommendedProductList.length,
+      itemCount: demoProductList.length,
     );
   }
 }

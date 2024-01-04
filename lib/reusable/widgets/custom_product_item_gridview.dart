@@ -1,7 +1,7 @@
-import 'package:darkak_e_commerce_app/data/various_sectors/recommended.dart';
 import 'package:darkak_e_commerce_app/models/product_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:darkak_e_commerce_app/screens/product_details_screen/product_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +17,8 @@ class CustomProductItemGridView extends StatefulWidget {
   final ScrollPhysics physics;
 
   @override
-  State<CustomProductItemGridView> createState() => _CustomProductItemGridViewState();
+  State<CustomProductItemGridView> createState() =>
+      _CustomProductItemGridViewState();
 }
 
 class _CustomProductItemGridViewState extends State<CustomProductItemGridView> {
@@ -33,7 +34,7 @@ class _CustomProductItemGridViewState extends State<CustomProductItemGridView> {
       itemBuilder: (context, index) {
         final productList = widget.productList[index];
         final discountAmount =
-            (productList.productPrice * productList.productDiscount) / 100;
+            (productList.productPrice * productList.discounts) / 100;
         final discountPrice = productList.productPrice - discountAmount.toInt();
         return Card(
           color: backgroundColor,
@@ -50,14 +51,23 @@ class _CustomProductItemGridViewState extends State<CustomProductItemGridView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
+                GestureDetector(
                   onTap: () {
-                    Get.to(() => ProductDetailsPage(
-                        productImagePath: productList.imgUrl,
+                    Get.to(
+                      () => ProductDetailsPage(
+                        productImagePath: productList.productImagePath,
                         productName: productList.productName,
                         productPrice: productList.productPrice,
-                        productDiscount: productList.productDiscount,
-                        productRating: productList.productRating));
+                        productDiscount: productList.discounts,
+                        productRating: productList.productRating,
+                        attributes: productList.attributes,
+                        customerReviews: productList.customerReviews,
+                        imagesPath: productList.imagesPath,
+                        color: productList.color,
+                        productDescription: productList.productDescription,
+                        productId: productList.productID,
+                      ),
+                    );
                   },
                   child: Container(
                     height: 230.h,
@@ -66,7 +76,7 @@ class _CustomProductItemGridViewState extends State<CustomProductItemGridView> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.r),
                         image: DecorationImage(
-                            image: AssetImage(productList.imgUrl),
+                            image: AssetImage(productList.productImagePath),
                             fit: BoxFit.cover)),
                     child: InkWell(
                       onTap: () {
@@ -116,7 +126,7 @@ class _CustomProductItemGridViewState extends State<CustomProductItemGridView> {
                           ),
                           Gap(10.w),
                           Text(
-                            '-${productList.productDiscount.toString()}%',
+                            '-${productList.discounts.toString()}%',
                             style: myTextStyle(
                                 15.sp, FontWeight.normal, greyColor),
                           ),

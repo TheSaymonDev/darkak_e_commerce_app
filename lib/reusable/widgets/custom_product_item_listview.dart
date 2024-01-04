@@ -1,6 +1,7 @@
 import 'package:darkak_e_commerce_app/models/product_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:darkak_e_commerce_app/screens/product_details_screen/product_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,7 @@ class _CustomProductItemListViewState extends State<CustomProductItemListView> {
           itemBuilder: (context, index) {
             final productList = widget.productList[index];
             final discountAmount =
-                (productList.productPrice * productList.productDiscount) / 100;
+                (productList.productPrice * productList.discounts) / 100;
             final discountPrice =
                 productList.productPrice - discountAmount.toInt();
             return Card(
@@ -46,11 +47,18 @@ class _CustomProductItemListViewState extends State<CustomProductItemListView> {
                     InkWell(
                       onTap: () {
                         Get.to(() => ProductDetailsPage(
-                            productImagePath: productList.imgUrl,
-                            productName: productList.productName,
-                            productPrice: productList.productPrice,
-                            productDiscount: productList.productDiscount,
-                            productRating: productList.productRating));
+                          productImagePath: productList.productImagePath,
+                          productName: productList.productName,
+                          productPrice: productList.productPrice,
+                          productDiscount: productList.discounts,
+                          productRating: productList.productRating,
+                          attributes: productList.attributes,
+                          customerReviews: productList.customerReviews,
+                          imagesPath: productList.imagesPath,
+                          color: productList.color,
+                          productDescription: productList.productDescription,
+                          productId: productList.productID,
+                        ));
                       },
                       child: Container(
                         height: 230.h,
@@ -59,7 +67,7 @@ class _CustomProductItemListViewState extends State<CustomProductItemListView> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.r),
                             image: DecorationImage(
-                                image: AssetImage(productList.imgUrl),
+                                image: AssetImage(productList.productImagePath),
                                 fit: BoxFit.cover)),
                         child: InkWell(
                           onTap: () {
@@ -86,7 +94,7 @@ class _CustomProductItemListViewState extends State<CustomProductItemListView> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                      EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +119,7 @@ class _CustomProductItemListViewState extends State<CustomProductItemListView> {
                               ),
                               Gap(10.w),
                               Text(
-                                '-${productList.productDiscount.toString()}%',
+                                '-${productList.discounts.toString()}%',
                                 style: myTextStyle(
                                     15.sp, FontWeight.normal, greyColor),
                               ),

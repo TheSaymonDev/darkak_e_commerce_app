@@ -59,10 +59,7 @@ class CouponCode extends StatelessWidget {
                         .write('copyCode', 'Copied');
                     final code =
                     GetStorage().read('copyCode');
-                    Get.snackbar('Coupon Code', code,
-                        snackPosition: SnackPosition.BOTTOM,
-                        backgroundColor: orangeColor,
-                        colorText: backgroundColor);
+                    customSnackMessage(title: 'Coupon Code', subTitle: code);
                   },
                   child: Container(
                     height: 25.h,
@@ -90,4 +87,5 @@ class CouponCode extends StatelessWidget {
           itemCount: CouponCodeModel.couponCodeList.length),
     );
   }
+
 }

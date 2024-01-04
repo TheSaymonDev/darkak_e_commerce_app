@@ -1,10 +1,12 @@
-import 'package:darkak_e_commerce_app/models/product.dart';
+import 'package:darkak_e_commerce_app/data/demo_product_list.dart';
+import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_searchview_with_back.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
-import 'package:darkak_e_commerce_app/screens/custom_product_item_gridview.dart';
-import 'package:darkak_e_commerce_app/screens/wishlist_screen/favourite_page_components/filter_and_sorting.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_product_item_gridview.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_filtering_and_sorting.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_query_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -18,14 +20,7 @@ class StorePage extends StatefulWidget {
 }
 
 class _StorePageState extends State<StorePage> {
-  int _currentIndex = 0;
-  final List<String> _titleList = [
-    'All',
-    'T-Shirt',
-    'Pant',
-    'Saree',
-    'Shalwar'
-  ];
+
   bool _isFollowing = false;
 
   @override
@@ -131,47 +126,12 @@ class _StorePageState extends State<StorePage> {
                     ],
                   )),
               Gap(16.h),
-              SizedBox(
-                height: 40.h,
-                child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          _currentIndex = index;
-                          setState(() {});
-                        },
-                        child: Container(
-                          height: double.infinity.h,
-                          width: 100.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.r),
-                            border: Border.all(color: orangeColor),
-                            color: _currentIndex == index
-                                ? orangeColor
-                                : backgroundColor,
-                          ),
-                          child: Text(
-                            _titleList[index],
-                            style: myTextStyle(
-                                15.sp,
-                                FontWeight.normal,
-                                _currentIndex == index
-                                    ? backgroundColor
-                                    : orangeColor),
-                          ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => Gap(10.w),
-                    itemCount: _titleList.length),
-              ),
+              CustomQueryTab(productQueryList: ProductQuery.productQueryList),
               Gap(16.h),
-              FilterAndSorting(filterTap: () {}, sortingTap: () {}),
+              CustomFilteringAndSorting(filterTap: () {}, sortingTap: () {}),
               Gap(20.h),
               CustomProductItemGridView(
-                  productList: ProductModel.storeProduct,
+                  productList: demoProductList,
                   physics: const NeverScrollableScrollPhysics()),
             ],
           ),

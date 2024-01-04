@@ -1,10 +1,12 @@
 import 'package:darkak_e_commerce_app/models/home_categories_model.dart';
 import 'package:darkak_e_commerce_app/models/product_model.dart';
+import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_product_item_gridview.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/app_search_text_form_field.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_searchview_with_back.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_filtering_and_sorting.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_product_item_gridview.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_query_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -54,43 +56,8 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    height: 40.h,
-                    child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              _currentIndex = index;
-                              setState(() {});
-                            },
-                            child: Container(
-                              height: double.infinity.h,
-                              width: 100.w,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30.r),
-                                border: Border.all(color: orangeColor),
-                                color: _currentIndex == index
-                                    ? orangeColor
-                                    : backgroundColor,
-                              ),
-                              child: Text(
-                                widget.subCategoryProductList[index]
-                                    .subCategoryName,
-                                style: myTextStyle(
-                                    15.sp,
-                                    FontWeight.normal,
-                                    _currentIndex == index
-                                        ? backgroundColor
-                                        : orangeColor),
-                              ),
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) => Gap(10.w),
-                        itemCount: widget.subCategoryProductList.length),
-                  ),
+                 CustomQueryTab(productQueryList: ProductQuery.productQueryList),
+                  CustomFilteringAndSorting(filterTap: (){}, sortingTap: (){}),
                 ],
               ),
             ),

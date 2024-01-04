@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
-class FilterAndSorting extends StatelessWidget {
-  const FilterAndSorting({
+class CustomFilteringAndSorting extends StatelessWidget {
+  const CustomFilteringAndSorting({
     super.key,
     required this.filterTap, required this.sortingTap
   });

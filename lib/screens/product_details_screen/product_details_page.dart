@@ -1,6 +1,10 @@
 import 'package:darkak_e_commerce_app/models/product_review_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/utility.dart';
+import 'package:darkak_e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
+import 'package:darkak_e_commerce_app/screens/review_screen/review_page.dart';
+import 'package:darkak_e_commerce_app/screens/store_screen/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,32 +12,38 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsPage extends StatefulWidget {
+  const ProductDetailsPage(
+      {super.key,
+      required this.productImagePath,
+      required this.productName,
+      required this.productPrice,
+      required this.productDiscount,
+      required this.productRating,
+      required this.attributes,
+      required this.customerReviews,
+      required this.color,
+      required this.imagesPath,
+      required this.productDescription,
+      required this.productId});
 
-  const ProductDetailsPage({super.key, required this.productImagePath, required this.productName, required this.productPrice, required this.productDiscount, required this.productRating});
-
-  final String productImagePath, productName;
+  final String productId, productImagePath, productName, productDescription;
   final int productPrice, productDiscount;
   final double productRating;
+  final List<String> imagesPath; // List of image URLs
+  final List<String> color;
+  final List<String> attributes;
+  final List<ProductReviewModel> customerReviews;
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-
+  int _selectedColor = 0;
   final double _height = 400.h;
-  bool _showMore = false;
+  bool _isExpanded = false;
   int _quantity = 1;
-
   String _productSize = 'S';
-  final List<String> _items = ['S', 'M', 'L', 'XL', 'XXL'];
-
-  List<String> variousProductList = [
-    'assets/images/black.png',
-    'assets/images/blue.png',
-    'assets/images/red.png',
-    'assets/images/yellow.png',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +62,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       pinned: true,
                       floating: true,
                       delegate: _SliverAppBarDelegate(
-                        minHeight: 196.h,
+                        minHeight: 200.h,
                         maxHeight: _height,
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image:
-                                    AssetImage(widget.productImagePath),
+                                image: AssetImage(widget.productImagePath),
                                 fit: BoxFit.cover),
                           ),
                           child: LayoutBuilder(
@@ -79,39 +88,44 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: 16.h),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
                                   child: Visibility(
                                     visible: constraints.maxHeight >= _height,
                                     child: Container(
                                       height: 100.h,
-                                      width: 398.w,
-                                      decoration: BoxDecoration(
-                                        color: backgroundColor,
-                                        borderRadius:
-                                            BorderRadius.circular(16.r),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: List.generate(
-                                          4,
-                                          (index) => InkWell(
-                                            onTap: () {},
-                                            child: Container(
-                                              height: 90.h,
-                                              width: 90.w,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(16.r),
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        widget.productImagePath),
-                                                    fit: BoxFit.cover),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8.w, vertical: 8.w),
+                                      alignment: Alignment.center,
+                                      child: ListView.separated(
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) =>
+                                              GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    _selectedColor = index;
+                                                  });
+                                                },
+                                                child: Container(
+                                                  height: 80.h,
+                                                  width: 90.w,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      16.r,
+                                                    ),
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                          widget.imagesPath[
+                                                              index],
+                                                        ),
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                          separatorBuilder: (context, index) =>
+                                              Gap(8.w),
+                                          itemCount: widget.imagesPath.length),
                                     ),
                                   ),
                                 ),
@@ -139,7 +153,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   ),
                                 ),
                                 Text(
-                                  'ID-76232982',
+                                  widget.productId,
                                   style: myTextStyle(
                                       25.sp, FontWeight.bold, textColor),
                                 ),
@@ -164,19 +178,23 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         ),
                                         style: myTextStyle(
                                             15.sp, FontWeight.bold, textColor),
-                                        items: _items.map((String item) {
+                                        items: widget.attributes
+                                            .map((String item) {
                                           return DropdownMenuItem(
                                             value: item,
                                             child: Text(item),
                                           );
                                         }).toList(),
                                         onChanged: (String? newValue) {
-                                          setState(() {
-                                            _productSize = newValue!;
-                                          });
+                                          if (newValue != null) {
+                                            setState(() {
+                                              _productSize = newValue;
+                                            });
+                                          }
                                         },
                                         value: _productSize,
                                       ),
+                                      // buildSizeDropdown(widget.attributes),
                                     ],
                                   ),
                                 ),
@@ -189,17 +207,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                             FontWeight.normal, textColor),
                                       ),
                                       const Spacer(),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          height: 22.h,
-                                          width: 22.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.r),
-                                              color: textColor),
-                                        ),
-                                      )
+                                      Text(
+                                        widget.color[_selectedColor],
+                                        style: myTextStyle(
+                                            15.sp, FontWeight.bold, textColor),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -215,40 +227,44 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              if (_quantity > 1) {
-                                                _quantity--;
-                                              }
-                                            });
-                                          },
-                                          child: Icon(
-                                            Icons.remove,
-                                            size: 30.sp,
-                                            color: greyColor,
-                                          )),
+                                        onTap: () {
+                                          setState(() {
+                                            if (_quantity > 1) {
+                                              _quantity--;
+                                            }
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 20.sp,
+                                          color: greyColor,
+                                        ),
+                                      ),
                                       Text(
                                         _quantity.toString(),
-                                        style: myTextStyle(20.sp,
-                                            FontWeight.normal, greyColor),
+                                        style: myTextStyle(
+                                            15.sp, FontWeight.bold, textColor),
                                       ),
                                       InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              _quantity++;
-                                            });
-                                          },
-                                          child: Icon(
-                                            Icons.add,
-                                            size: 30.sp,
-                                            color: greyColor,
-                                          )),
+                                        onTap: () {
+                                          setState(() {
+                                            _quantity++;
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 20.sp,
+                                          color: greyColor,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 _circularContainer(
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.star,
@@ -257,10 +273,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                             ? greyColor
                                             : yellowColor,
                                       ),
+                                      Gap(4.w),
                                       Text(
                                         widget.productRating.toString(),
-                                        style: myTextStyle(20.sp,
-                                            FontWeight.normal, textColor),
+                                        style: myTextStyle(
+                                            15.sp, FontWeight.bold, textColor),
                                       ),
                                     ],
                                   ),
@@ -274,33 +291,28 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   20.sp, FontWeight.bold, textColor),
                             ),
                             Gap(8.h),
-                            Column(
-                              children: [
-                                Text(
-                                  'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-                                  style: myTextStyle(
-                                      20.sp, FontWeight.normal, textColor),
-                                ),
-                                if (_showMore) ...[
-                                  Text(
-                                    'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-                                    style: myTextStyle(
-                                        20.sp, FontWeight.normal, textColor),
-                                  )
-                                ]
-                              ],
+                            Text(
+                              _isExpanded == true
+                                  ? widget.productDescription.substring(
+                                      0, widget.productDescription.length)
+                                  : widget.productDescription.substring(0, 100),
+                              style: myTextStyle(
+                                  20.sp, FontWeight.normal, textColor),
                             ),
-                            Center(
-                              child: TextButton(
-                                onPressed: () =>
-                                    setState(() => _showMore = !_showMore),
-                                child: Text(
-                                  _showMore ? "See Less" : "See More",
-                                  style: myTextStyle(
-                                      20.sp, FontWeight.bold, orangeColor),
-                                ),
+                            Gap(8.h),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _isExpanded = !_isExpanded;
+                                });
+                              },
+                              child: Text(
+                                _isExpanded ? 'Show Less' : 'Show More',
+                                style: myTextStyle(
+                                    20.sp, FontWeight.normal, orangeColor),
                               ),
                             ),
+                            Gap(16.h),
                             Text(
                               'Reviews',
                               style: myTextStyle(
@@ -308,7 +320,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             ),
                             Gap(8.h),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Get.to(()=>const ReviewPage());
+                              },
                               child: Text(
                                 'Write your review',
                                 style: myTextStyle(
@@ -322,8 +336,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     SliverList.separated(
                       itemBuilder: (context, index) {
-                        final productReview =
-                            ProductReviewModel.productReviewList[index];
+                        final productReview = widget.customerReviews[index];
                         return Container(
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
                           width: double.infinity,
@@ -418,13 +431,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                 height: 20.h,
                                                 width: 22.w,
                                                 child: SvgPicture.asset(
-                                                  color:
-                                                      productReview.isLiked ==
-                                                              true
-                                                          ? null
-                                                          : greyColor,
                                                   'assets/images/liked-icon.svg',
                                                   fit: BoxFit.cover,
+                                                  colorFilter:
+                                                      productReview.isLiked ==
+                                                              true
+                                                          ? ColorFilter.mode(
+                                                              greyColor,
+                                                              BlendMode.srcIn)
+                                                          : null,
                                                 ),
                                               ),
                                             )
@@ -440,7 +455,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         );
                       },
                       separatorBuilder: (context, index) => Gap(20.h),
-                      itemCount: ProductReviewModel.productReviewList.length,
+                      itemCount: widget.customerReviews.length,
                     ),
                     SliverToBoxAdapter(child: Gap(16.h))
                   ],
@@ -475,7 +490,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 15.sp, FontWeight.normal, greyColor),
                           ),
                           Text(
-                            '${takaSign}1500',
+                            '$takaSign${calculateTotal()}',
                             style: myTextStyle(
                                 20.sp, FontWeight.bold, orangeColor),
                           ),
@@ -483,7 +498,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => const StorePage());
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -501,7 +518,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        customSnackMessage(title: 'Add to cart', subTitle: 'Successfully');
+                        Get.to(()=>const BottomNavBarPage());
+                      },
                       focusColor: backgroundColor,
                       child: Container(
                         width: 146.w,
@@ -527,6 +547,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
+  int calculateTotal() {
+    int total = 0;
+    total += widget.productPrice * _quantity;
+    return total;
+  }
+
   Container _circularContainer(Widget child) {
     return Container(
       height: 40.h,
@@ -537,20 +563,27 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  // void _showDropDownButton() {
-  //   DropdownButton(
-  //     items: _items.map((String item) {
-  //       return DropdownMenuItem(
-  //         value: item,
-  //         child: Text(item),
+  // Widget buildSizeDropdown(List<String> sizes) {
+  //   String selectedSize = sizes.isNotEmpty ? sizes[0] : '';
+  //
+  //   return DropdownButton<String>(
+  //
+  //     value: selectedSize,
+  //     onChanged: (String? newSize) {
+  //       if (newSize != null) {
+  //         setState(() {
+  //           selectedSize=newSize;
+  //         });
+  //         // Handle the selected size
+  //         print('Selected Size: $newSize');
+  //       }
+  //     },
+  //     items: sizes.map((String size) {
+  //       return DropdownMenuItem<String>(
+  //         value: size,
+  //         child: Text(size),
   //       );
   //     }).toList(),
-  //     onChanged: (String? newValue) {
-  //       setState(() {
-  //         _dropDownValue = newValue!;
-  //       });
-  //     },
-  //     value: _dropDownValue,
   //   );
   // }
 }

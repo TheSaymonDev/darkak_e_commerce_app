@@ -2,6 +2,7 @@ import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 TextStyle myTextStyle(double fSize, FontWeight fWeight, Color clr, {TextDecoration? decoration}) {
@@ -57,9 +58,9 @@ PinTheme pinTheme() {
     selectedFillColor: backgroundColor,
     fieldHeight: 46.h,
     fieldWidth: 46.w,
-    activeColor: Color(0xffDDDDDD),
+    activeColor: const Color(0xffDDDDDD),
     selectedColor: orangeColor,
-    inactiveColor: Color(0xffDDDDDD),
+    inactiveColor: const Color(0xffDDDDDD),
   );
 }
 
@@ -88,5 +89,12 @@ BoxDecoration decorationStyle() {
   );
 }
 
-const String takaSign = '৳';
+SnackbarController customSnackMessage({required String title, required dynamic subTitle}) {
+  return Get.snackbar(title, subTitle,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: orangeColor,
+      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      duration: const Duration(seconds: 2),
+      colorText: backgroundColor);
+}
 

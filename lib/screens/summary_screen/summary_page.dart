@@ -1,8 +1,8 @@
-import 'package:darkak_e_commerce_app/data/various_sectors/best_selling.dart';
+import 'package:darkak_e_commerce_app/data/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_product_item_listview.dart';
 import 'package:darkak_e_commerce_app/screens/payment_screen/payment_success_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,9 +29,9 @@ class SummaryPage extends StatelessWidget {
               child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    final productList = bestSellingProductList[index];
+                    final productList = demoProductList[index];
                     final discountAmount =
-                        (productList.productPrice * productList.productDiscount) / 100;
+                        (productList.productPrice * productList.discounts) / 100;
                     final discountPrice =
                         productList.productPrice - discountAmount.toInt();
                     return Card(
@@ -57,7 +57,7 @@ class SummaryPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.r),
                                     image: DecorationImage(
-                                        image: AssetImage(productList.imgUrl),
+                                        image: AssetImage(productList.productImagePath),
                                         fit: BoxFit.cover)),
                               ),
                             ),
@@ -85,7 +85,7 @@ class SummaryPage extends StatelessWidget {
                                     ),
                                     Gap(10.w),
                                     Text(
-                                      '-${productList.productDiscount.toString()}%',
+                                      '-${productList.discounts.toString()}%',
                                       style: myTextStyle(
                                           15.sp, FontWeight.normal, greyColor),
                                     ),
@@ -112,7 +112,7 @@ class SummaryPage extends StatelessWidget {
                     );
                   },
                   separatorBuilder: (context, index) => Gap(0.w),
-                  itemCount: bestSellingProductList.length),
+                  itemCount: demoProductList.length),
             ),
             const Spacer(),
             Divider(color: orangeColor, thickness: 1.h,),

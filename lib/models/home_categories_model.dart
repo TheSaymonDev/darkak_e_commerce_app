@@ -1,190 +1,5 @@
+import 'package:darkak_e_commerce_app/data/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/models/product_model.dart';
-
-List<ProductModel> tShirtProductList = [
-  ProductModel(
-      imgUrl: 'assets/images/tshirt.png',
-      productName: 'T-Shirt',
-      productPrice: 500,
-      productRating: 4.5,
-      productDiscount: 20,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/tshirt.png',
-      productName: 'T-Shirt',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/tshirt.png',
-      productName: 'T-Shirt',
-      productPrice: 500,
-      productRating: 3.5,
-      productDiscount: 30,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/tshirt.png',
-      productName: 'T-Shirt',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-];
-
-List<ProductModel> pantProductList = [
-  ProductModel(
-      imgUrl: 'assets/images/pant.png',
-      productName: 'Pant',
-      productPrice: 500,
-      productRating: 4.5,
-      productDiscount: 20,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/pant.png',
-      productName: 'Pant',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/pant.png',
-      productName: 'Pant',
-      productPrice: 500,
-      productRating: 3.5,
-      productDiscount: 30,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/pant.png',
-      productName: 'Pant',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-];
-
-List<ProductModel> sareeProductList = [
-  ProductModel(
-      imgUrl: 'assets/images/saree.jpg',
-      productName: 'Saree',
-      productPrice: 500,
-      productRating: 4.5,
-      productDiscount: 20,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/saree.jpg',
-      productName: 'Saree',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/saree.jpg',
-      productName: 'Saree',
-      productPrice: 500,
-      productRating: 3.5,
-      productDiscount: 30,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/saree.jpg',
-      productName: 'Saree',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-];
-
-List<ProductModel> cosmeticsProductList = [
-  ProductModel(
-      imgUrl: 'assets/images/cosmetics.png',
-      productName: 'Cosmetics',
-      productPrice: 500,
-      productRating: 4.5,
-      productDiscount: 20,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/cosmetics.png',
-      productName: 'Cosmetics',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/cosmetics.png',
-      productName: 'Cosmetics',
-      productPrice: 500,
-      productRating: 3.5,
-      productDiscount: 30,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/cosmetics.png',
-      productName: 'Cosmetics',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-];
-
-List<ProductModel> watchProductList = [
-  ProductModel(
-      imgUrl: 'assets/images/watch.jpg',
-      productName: 'Watch',
-      productPrice: 500,
-      productRating: 4.5,
-      productDiscount: 20,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/watch.jpg',
-      productName: 'Watch',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/watch.jpg',
-      productName: 'Watch',
-      productPrice: 500,
-      productRating: 3.5,
-      productDiscount: 30,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/watch.jpg',
-      productName: 'Watch',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-];
-
-List<ProductModel> bagProductList = [
-  ProductModel(
-      imgUrl: 'assets/images/bag.jpg',
-      productName: 'Bag',
-      productPrice: 500,
-      productRating: 4.5,
-      productDiscount: 20,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/bag.jpg',
-      productName: 'Bag',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/bag.jpg',
-      productName: 'Bag',
-      productPrice: 500,
-      productRating: 3.5,
-      productDiscount: 30,
-      isFavourite: false),
-  ProductModel(
-      imgUrl: 'assets/images/bag.jpg',
-      productName: 'Bag',
-      productPrice: 600,
-      productRating: 5.0,
-      productDiscount: 10,
-      isFavourite: false),
-];
 
 class Category {
   String categoryName, categoryImage;
@@ -232,44 +47,44 @@ class SubCategory {
   static List<SubCategory> menProductList = [
     SubCategory(subCategoryName: 'All', subCategoryProductList: []),
     SubCategory(
-        subCategoryName: 'T-Shirt', subCategoryProductList: tShirtProductList),
+        subCategoryName: 'T-Shirt', subCategoryProductList: demoProductList),
     SubCategory(
-        subCategoryName: 'Pant', subCategoryProductList: pantProductList),
+        subCategoryName: 'Pant', subCategoryProductList: demoProductList),
   ];
 
   static List<SubCategory> womenProductList = [
     SubCategory(subCategoryName: 'All', subCategoryProductList: []),
     SubCategory(
-        subCategoryName: 'Saree', subCategoryProductList: sareeProductList),
+        subCategoryName: 'Saree', subCategoryProductList: demoProductList),
     SubCategory(
         subCategoryName: 'Cosmetics',
-        subCategoryProductList: cosmeticsProductList),
+        subCategoryProductList: demoProductList),
   ];
 
   static List<SubCategory> devicesProductList = [
     SubCategory(subCategoryName: 'All', subCategoryProductList: []),
     SubCategory(
-        subCategoryName: 'Watch', subCategoryProductList: watchProductList),
+        subCategoryName: 'Watch', subCategoryProductList: demoProductList),
     SubCategory(
         subCategoryName: 'Bag',
-        subCategoryProductList: bagProductList),
+        subCategoryProductList: demoProductList),
   ];
 
   static List<SubCategory> gadgetsProductList = [
     SubCategory(subCategoryName: 'All', subCategoryProductList: []),
     SubCategory(
-        subCategoryName: 'Watch', subCategoryProductList: watchProductList),
+        subCategoryName: 'Watch', subCategoryProductList: demoProductList),
     SubCategory(
         subCategoryName: 'Bag',
-        subCategoryProductList: bagProductList),
+        subCategoryProductList: demoProductList),
   ];
 
   static List<SubCategory> gamingProductList = [
     SubCategory(subCategoryName: 'All', subCategoryProductList: []),
     SubCategory(
-        subCategoryName: 'Watch', subCategoryProductList: watchProductList),
+        subCategoryName: 'Watch', subCategoryProductList: demoProductList),
     SubCategory(
         subCategoryName: 'Bag',
-        subCategoryProductList: bagProductList),
+        subCategoryProductList: demoProductList),
   ];
 }

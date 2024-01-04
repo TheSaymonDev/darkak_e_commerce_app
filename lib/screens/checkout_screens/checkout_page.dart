@@ -142,7 +142,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           _currentStep = _currentStep + 1;
                         });
                       } else {
-                        print('Please select an only option here');
+                        customSnackMessage(title: 'Select Option', subTitle: 'Please select an option');
                       }
                     }
                   },

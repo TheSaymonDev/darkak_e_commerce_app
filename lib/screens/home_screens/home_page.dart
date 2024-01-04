@@ -1,16 +1,11 @@
 import 'dart:async';
-import 'package:darkak_e_commerce_app/data/various_sectors/best_selling.dart';
-import 'package:darkak_e_commerce_app/data/various_sectors/flash_sale.dart';
-import 'package:darkak_e_commerce_app/data/various_sectors/just_for_you.dart';
-import 'package:darkak_e_commerce_app/data/various_sectors/new_arrival.dart';
-import 'package:darkak_e_commerce_app/data/various_sectors/recent_added.dart';
-import 'package:darkak_e_commerce_app/data/various_sectors/top_trending_week.dart';
+import 'package:darkak_e_commerce_app/data/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/screens/category_and_sub_category_screens/see_all_categories/see_all_categories_page.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_product_item_listview.dart';
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/brand_shop.dart';
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/count_down_timer.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_product_item_listview.dart';
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/fixed_search_bar.dart';
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/product_categories.dart';
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/slider.dart';
@@ -79,13 +74,13 @@ class _HomePageState extends State<HomePage> {
                     Gap(16.h),
                     //CouponCode(),
                     // Gap(16.h),
-                    CustomProductItemListView(productList: flashSaleProductList),
+                    CustomProductItemListView(productList: demoProductList),
                     Gap(16.h),
                     _productSectorName(onTap: (){
-                      Get.to(()=>ProductListingPage(productList: bestSellingProductList));
+                      Get.to(()=>ProductListingPage(productList: demoProductList));
                     }, sectorName: 'Best Selling'),
                     Gap(8.h),
-                    CustomProductItemListView(productList: bestSellingProductList.sublist(0,4)),
+                    CustomProductItemListView(productList: demoProductList.sublist(0,4)),
                     Gap(16.h),
                     _productSectorName(onTap: (){
 
@@ -94,29 +89,29 @@ class _HomePageState extends State<HomePage> {
                     const BrandShop(),
                     Gap(16.h),
                     _productSectorName(onTap: (){
-                      Get.to(()=>ProductListingPage(productList: newArrivalProductList));
+                      Get.to(()=>ProductListingPage(productList: demoProductList));
                     }, sectorName: 'New Arrival'),
                     Gap(8.h),
-                    CustomProductItemListView(productList: newArrivalProductList.sublist(0,4)),
+                    CustomProductItemListView(productList: demoProductList.sublist(0,4)),
                     Gap(16.h),
                     _productSectorName(onTap: (){
-                      Get.to(()=>ProductListingPage(productList: justForYouProductList));
+                      Get.to(()=>ProductListingPage(productList: demoProductList));
                     }, sectorName: 'Just For You'),
                     Gap(8.h),
-                    CustomProductItemListView(productList: justForYouProductList.sublist(0,4)),
+                    CustomProductItemListView(productList: demoProductList.sublist(0,4)),
                     Gap(16.h),
                     _productSectorName(onTap: (){
-                      Get.to(()=>ProductListingPage(productList: topTrendingWeekProductList));
+                      Get.to(()=>ProductListingPage(productList: demoProductList));
                     }, sectorName: 'Top Trending(Week)'),
                     Gap(8.h),
                     CustomProductItemListView(
-                        productList: topTrendingWeekProductList.sublist(0,4)),
+                        productList: demoProductList.sublist(0,4)),
                     Gap(16.h),
                     _productSectorName(onTap: (){
-                      Get.to(()=>ProductListingPage(productList: recentAddedProductList));
+                      Get.to(()=>ProductListingPage(productList: demoProductList));
                     }, sectorName: 'Recent Added Products'),
                     Gap(8.h),
-                    CustomProductItemListView(productList: recentAddedProductList.sublist(0,4)),
+                    CustomProductItemListView(productList: demoProductList.sublist(0,4)),
                     Gap(16.h),
                   ],
                 ),

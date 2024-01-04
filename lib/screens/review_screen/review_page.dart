@@ -44,117 +44,119 @@ class _ReviewPageState extends State<ReviewPage> {
         height: double.infinity.h,
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-          children: [
-            Gap(40.h),
-            Text(
-              'What is your rate?',
-              style: myTextStyle(25.sp, FontWeight.normal, textColor),
-            ),
-            Gap(8.h),
-            RatingBar.builder(
-              initialRating: 0,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: yellowColor,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Gap(40.h),
+              Text(
+                'What is your rate?',
+                style: myTextStyle(25.sp, FontWeight.normal, textColor),
               ),
-              onRatingUpdate: (rating) {
-                print(rating);
-              },
-            ),
-            Gap(40.h),
-            Text(
-              'Please share your opinion\nabout the product',
-              style: myTextStyle(20.sp, FontWeight.normal, textColor),
-              textAlign: TextAlign.center,
-            ),
-            Gap(8.h),
-            SizedBox(
-              height: 200.h,
-              child: TextFormField(
-                maxLines: 5,
-                cursorColor: textColor,
-                controller: _reviewController,
-                decoration: InputDecoration(
-                  hintText: 'Write your review',
-                  fillColor: backgroundColor,
-                  filled: true,
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.r),
-                      borderSide: BorderSide(color: orangeColor, width: 1.w)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.r),
-                      borderSide: BorderSide(color: orangeColor, width: 1.w)),
+              Gap(8.h),
+              RatingBar.builder(
+                initialRating: 0,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: yellowColor,
+                ),
+                onRatingUpdate: (rating) {
+                  print(rating);
+                },
+              ),
+              Gap(40.h),
+              Text(
+                'Please share your opinion\nabout the product',
+                style: myTextStyle(20.sp, FontWeight.normal, textColor),
+                textAlign: TextAlign.center,
+              ),
+              Gap(8.h),
+              SizedBox(
+                height: 200.h,
+                child: TextFormField(
+                  maxLines: 5,
+                  cursorColor: textColor,
+                  controller: _reviewController,
+                  decoration: InputDecoration(
+                    hintText: 'Write your review',
+                    fillColor: backgroundColor,
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.r),
+                        borderSide: BorderSide(color: orangeColor, width: 1.w)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.r),
+                        borderSide: BorderSide(color: orangeColor, width: 1.w)),
+                  ),
                 ),
               ),
-            ),
-            Gap(16.h),
-            SizedBox(
-              height: 100.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: _selectedImages.isEmpty
-                        ? const SizedBox()
-                        : ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: _selectedImages.length,
-                            separatorBuilder: (context, index) => Gap(4.w),
-                            itemBuilder: (context, index) {
-                              return SizedBox(
-                                height: 100.h,
-                                width: 104.w,
-                                child: Image.file(_selectedImages[index],
-                                    fit: BoxFit.cover),
-                              );
-                            },
-                          ),
-                  ),
-                  GestureDetector(
-                    onTap: _pickImagesFromGallery,
-                    child: SizedBox(
-                      height: 100.h,
-                      width: 104.w,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 60.h,
-                            width: 60.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: orangeColor,
+              Gap(16.h),
+              SizedBox(
+                height: 100.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: _selectedImages.isEmpty
+                          ? const SizedBox()
+                          : ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: _selectedImages.length,
+                              separatorBuilder: (context, index) => Gap(4.w),
+                              itemBuilder: (context, index) {
+                                return SizedBox(
+                                  height: 100.h,
+                                  width: 104.w,
+                                  child: Image.file(_selectedImages[index],
+                                      fit: BoxFit.cover),
+                                );
+                              },
                             ),
-                            child: Icon(Icons.camera_alt_outlined,
-                                size: 20.sp, color: backgroundColor),
-                          ),
-                          Gap(4.h),
-                          Text('Add photos',
-                              style:
-                                  myTextStyle(15.sp, FontWeight.bold, textColor)),
-                        ],
+                    ),
+                    GestureDetector(
+                      onTap: _pickImagesFromGallery,
+                      child: SizedBox(
+                        height: 100.h,
+                        width: 104.w,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60.h,
+                              width: 60.w,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: orangeColor,
+                              ),
+                              child: Icon(Icons.camera_alt_outlined,
+                                  size: 20.sp, color: backgroundColor),
+                            ),
+                            Gap(4.h),
+                            Text('Add photos',
+                                style:
+                                    myTextStyle(15.sp, FontWeight.bold, textColor)),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Spacer(),
-            CustomOrangeButton(
-                onPressed: () {
-                  Get.to(()=>const BottomNavBarPage());
-                },
-                buttonName: 'Send Review',
-                width: double.infinity.w),
-            Gap(40.h),
-          ],
+              Gap(200.h),
+              CustomOrangeButton(
+                  onPressed: () {
+                    customSnackMessage(title: 'Review Send', subTitle: 'Successfully');
+                    Get.to(()=>const BottomNavBarPage());
+                  },
+                  buttonName: 'Send Review',
+                  width: double.infinity.w),
+            ],
+          ),
         ),
       ),
     );
