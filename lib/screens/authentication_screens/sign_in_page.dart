@@ -5,7 +5,7 @@ import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_sign_in_with_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_text_form_field.dart';
-import 'package:darkak_e_commerce_app/screens/authentication_screens/forgot_password_page.dart';
+import 'package:darkak_e_commerce_app/screens/authentication_screens/verify_email_page.dart';
 import 'package:darkak_e_commerce_app/screens/authentication_screens/sign_up_page.dart';
 import 'package:darkak_e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:flutter/material.dart';
@@ -70,26 +70,29 @@ class _SignInPageState extends State<SignInPage> {
                         labelText: 'Password',
                         controller: _passwordController,
                         validator: passwordValidator,
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isObscure = !isObscure;
-                              });
-                            },
-                            icon: Icon(
-                              isObscure
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: textColor,
-                              size: 25.sp,
-                            )),
+                        suffixIcon: Padding(
+                          padding: EdgeInsets.only(right: 8.w),
+                          child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isObscure = !isObscure;
+                                });
+                              },
+                              icon: Icon(
+                                isObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: textColor,
+                                size: 25.sp,
+                              )),
+                        ),
                         obscureText: isObscure,
                       ),
                       Gap(20.h),
                       GestureDetector(
                         onTap: () {
                           Get.to(
-                            () => ForgotPasswordPage(),
+                            () => VerifyEmailPage(),
                           );
                         },
                         child: Align(

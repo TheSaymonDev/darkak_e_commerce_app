@@ -5,13 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppbarTextviewWithBack extends StatelessWidget implements PreferredSizeWidget {
 
-  const AppbarTextviewWithBack({super.key, required this.onPressedBack, this.title});
+  const AppbarTextviewWithBack({super.key, required this.onPressedBack, this.title, this.tabBar});
 
   final void Function()? onPressedBack;
   final String? title;
+  final TabBar? tabBar;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => tabBar != null
+      ? Size.fromHeight(100.h) // Height of 100 when TabBar is present
+      : const Size.fromHeight(kToolbarHeight); // Default height
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,8 @@ class AppbarTextviewWithBack extends StatelessWidget implements PreferredSizeWid
       title: title != null
           ? Text(title!, style: myTextStyle(20.sp, FontWeight.bold, textColor))
           : null, // Use null if title is not provided
+      bottom: tabBar,
+      toolbarHeight: preferredSize.height,
     );
   }
 }

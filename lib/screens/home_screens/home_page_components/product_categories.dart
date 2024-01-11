@@ -1,6 +1,7 @@
 import 'package:darkak_e_commerce_app/models/home_categories_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
 import 'package:darkak_e_commerce_app/screens/category_and_sub_category_screens/sub_category/sub_category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,7 @@ class ProductCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 92.h,
+      height: 95.h,
       width: double.infinity,
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
@@ -29,13 +30,12 @@ class ProductCategories extends StatelessWidget {
                   onTap: (){
                     Get.to(()=>SubCategoryPage(subCategoryProductList: categoriesList.categoryProductList));
                   },
-                  child: Container(
-                    height: 60.h,
+                  child: CustomCardStyle2(
+                    isCircle: true,
                     width: 60.w,
+                    height: 60.h,
                     padding: EdgeInsets.symmetric(
                         horizontal: 15.w, vertical: 15.h),
-                    alignment: Alignment.center,
-                    decoration: shadowDecoration(),
                     child: SvgPicture.asset(
                       categoriesList.categoryImage,
                     ),
@@ -45,7 +45,7 @@ class ProductCategories extends StatelessWidget {
                   categoriesList.categoryName,
                   style: myTextStyle(
                       20.sp, FontWeight.normal, textColor),
-                )
+                ),
               ],
             );
           },

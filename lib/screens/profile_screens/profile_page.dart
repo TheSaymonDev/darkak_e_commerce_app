@@ -1,13 +1,13 @@
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_bottom_sheet.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_flutter_switch.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screens/account_pages/cards_page.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screens/account_pages/logout_page.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screens/account_pages/my_order_page.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screens/account_pages/order_history_page.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screens/account_pages/profile_update_page.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screens/account_pages/shipping_address_page.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screens/account_pages/track_order_page.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_two_buttons.dart';
+import 'package:darkak_e_commerce_app/screens/authentication_screens/sign_in_page.dart';
+import 'package:darkak_e_commerce_app/screens/order_history_screen/my_order_screen/my_order_page.dart';
+import 'package:darkak_e_commerce_app/screens/profile_screens/profile_update_page.dart';
+import 'package:darkak_e_commerce_app/screens/address_screen/shipping_address_page.dart';
+import 'package:darkak_e_commerce_app/screens/order_tracking_screen/order_tracking_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -73,7 +73,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Get.to(const ProfileUpdatePage());
+                        Get.to(ProfileUpdatePage());
                       },
                       child: _accountItem(
                           iconUrl: 'assets/images/profile-edit.svg',
@@ -115,39 +115,11 @@ class _UserAccountPageState extends State<UserAccountPage> {
                     Gap(20.h),
                     InkWell(
                       onTap: () {
-                        Get.to(const OrderHistoryPage());
-                      },
-                      child: _accountItem(
-                          iconUrl: 'assets/images/order-history.svg',
-                          title: 'Order History',
-                          widget: Icon(
-                            Icons.keyboard_arrow_right,
-                            color: orangeColor,
-                            size: 27.sp,
-                          )),
-                    ),
-                    Gap(20.h),
-                    InkWell(
-                      onTap: () {
-                        Get.to(const TrackOrderPage());
+                        Get.to(const OrderTrackingPage(orderID: '00001',));
                       },
                       child: _accountItem(
                           iconUrl: 'assets/images/track-order.svg',
                           title: 'Track Order',
-                          widget: Icon(
-                            Icons.keyboard_arrow_right,
-                            color: orangeColor,
-                            size: 27.sp,
-                          )),
-                    ),
-                    Gap(20.h),
-                    InkWell(
-                      onTap: () {
-                        Get.to(const CardsPage());
-                      },
-                      child: _accountItem(
-                          iconUrl: 'assets/images/card.svg',
-                          title: 'Cards',
                           widget: Icon(
                             Icons.keyboard_arrow_right,
                             color: orangeColor,
@@ -169,7 +141,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
                     Gap(20.h),
                     InkWell(
                       onTap: () {
-                        Get.to(const LogOutPage());
+                        _showBottomSheet();
                       },
                       child: _accountItem(
                           iconUrl: 'assets/images/logout.svg',
@@ -181,17 +153,45 @@ class _UserAccountPageState extends State<UserAccountPage> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
     );
   }
 
-  SizedBox _accountItem(
-      {required String iconUrl,
-      required String title,
-      required Widget widget}) {
+  Future<dynamic> _showBottomSheet() {
+    return Get.bottomSheet(
+      CustomBottomSheet(
+        children: [
+          Text(
+            'Logout',
+            style: myTextStyle(25.sp, FontWeight.bold, textColor),
+          ),
+          Gap(20.h),
+          Text(
+            'Are you sure want to logout?',
+            style: myTextStyle(25.sp, FontWeight.normal, textColor),
+          ),
+          Gap(50.h),
+          CustomTwoButtons(
+              leftButtonName: 'Cancel',
+              onLeftButtonPressed: () {
+                Get.back();
+              },
+              rightButtonName: 'Logout',
+              onRightButtonPressed: () {
+                Get.offAll(() => const SignInPage());
+              }),
+        ],
+      ),
+    );
+  }
+
+  SizedBox _accountItem({
+    required String iconUrl,
+    required String title,
+    required Widget widget,
+  }) {
     return SizedBox(
       height: 50,
       child: Row(

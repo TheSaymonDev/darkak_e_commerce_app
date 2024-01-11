@@ -3,15 +3,15 @@ import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
-import 'package:darkak_e_commerce_app/screens/authentication_screens/password_change_page.dart';
+import 'package:darkak_e_commerce_app/screens/authentication_screens/set_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class VerificationPage extends StatelessWidget {
-  const VerificationPage({super.key});
+class OtpVerificationPage extends StatelessWidget {
+  const OtpVerificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class VerificationPage extends StatelessWidget {
                 Gap(35.h),
                 CustomOrangeButton(
                     onPressed: () {
-                      Get.to(const PasswordChangePage());
+                      Get.to(const SetPasswordPage());
                     },
                     buttonName: 'CONTINUE',
                     width: double.infinity.w)

@@ -11,14 +11,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class PasswordChangePage extends StatefulWidget {
-  const PasswordChangePage({super.key});
+class SetPasswordPage extends StatefulWidget {
+  const SetPasswordPage({super.key});
 
   @override
-  State<PasswordChangePage> createState() => _PasswordChangePageState();
+  State<SetPasswordPage> createState() => _SetPasswordPageState();
 }
 
-class _PasswordChangePageState extends State<PasswordChangePage> {
+class _SetPasswordPageState extends State<SetPasswordPage> {
   final _newPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -45,16 +45,19 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                   labelText: 'New Password',
                   controller: _newPasswordController,
                   validator: passwordValidator,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isObscureNew = !_isObscureNew;
-                      });
-                    },
-                    icon: Icon(
-                      _isObscureNew ? Icons.visibility_off : Icons.visibility,
-                      color: textColor,
-                      size: 25.sp,
+                  suffixIcon: Padding(
+                    padding: EdgeInsets.only(right: 8.w),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isObscureNew = !_isObscureNew;
+                        });
+                      },
+                      icon: Icon(
+                        _isObscureNew ? Icons.visibility_off : Icons.visibility,
+                        color: textColor,
+                        size: 25.sp,
+                      ),
                     ),
                   ),
                   obscureText: _isObscureNew,
@@ -64,19 +67,22 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                   labelText: 'Confirm Password',
                   controller: _confirmPasswordController,
                   validator: passwordValidator,
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _isObscureConfirm = !_isObscureConfirm;
-                        });
-                      },
-                      icon: Icon(
-                        _isObscureConfirm
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: textColor,
-                        size: 25.sp,
-                      )),
+                  suffixIcon: Padding(
+                    padding: EdgeInsets.only(right: 8.w),
+                    child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isObscureConfirm = !_isObscureConfirm;
+                          });
+                        },
+                        icon: Icon(
+                          _isObscureConfirm
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: textColor,
+                          size: 25.sp,
+                        )),
+                  ),
                   obscureText: _isObscureConfirm,
                 ),
                 Gap(50.h),

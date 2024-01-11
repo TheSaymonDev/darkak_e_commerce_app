@@ -2,6 +2,7 @@ import 'package:darkak_e_commerce_app/models/product_review_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/utility.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
 import 'package:darkak_e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:darkak_e_commerce_app/screens/review_screen/review_page.dart';
 import 'package:darkak_e_commerce_app/screens/store_screen/store_page.dart';
@@ -163,8 +164,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _circularContainer(
-                                  Row(
+                                CustomCardStyle2(
+                                  width: 160.w,
+                                  height: 40.h,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.w),
+                                  child: Row(
                                     children: [
                                       Text(
                                         'Size:',
@@ -198,8 +203,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     ],
                                   ),
                                 ),
-                                _circularContainer(
-                                  Row(
+                                CustomCardStyle2(
+                                  width: 160.w,
+                                  height: 40.h,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.w),
+                                  child: Row(
                                     children: [
                                       Text(
                                         'Color:',
@@ -214,15 +223,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       ),
                                     ],
                                   ),
-                                ),
+                                )
                               ],
                             ),
                             Gap(16.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _circularContainer(
-                                  Row(
+                                CustomCardStyle2(
+                                  width: 160.w,
+                                  height: 40.h,
+                                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                  child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -260,8 +272,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     ],
                                   ),
                                 ),
-                                _circularContainer(
-                                  Row(
+                                CustomCardStyle2(
+                                  width: 160.w,
+                                  height: 40.h,
+                                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                  child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -321,7 +336,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             Gap(8.h),
                             InkWell(
                               onTap: () {
-                                Get.to(()=>const ReviewPage());
+                                Get.to(() => const ReviewPage());
                               },
                               child: Text(
                                 'Write your review',
@@ -519,8 +534,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        customSnackMessage(title: 'Add to cart', subTitle: 'Successfully');
-                        Get.to(()=>const BottomNavBarPage());
+                        customSnackMessage(
+                            title: 'Add to cart', subTitle: 'Successfully');
+                        Get.to(() => const BottomNavBarPage());
                       },
                       focusColor: backgroundColor,
                       child: Container(
@@ -551,16 +567,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     int total = 0;
     total += widget.productPrice * _quantity;
     return total;
-  }
-
-  Container _circularContainer(Widget child) {
-    return Container(
-      height: 40.h,
-      width: 160.w,
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      decoration: shadowDecoration1(),
-      child: child,
-    );
   }
 
   // Widget buildSizeDropdown(List<String> sizes) {

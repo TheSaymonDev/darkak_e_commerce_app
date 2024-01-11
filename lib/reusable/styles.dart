@@ -16,28 +16,6 @@ TextStyle myTextStyle(double fSize, FontWeight fWeight, Color clr, {TextDecorati
   );
 }
 
-BoxDecoration shadowDecoration() {
-  return BoxDecoration(boxShadow: [
-    BoxShadow(
-      color: greyColor.withOpacity(0.3),
-      spreadRadius: 1,
-      blurRadius: 1,
-      offset: const Offset(0, 1),
-    ),
-  ], shape: BoxShape.circle, color: backgroundColor);
-}
-
-BoxDecoration shadowDecoration1() {
-  return BoxDecoration(boxShadow: [
-    BoxShadow(
-      color: greyColor.withOpacity(0.3),
-      spreadRadius: 1,
-      blurRadius: 1,
-      offset: const Offset(0, 1),
-    ),
-  ], borderRadius: BorderRadius.circular(50.r), color: backgroundColor);
-}
-
 myToastMessage({required String message}) {
   return Fluttertoast.showToast(
       msg: message,
@@ -82,13 +60,6 @@ DropdownButton<String> customDropDownButton(
   );
 }
 
-BoxDecoration decorationStyle() {
-  return BoxDecoration(
-    borderRadius: BorderRadius.circular(12.r),
-    color: filledColor,
-  );
-}
-
 SnackbarController customSnackMessage({required String title, required dynamic subTitle}) {
   return Get.snackbar(title, subTitle,
       snackPosition: SnackPosition.BOTTOM,
@@ -97,4 +68,5 @@ SnackbarController customSnackMessage({required String title, required dynamic s
       duration: const Duration(seconds: 2),
       colorText: backgroundColor);
 }
+
 

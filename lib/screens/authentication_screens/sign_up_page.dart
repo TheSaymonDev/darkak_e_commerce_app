@@ -75,17 +75,20 @@ class _SignUpPageState extends State<SignUpPage> {
                       labelText: 'Password',
                       controller: _passwordController,
                       validator: passwordValidator,
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isObscure = !isObscure;
-                            });
-                          },
-                          icon: Icon(
-                            isObscure ? Icons.visibility_off : Icons.visibility,
-                            color: textColor,
-                            size: 25.sp,
-                          )),
+                      suffixIcon: Padding(
+                        padding: EdgeInsets.only(right: 8.w),
+                        child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isObscure = !isObscure;
+                              });
+                            },
+                            icon: Icon(
+                              isObscure ? Icons.visibility_off : Icons.visibility,
+                              color: textColor,
+                              size: 25.sp,
+                            )),
+                      ),
                       obscureText: isObscure,
                     ),
                     Gap(38.h),

@@ -30,13 +30,15 @@ class _HomePageState extends State<HomePage> {
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _duration = _duration - const Duration(seconds: 1);
-        if (_duration.isNegative) {
-          _timer.cancel();
-          // Handle timer completion actions
-        }
-      });
+     if(mounted){
+       setState(() {
+         _duration = _duration - const Duration(seconds: 1);
+         if (_duration.isNegative) {
+           _timer.cancel();
+           // Handle timer completion actions
+         }
+       });
+     }
     });
   }
 
@@ -46,6 +48,13 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _startTimer();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+  }
+
 
   @override
   Widget build(BuildContext context) {

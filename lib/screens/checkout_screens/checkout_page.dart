@@ -18,7 +18,6 @@ class CheckOutPage extends StatefulWidget {
 }
 
 class _CheckOutPageState extends State<CheckOutPage> {
-
   final _addressLine1Controller = TextEditingController();
   final _addressLine2Controller = TextEditingController();
   final _cityController = TextEditingController();
@@ -130,7 +129,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   onTap: () {
                     final isLastStep = _currentStep == _stepList().length - 1;
                     if (isLastStep) {
-                      Get.to(()=>const SummaryPage());
+                      Get.to(() => const SummaryPage());
                       // setState(() {
                       //   _isCompleted = true;
                       // });
@@ -142,7 +141,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           _currentStep = _currentStep + 1;
                         });
                       } else {
-                        customSnackMessage(title: 'Select Option', subTitle: 'Please select an option');
+                        customSnackMessage(
+                            title: 'Select Option',
+                            subTitle: 'Please select an option');
                       }
                     }
                   },
@@ -208,28 +209,40 @@ class _CheckOutPageState extends State<CheckOutPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Checkbox(value: _isCheckedBilling, onChanged: (value) {setState(() {
-              _isCheckedBilling =! _isCheckedBilling;
-            });}, activeColor: orangeColor,),
+            Checkbox(
+              value: _isCheckedBilling,
+              onChanged: (value) {
+                setState(() {
+                  _isCheckedBilling = !_isCheckedBilling;
+                });
+              },
+              activeColor: orangeColor,
+            ),
             Expanded(
                 child: Text(
-                  'Billing address is the same as delivery address',
-                  style: myTextStyle(20.sp, FontWeight.normal, textColor),
-                )),
+              'Billing address is the same as delivery address',
+              style: myTextStyle(20.sp, FontWeight.normal, textColor),
+            )),
           ],
         ),
         Gap(35.h),
-        CustomTextFormField(labelText: 'Address line 1', controller: _addressLine1Controller),
+        CustomTextFormField(
+            labelText: 'Address line 1', controller: _addressLine1Controller),
         Gap(35.h),
-        CustomTextFormField(labelText: 'Address line 2', controller: _addressLine2Controller),
+        CustomTextFormField(
+            labelText: 'Address line 2', controller: _addressLine2Controller),
         Gap(35.h),
         CustomTextFormField(labelText: 'City', controller: _cityController),
         Gap(35.h),
         Row(
           children: [
-            Expanded(child: CustomTextFormField(labelText: 'Area', controller: _areaController)),
+            Expanded(
+                child: CustomTextFormField(
+                    labelText: 'Area', controller: _areaController)),
             Gap(40.w),
-            Expanded(child: CustomTextFormField(labelText: 'Country', controller: _countryController)),
+            Expanded(
+                child: CustomTextFormField(
+                    labelText: 'Country', controller: _countryController)),
           ],
         ),
       ],
@@ -241,51 +254,84 @@ class _CheckOutPageState extends State<CheckOutPage> {
       children: [
         Row(
           children: [
-            Expanded(child: SizedBox(
-              height: 50.h,
-              child: SvgPicture.asset('assets/images/mobile-banking.svg', fit: BoxFit.cover,),
-            ),),
+            Expanded(
+              child: SizedBox(
+                height: 50.h,
+                child: SvgPicture.asset(
+                  'assets/images/mobile-banking.svg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             Gap(4.w),
-            Expanded(child: SizedBox(
-              height: 50.h,
-              child: SvgPicture.asset('assets/images/credit-card.svg', fit: BoxFit.cover,),
-            ),),
+            Expanded(
+              child: SizedBox(
+                height: 50.h,
+                child: SvgPicture.asset(
+                  'assets/images/credit-card.svg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             Gap(4.w),
-            Expanded(child: SizedBox(
-              height: 50.h,
-              child: SvgPicture.asset('assets/images/saved-card.svg', fit: BoxFit.cover,),
-            ),),
+            Expanded(
+              child: SizedBox(
+                height: 50.h,
+                child: SvgPicture.asset(
+                  'assets/images/saved-card.svg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             Gap(4.w),
-            Expanded(child: SizedBox(
-              height: 50.h,
-              child: SvgPicture.asset('assets/images/wallet.svg', fit: BoxFit.cover,),
-            ),),
+            Expanded(
+              child: SizedBox(
+                height: 50.h,
+                child: SvgPicture.asset(
+                  'assets/images/wallet.svg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ],
         ),
         Gap(45.h),
-        CustomTextFormField(labelText: 'Name on Card', controller: _nameOfCardController),
+        CustomTextFormField(
+            labelText: 'Name on Card', controller: _nameOfCardController),
         Gap(35.h),
-        CustomTextFormField(labelText: 'Card Number', controller: _cardNumberController),
+        CustomTextFormField(
+            labelText: 'Card Number', controller: _cardNumberController),
         Gap(35.h),
         Row(
           children: [
-            Expanded(child: CustomTextFormField(labelText: 'Expiry Date', controller: _expiryDateController)),
+            Expanded(
+                child: CustomTextFormField(
+                    labelText: 'Expiry Date',
+                    controller: _expiryDateController)),
             Gap(40.w),
-            Expanded(child: CustomTextFormField(labelText: 'CVV', controller: _cvvController)),
+            Expanded(
+                child: CustomTextFormField(
+                    labelText: 'CVV', controller: _cvvController)),
           ],
         ),
         Gap(40.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Checkbox(value: _isCheckedCard, onChanged: (value) {setState(() {
-              _isCheckedCard =! _isCheckedCard;
-            });}, activeColor: orangeColor,),
+            Checkbox(
+              value: _isCheckedCard,
+              onChanged: (value) {
+                setState(() {
+                  _isCheckedCard = !_isCheckedCard;
+                });
+              },
+              activeColor: orangeColor,
+            ),
             Expanded(
                 child: Text(
-                  'Billing address is the same as delivery address',
-                  style: myTextStyle(20.sp, FontWeight.normal, textColor),
-                )),
+              'Billing address is the same as delivery address',
+              style: myTextStyle(20.sp, FontWeight.normal, textColor),
+            )),
           ],
         ),
       ],

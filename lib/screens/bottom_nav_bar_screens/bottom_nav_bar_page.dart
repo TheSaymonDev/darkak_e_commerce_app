@@ -3,7 +3,7 @@ import 'package:darkak_e_commerce_app/screens/cart_screen/cart_page.dart';
 import 'package:darkak_e_commerce_app/screens/wishlist_screen/favourite_page.dart';
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page.dart';
 import 'package:darkak_e_commerce_app/screens/shop_screen/shop_page.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screens/user_account_page.dart';
+import 'package:darkak_e_commerce_app/screens/profile_screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

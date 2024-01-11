@@ -4,14 +4,14 @@ import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_text_form_field.dart';
-import 'package:darkak_e_commerce_app/screens/authentication_screens/verification_page.dart';
+import 'package:darkak_e_commerce_app/screens/authentication_screens/otp_verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class ForgotPasswordPage extends StatelessWidget {
-  ForgotPasswordPage({super.key});
+class VerifyEmailPage extends StatelessWidget {
+  VerifyEmailPage({super.key});
 
   final _identifier = TextEditingController();
 
@@ -45,7 +45,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 Gap(40.h),
                 CustomOrangeButton(
                   onPressed: () {
-                    Get.to(()=>const VerificationPage());
+                    Get.to(()=>const OtpVerificationPage());
                   },
                   buttonName: 'SEND',
                   width: double.infinity.w,
