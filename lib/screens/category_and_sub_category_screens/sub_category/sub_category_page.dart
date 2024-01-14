@@ -14,16 +14,16 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class SubCategoryPage extends StatefulWidget {
-  SubCategoryPage({super.key, required this.subCategoryProductList});
+  const SubCategoryPage({super.key, required this.subCategoryProductList});
 
-  List<SubCategory> subCategoryProductList;
+  final List<SubCategory> subCategoryProductList;
 
   @override
   State<SubCategoryPage> createState() => _SubCategoryPageState();
 }
 
 class _SubCategoryPageState extends State<SubCategoryPage> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
 
   @override
   void initState() {
@@ -42,6 +42,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppbarSearchviewWithBack(
         onPressedBack: () {
           Get.back();
@@ -57,19 +58,10 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
         child: Column(
           children: [
             Gap(16.h),
-            SizedBox(
-              height: 80.h,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomQueryTab(
-                      productQueryList: ProductQuery.productQueryList),
-                  const CustomFilteringAndSorting(
-                  ),
-                ],
-              ),
-            ),
+            CustomQueryTab(
+                productQueryList: ProductQuery.productQueryList),
+            Gap(8.h),
+            const CustomFilteringAndSorting(),
             Gap(16.h),
             Expanded(
               child: CustomProductItemGridView(

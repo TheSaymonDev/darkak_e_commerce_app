@@ -60,11 +60,14 @@ DropdownButton<String> customDropDownButton(
   );
 }
 
-SnackbarController customSnackMessage({required String title, required dynamic subTitle}) {
-  return Get.snackbar(title, subTitle,
+SnackbarController customSnackMessage({required String title}) {
+  return Get.snackbar(title, '',
+      messageText: const SizedBox(),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: orangeColor,
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+      borderRadius: 4.r,
       duration: const Duration(seconds: 2),
       colorText: backgroundColor);
 }

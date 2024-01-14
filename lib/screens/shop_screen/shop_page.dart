@@ -38,8 +38,7 @@ class ShopPageState extends State<ShopPage> {
             Gap(16.h),
             CustomQueryTab(productQueryList: ProductQuery.productQueryList),
             Gap(8.h),
-            const CustomFilteringAndSorting(
-            ),
+            const CustomFilteringAndSorting(),
             Gap(16.h),
             Expanded(
               child: CustomProductItemGridView(

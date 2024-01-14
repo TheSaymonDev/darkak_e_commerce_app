@@ -163,14 +163,18 @@ class _UserAccountPageState extends State<UserAccountPage> {
     return Get.bottomSheet(
       CustomBottomSheet(
         children: [
-          Text(
-            'Logout',
-            style: myTextStyle(25.sp, FontWeight.bold, textColor),
+          Center(
+            child: Text(
+              'Logout',
+              style: myTextStyle(25.sp, FontWeight.bold, textColor),
+            ),
           ),
           Gap(20.h),
-          Text(
-            'Are you sure want to logout?',
-            style: myTextStyle(25.sp, FontWeight.normal, textColor),
+          Center(
+            child: Text(
+              'Are you sure want to logout?',
+              style: myTextStyle(25.sp, FontWeight.normal, textColor),
+            ),
           ),
           Gap(50.h),
           CustomTwoButtons(
@@ -182,6 +186,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
               onRightButtonPressed: () {
                 Get.offAll(() => const SignInPage());
               }),
+          Gap(32.h)
         ],
       ),
     );

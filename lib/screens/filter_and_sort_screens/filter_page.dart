@@ -6,6 +6,7 @@ import 'package:darkak_e_commerce_app/reusable/widgets/custom_two_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -22,9 +23,47 @@ class _FilterPageState extends State<FilterPage> {
     'Microsoft',
     'Sony'
   ];
-  final List<String> selectedBrands = [];
+  final List<String> _selectedBrands = [];
 
   RangeValues _priceRange = const RangeValues(200, 400); // Initial range
+
+  final Map<String, Color> colors = {
+    'Red': Colors.red,
+    'Blue': Colors.blue,
+    'Green': Colors.green,
+    'Yellow': Colors.yellow,
+  };
+  final List<String> _selectedColors = [];
+  void _toggleColorSelection(String colorName) {
+    setState(() {
+      if (_selectedColors.contains(colorName)) {
+        _selectedColors.remove(colorName);
+      } else {
+        _selectedColors.add(colorName);
+      }
+    });
+  }
+
+  final List<String> sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+  final List<String> _selectedSize = [];
+  void _toggleSizeSelection(String sizeName) {
+    setState(() {
+      if (_selectedSize.contains(sizeName)) {
+        _selectedSize.remove(sizeName);
+      } else {
+        _selectedSize.add(sizeName);
+      }
+    });
+  }
+
+  final List<String> _shippingOptions = ['Bangladesh', 'Worldwide'];
+  late String _selectedShippingOption;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _selectedShippingOption = _shippingOptions[0];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +85,9 @@ class _FilterPageState extends State<FilterPage> {
                   children: [
                     _buildExpansionTile(
                       title: 'Brands',
-                      subTitle: selectedBrands.isEmpty
-                          ? 'Selected Brand'
-                          : selectedBrands.join(', '),
+                      subTitle: _selectedBrands.isEmpty
+                          ? 'Select Brand'
+                          : _selectedBrands.join(', '),
                       children: [
                         ListView.builder(
                           shrinkWrap: true,
@@ -56,14 +95,20 @@ class _FilterPageState extends State<FilterPage> {
                           itemBuilder: (context, index) {
                             final brand = brands[index];
                             return CheckboxListTile(
-                              title: Text(brand),
-                              value: selectedBrands.contains(brand),
+                              title: Text(
+                                brand,
+                                style: myTextStyle(
+                                    20.sp, FontWeight.bold, textColor),
+                              ),
+                              value: _selectedBrands.contains(brand),
+                              activeColor: orangeColor,
+                              tileColor: orangeColor.withOpacity(0.1),
                               onChanged: (value) {
                                 setState(() {
                                   if (value!) {
-                                    selectedBrands.add(brand);
+                                    _selectedBrands.add(brand);
                                   } else {
-                                    selectedBrands.remove(brand);
+                                    _selectedBrands.remove(brand);
                                   }
                                 });
                               },
@@ -75,47 +120,151 @@ class _FilterPageState extends State<FilterPage> {
                     _buildExpansionTile(
                         title: 'Price',
                         subTitle:
-                            '${_priceRange.start.toStringAsFixed(0)}-${_priceRange.end.toStringAsFixed(0)}',
+                            '$takaSign${_priceRange.start.toStringAsFixed(0)}-$takaSign${_priceRange.end.toStringAsFixed(0)}',
                         children: [
-                          RangeSlider(
-                            values: _priceRange,
-                            min: 0,
-                            max: 1000, // Adjust based on your price range
-                            divisions: 10,
-                            activeColor: orangeColor,
-                            inactiveColor: orangeColor.withOpacity(0.3),
-                            labels: RangeLabels(
-                              _priceRange.start.toStringAsFixed(2),
-                              _priceRange.end.toStringAsFixed(2),
+                          SliderTheme(
+                            data: SliderThemeData(
+                                trackHeight: 2.h,
+                                valueIndicatorColor: orangeColor,
+                                valueIndicatorTextStyle: myTextStyle(
+                                    15.sp, FontWeight.bold, backgroundColor)),
+                            child: RangeSlider(
+                              values: _priceRange,
+                              min: 0,
+                              max: 1000, // Adjust based on your price range
+                              divisions: 10,
+                              activeColor: orangeColor,
+                              inactiveColor: orangeColor.withOpacity(0.3),
+                              labels: RangeLabels(
+                                _priceRange.start.toStringAsFixed(0),
+                                _priceRange.end.toStringAsFixed(0),
+                              ),
+                              onChanged: (newRange) {
+                                setState(() {
+                                  _priceRange = newRange;
+                                });
+                              },
                             ),
-                            onChanged: (newRange) {
-                              setState(() {
-                                _priceRange = newRange;
-                              });
-                            },
-                          ),
+                          )
                         ]),
                     _buildExpansionTile(
                         title: 'Color',
-                        subTitle: 'Red',
+                        subTitle: _selectedColors.isEmpty
+                            ? 'Select Color'
+                            : _selectedColors.join(', '),
                         children: [
-                          const SizedBox(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              for (String colorName in colors.keys)
+                                GestureDetector(
+                                  onTap: () => _toggleColorSelection(colorName),
+                                  child: Container(
+                                    width: 35.w,
+                                    height: 35.h,
+                                    decoration: BoxDecoration(
+                                      color: colors[colorName],
+                                      borderRadius: BorderRadius.circular(4.r),
+                                      border: Border.all(
+                                        color:
+                                            _selectedColors.contains(colorName)
+                                                ? textColor
+                                                : Colors.transparent,
+                                        width: 2.w,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ]),
                     _buildExpansionTile(
                         title: 'Size',
-                        subTitle: 'M',
+                        subTitle: _selectedSize.isEmpty
+                            ? 'Select Size'
+                            : _selectedSize.join(', '),
                         children: [
-                          const SizedBox(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              for (String sizeName in sizes)
+                                GestureDetector(
+                                  onTap: () => _toggleSizeSelection(sizeName),
+                                  child: Container(
+                                    height: 35.h,
+                                    width: 35.w,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4.r),
+                                      color: _selectedSize.contains(sizeName)
+                                          ? orangeColor
+                                          : backgroundColor,
+                                      border: Border.all(
+                                          color: orangeColor, width: 1.w),
+                                    ),
+                                    child: Text(
+                                      sizeName,
+                                      style: myTextStyle(
+                                          15.sp,
+                                          FontWeight.normal,
+                                          _selectedSize.contains(sizeName)
+                                              ? backgroundColor
+                                              : textColor),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          )
                         ]),
+                    _buildExpansionTile(
+                      title: 'Shipped From',
+                      subTitle: _selectedShippingOption,
+                      children: [
+                        Row(
+                          children: [
+                            for (var option in _shippingOptions)
+                              (option) {
+                                // Create a closure
+                                return Row(
+                                  // Enclose Radio and Text within a Row
+                                  children: [
+                                    Radio<String>(
+                                      activeColor: orangeColor,
+                                      value: option,
+                                      groupValue: _selectedShippingOption,
+                                      onChanged: (value) => setState(() =>
+                                          _selectedShippingOption = value!),
+                                    ),
+                                    Text(
+                                      option,
+                                      style: myTextStyle(
+                                          20.sp, FontWeight.bold, textColor),
+                                    ), // Access option within the closure
+                                  ],
+                                );
+                              }(option), // Pass option to the closure
+                          ],
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
             ),
+            Gap(32.h),
             CustomTwoButtons(
                 leftButtonName: 'Clear',
-                onLeftButtonPressed: () {},
+                onLeftButtonPressed: () {
+                  setState(() {
+                    _selectedBrands.clear();
+                    _selectedColors.clear();
+                    _selectedSize.clear();
+                  });
+                },
                 rightButtonName: 'Apply',
-                onRightButtonPressed: () {}),
+                onRightButtonPressed: () {
+                  Get.back();
+                }),
             Gap(32.h),
           ],
         ),

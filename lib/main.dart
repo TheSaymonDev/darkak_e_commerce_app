@@ -1,6 +1,4 @@
-import 'package:darkak_e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:darkak_e_commerce_app/screens/onboarding_screens/onboarding_page.dart';
-import 'package:darkak_e_commerce_app/screens/order_history_screen/my_order_screen/my_order_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,8 +22,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: const BottomNavBarPage(
-      ),
+      child: const OnboardingPage(),
     );
   }
 }

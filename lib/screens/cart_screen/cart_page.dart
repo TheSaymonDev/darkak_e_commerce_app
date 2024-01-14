@@ -258,6 +258,7 @@ class _CartPageState extends State<CartPage> {
                                        borderRadius: BorderRadius.only(topRight: Radius.circular(4.r), bottomRight: Radius.circular(4.r)),
                                        borderSide: BorderSide(color: orangeColor, width: 1),
                                      ),
+                                     contentPadding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
                                      hintText: 'Enter Voucher Code',
                                      hintStyle: myTextStyle(
                                          20.sp, FontWeight.normal, greyColor),

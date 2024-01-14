@@ -149,7 +149,8 @@ class _ShippingAddressPageState extends State<ShippingAddressPage> {
               rightButtonName: 'Save',
               onRightButtonPressed: () {
                 Get.back();
-              })
+              }),
+          Gap(32.h),
         ],
       ),
     );

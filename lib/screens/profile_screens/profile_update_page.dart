@@ -222,6 +222,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               },
               buttonName: 'Change Password',
               width: double.infinity.w),
+          Gap(32.h)
         ],
       ),
     );

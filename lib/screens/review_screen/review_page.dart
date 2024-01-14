@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
 import 'package:darkak_e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:flutter/material.dart';
@@ -150,7 +149,7 @@ class _ReviewPageState extends State<ReviewPage> {
               Gap(200.h),
               CustomOrangeButton(
                   onPressed: () {
-                    customSnackMessage(title: 'Review Send', subTitle: 'Successfully');
+                    customSnackMessage(title: 'Review Send Successful');
                     Get.to(()=>const BottomNavBarPage());
                   },
                   buttonName: 'Send Review',

@@ -2,11 +2,14 @@ import 'package:darkak_e_commerce_app/models/product_review_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/utility.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_bottom_sheet.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_coupon_code.dart';
 import 'package:darkak_e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:darkak_e_commerce_app/screens/review_screen/review_page.dart';
 import 'package:darkak_e_commerce_app/screens/store_screen/store_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -233,7 +236,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 CustomCardStyle2(
                                   width: 160.w,
                                   height: 40.h,
-                                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.w),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -275,7 +279,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 CustomCardStyle2(
                                   width: 160.w,
                                   height: 40.h,
-                                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.w),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
@@ -327,6 +332,42 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     20.sp, FontWeight.normal, orangeColor),
                               ),
                             ),
+                            Gap(16.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Promotional Code',
+                                  style: myTextStyle(
+                                      25.sp, FontWeight.bold, textColor),
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    Get.bottomSheet(CustomBottomSheet(children: [
+                                      Text('Your Promotional Code', style: myTextStyle(25.sp, FontWeight.bold, textColor),),
+                                      Gap(16.h),
+                                      const CustomCouponCode(),
+                                      Gap(8.h),
+                                      const CustomCouponCode(),
+                                      Gap(8.h),
+                                      const CustomCouponCode(),
+                                      Gap(8.h),
+                                      const CustomCouponCode(),
+                                      Gap(8.h),
+                                      const CustomCouponCode(),
+                                      Gap(16.h),
+                                    ]));
+                                  },
+                                  child: Text(
+                                    'See all',
+                                    style: myTextStyle(
+                                        20.sp, FontWeight.normal, textColor),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Gap(8.h),
+                            const CustomCouponCode(),
                             Gap(16.h),
                             Text(
                               'Reviews',
@@ -535,7 +576,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     InkWell(
                       onTap: () {
                         customSnackMessage(
-                            title: 'Add to cart', subTitle: 'Successfully');
+                            title: 'Add to cart Successful');
                         Get.to(() => const BottomNavBarPage());
                       },
                       focusColor: backgroundColor,

@@ -81,8 +81,6 @@ class _HomePageState extends State<HomePage> {
                     Gap(16.h),
                     CountDownTimer(duration: _duration),
                     Gap(16.h),
-                    //CouponCode(),
-                    // Gap(16.h),
                     CustomProductItemListView(productList: demoProductList),
                     Gap(16.h),
                     _productSectorName(onTap: (){

@@ -38,7 +38,7 @@ class _CustomProductItemListViewState extends State<CustomProductItemListView> {
               ),
               child: Container(
                 height: double.infinity.h,
-                width: 184.w,
+                width: 175.w,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
                     color: backgroundColor),

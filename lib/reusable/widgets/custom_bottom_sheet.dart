@@ -11,7 +11,7 @@ class CustomBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity.w,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.h),
+      padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 32.h),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.only(
