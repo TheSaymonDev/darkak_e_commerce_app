@@ -1,10 +1,12 @@
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/app_search_text_form_field.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_search_text_form_field.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
+import 'package:darkak_e_commerce_app/screens/search_results_screen/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class FixedSearchBar extends StatelessWidget {
   const FixedSearchBar({
@@ -57,7 +59,9 @@ class FixedSearchBar extends StatelessWidget {
           style: myTextStyle(15.sp, FontWeight.normal, greyColor),
         ),
         Gap(8.h),
-        const AppSearchTextFormField(),
+        CustomSearchTextFormField(onTap: (){
+          Get.to(()=>const SearchPage());
+        }, readOnly: true,),
       ],
     );
   }

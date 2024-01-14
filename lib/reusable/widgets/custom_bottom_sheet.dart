@@ -21,7 +21,7 @@ class CustomBottomSheet extends StatelessWidget {
       ),
       child:SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: children,
         ),

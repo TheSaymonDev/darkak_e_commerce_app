@@ -27,11 +27,7 @@ class _StorePageState extends State<StorePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppbarSearchviewWithBack(
-          onPressedBack: () {
-            Get.back();
-          },
-          onTapSearch: () {}),
+      appBar: AppbarSearchviewWithBack(onPressedBack: (){Get.back();}, onChanged: (value){}),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
@@ -128,7 +124,7 @@ class _StorePageState extends State<StorePage> {
               Gap(16.h),
               CustomQueryTab(productQueryList: ProductQuery.productQueryList),
               Gap(16.h),
-              CustomFilteringAndSorting(filterTap: () {}, sortingTap: () {}),
+              const CustomFilteringAndSorting(),
               Gap(20.h),
               CustomProductItemGridView(
                   productList: demoProductList,

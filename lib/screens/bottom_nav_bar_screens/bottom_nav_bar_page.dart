@@ -19,7 +19,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
   final List<Widget> _widgetList = [
     const HomePage(),
-    const ShopPage(),
+     ShopPage(),
     const CartPage(),
     const FavouritePage(),
     const UserAccountPage(),

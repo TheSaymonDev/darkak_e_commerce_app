@@ -1,4 +1,3 @@
-
 import 'package:darkak_e_commerce_app/models/product_model.dart';
 import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
@@ -20,9 +19,11 @@ class ProductListingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppbarSearchviewWithBack(onPressedBack: (){
-        Get.back();
-      }, onTapSearch: (){}),
+      appBar: AppbarSearchviewWithBack(
+          onPressedBack: () {
+            Get.back();
+          },
+          onChanged: (value) {}),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
@@ -32,7 +33,8 @@ class ProductListingPage extends StatelessWidget {
             Gap(16.h),
             CustomQueryTab(productQueryList: ProductQuery.productQueryList),
             Gap(8.h),
-            CustomFilteringAndSorting(filterTap: (){}, sortingTap: (){}),
+            const CustomFilteringAndSorting(
+            ),
             Gap(16.h),
             Expanded(
               child: CustomProductItemGridView(

@@ -5,10 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppbarSearchviewWithBack extends StatelessWidget implements PreferredSizeWidget {
 
-  const AppbarSearchviewWithBack({super.key, required this.onPressedBack, required this.onTapSearch});
+  const AppbarSearchviewWithBack({super.key, required this.onPressedBack, this.onChanged, this.onTap});
 
   final void Function()? onPressedBack;
-  final void Function()? onTapSearch;
+  final void Function(String)? onChanged;
+  final void Function()? onTap;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -26,7 +27,8 @@ class AppbarSearchviewWithBack extends StatelessWidget implements PreferredSizeW
         height: 50.h,
         width: double.infinity.w,
         child: TextField(
-          onTap: onTapSearch,
+          onTap: onTap,
+          onChanged: onChanged,
           textAlign: TextAlign.start,
           cursorColor: textColor,
           style: myTextStyle(20.sp, FontWeight.normal, textColor),
@@ -34,7 +36,7 @@ class AppbarSearchviewWithBack extends StatelessWidget implements PreferredSizeW
               fillColor: filledColor,
               filled: true,
               prefixIcon: Icon(Icons.search, size: 25.sp, color: orangeColor,),
-              contentPadding: EdgeInsets.only(bottom: 10.h),
+              contentPadding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 16.w),
               border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(50.r)

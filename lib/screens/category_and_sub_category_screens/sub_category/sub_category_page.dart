@@ -7,6 +7,7 @@ import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_sear
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_filtering_and_sorting.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_product_item_gridview.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_query_tab.dart';
+import 'package:darkak_e_commerce_app/screens/search_results_screen/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -22,7 +23,6 @@ class SubCategoryPage extends StatefulWidget {
 }
 
 class _SubCategoryPageState extends State<SubCategoryPage> {
-
   int _currentIndex = 0;
 
   @override
@@ -31,7 +31,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
 
     // Concatenate product lists of all subcategories except 'All'
     widget.subCategoryProductList[_currentIndex].subCategoryProductList =
-    List<ProductModel>.empty(growable: true); // Initialize an empty list
+        List<ProductModel>.empty(growable: true); // Initialize an empty list
 
     for (int i = 1; i < widget.subCategoryProductList.length; i++) {
       widget.subCategoryProductList[_currentIndex].subCategoryProductList +=
@@ -42,7 +42,14 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarSearchviewWithBack(onPressedBack: (){Get.back();}, onTapSearch: (){}),
+      appBar: AppbarSearchviewWithBack(
+        onPressedBack: () {
+          Get.back();
+        },
+        onTap: () {
+          Get.to(() => const SearchPage());
+        },
+      ),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
@@ -56,8 +63,10 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                 CustomQueryTab(productQueryList: ProductQuery.productQueryList),
-                  CustomFilteringAndSorting(filterTap: (){}, sortingTap: (){}),
+                  CustomQueryTab(
+                      productQueryList: ProductQuery.productQueryList),
+                  const CustomFilteringAndSorting(
+                  ),
                 ],
               ),
             ),
