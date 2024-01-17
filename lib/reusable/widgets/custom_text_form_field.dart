@@ -42,7 +42,9 @@ class CustomTextFormField extends StatelessWidget {
               validator: validator,
               cursorColor: textColor,
               keyboardType: keyBoardType,
+              style: myTextStyle(20.sp, FontWeight.normal, textColor),
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 16.h),
                 suffixIcon: suffixIcon,
                 fillColor: backgroundColor,
                 filled: true,

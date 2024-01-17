@@ -53,6 +53,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   image_picker: ^1.0.5
   timeline_tile: ^2.0.0
+  dropdown_button2: ^2.3.9
 
 flutter_launcher_icons:
   android: "launcher_icon"

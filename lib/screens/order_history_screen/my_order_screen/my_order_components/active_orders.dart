@@ -180,51 +180,26 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                               children: [
                                 CustomOutlinedButton(
                                     onPressed: () {
-                                      Get.defaultDialog(
+                                      showDialogBox(
                                           title: 'Cancel',
-                                          titleStyle: myTextStyle(25.sp,
-                                              FontWeight.bold, textColor),
                                           middleText:
                                               'Are you sure want to cancel?',
-                                          middleTextStyle: myTextStyle(20.sp,
-                                              FontWeight.normal, textColor),
-                                          backgroundColor: backgroundColor,
-                                          barrierDismissible: false,
-                                          radius: 15.r,
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () {
-                                                  Get.back();
-                                                },
-                                                child: Text(
-                                                  'No',
-                                                  style: myTextStyle(
-                                                      20.sp,
-                                                      FontWeight.bold,
-                                                      textColor),
-                                                )),
-                                            TextButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    myOrder.products
-                                                        .removeAt(index);
-                                                    Get.back();
-                                                  });
-                                                },
-                                                child: Text(
-                                                  'Yes',
-                                                  style: myTextStyle(
-                                                      20.sp,
-                                                      FontWeight.bold,
-                                                      orangeColor),
-                                                )),
-                                          ]);
+                                          onPressedCancel: () {
+                                            Get.back();
+                                          },
+                                          onPressedConfirm: () {
+                                            setState(() {
+                                              myOrder.products.removeAt(index);
+                                              Get.back();
+                                            });
+                                          });
                                     },
                                     buttonName: 'Cancel',
                                     buttonWidth: 150.w),
                                 CustomOutlinedButton(
                                     onPressed: () {
-                                      Get.to(()=>OrderTrackingPage(orderID: myOrder.orderID));
+                                      Get.to(() => OrderTrackingPage(
+                                          orderID: myOrder.orderID));
                                     },
                                     buttonName: 'Track Order',
                                     buttonWidth: 150.w),
@@ -243,4 +218,5 @@ class _ActiveOrdersState extends State<ActiveOrders> {
           itemCount: MyOrder.activeOrders.length),
     );
   }
+
 }

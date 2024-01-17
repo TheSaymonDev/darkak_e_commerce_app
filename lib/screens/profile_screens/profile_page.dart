@@ -6,8 +6,7 @@ import 'package:darkak_e_commerce_app/reusable/widgets/custom_two_buttons.dart';
 import 'package:darkak_e_commerce_app/screens/authentication_screens/sign_in_page.dart';
 import 'package:darkak_e_commerce_app/screens/order_history_screen/my_order_screen/my_order_page.dart';
 import 'package:darkak_e_commerce_app/screens/profile_screens/profile_update_page.dart';
-import 'package:darkak_e_commerce_app/screens/address_screen/shipping_address_page.dart';
-import 'package:darkak_e_commerce_app/screens/order_tracking_screen/order_tracking_page.dart';
+import 'package:darkak_e_commerce_app/screens/address_screen/address_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -73,7 +72,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Get.to(ProfileUpdatePage());
+                        Get.to(const ProfileUpdatePage());
                       },
                       child: _accountItem(
                           iconUrl: 'assets/images/profile-edit.svg',
@@ -87,7 +86,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
                     Gap(20.h),
                     InkWell(
                       onTap: () {
-                        Get.to(const ShippingAddressPage());
+                        Get.to(const AddressViewPage());
                       },
                       child: _accountItem(
                           iconUrl: 'assets/images/shipping-address.svg',
@@ -106,20 +105,6 @@ class _UserAccountPageState extends State<UserAccountPage> {
                       child: _accountItem(
                           iconUrl: 'assets/images/my-order.svg',
                           title: 'My Order',
-                          widget: Icon(
-                            Icons.keyboard_arrow_right,
-                            color: orangeColor,
-                            size: 27.sp,
-                          )),
-                    ),
-                    Gap(20.h),
-                    InkWell(
-                      onTap: () {
-                        Get.to(const OrderTrackingPage(orderID: '00001',));
-                      },
-                      child: _accountItem(
-                          iconUrl: 'assets/images/track-order.svg',
-                          title: 'Track Order',
                           widget: Icon(
                             Icons.keyboard_arrow_right,
                             color: orangeColor,

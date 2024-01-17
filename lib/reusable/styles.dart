@@ -42,24 +42,6 @@ PinTheme pinTheme() {
   );
 }
 
-DropdownButton<String> customDropDownButton(
-    {required void Function(String?)? onChanged,
-    required List<DropdownMenuItem<String>>? items}) {
-  return DropdownButton(
-    icon: Icon(
-      Icons.keyboard_arrow_down,
-      color: orangeColor,
-    ),
-    iconSize: 30.sp,
-    elevation: 4,
-    underline: const SizedBox(
-      height: 0,
-    ),
-    items: items,
-    onChanged: onChanged,
-  );
-}
-
 SnackbarController customSnackMessage({required String title}) {
   return Get.snackbar(title, '',
       messageText: const SizedBox(),
@@ -72,4 +54,33 @@ SnackbarController customSnackMessage({required String title}) {
       colorText: backgroundColor);
 }
 
-
+Future<dynamic> showDialogBox({
+  required String title,
+  required String middleText,
+  required void Function()? onPressedCancel,
+  required void Function()? onPressedConfirm,
+}) {
+  return Get.defaultDialog(
+    title: title,
+    titleStyle: myTextStyle(25.sp, FontWeight.bold, textColor),
+    middleText: middleText,
+    middleTextStyle: myTextStyle(20.sp, FontWeight.normal, textColor),
+    backgroundColor: backgroundColor,
+    barrierDismissible: false,
+    radius: 15.r,
+    actions: [
+      TextButton(
+          onPressed: onPressedCancel,
+          child: Text(
+            'No',
+            style: myTextStyle(20.sp, FontWeight.bold, textColor),
+          )),
+      TextButton(
+          onPressed: onPressedConfirm,
+          child: Text(
+            'Yes',
+            style: myTextStyle(20.sp, FontWeight.bold, orangeColor),
+          )),
+    ],
+  );
+}

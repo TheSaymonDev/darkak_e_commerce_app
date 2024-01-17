@@ -26,6 +26,13 @@ class _SearchPageState extends State<SearchPage> {
   List<ProductModel> filteredProducts = [];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    filteredProducts = demoProductList;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,

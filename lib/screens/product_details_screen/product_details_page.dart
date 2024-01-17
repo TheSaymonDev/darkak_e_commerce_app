@@ -6,6 +6,7 @@ import 'package:darkak_e_commerce_app/reusable/widgets/custom_bottom_sheet.dart'
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_coupon_code.dart';
 import 'package:darkak_e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
+import 'package:darkak_e_commerce_app/screens/product_details_screen/product_view_page.dart';
 import 'package:darkak_e_commerce_app/screens/review_screen/review_page.dart';
 import 'package:darkak_e_commerce_app/screens/store_screen/store_page.dart';
 import 'package:flutter/material.dart';
@@ -68,72 +69,82 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       delegate: _SliverAppBarDelegate(
                         minHeight: 200.h,
                         maxHeight: _height,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(widget.productImagePath),
-                                fit: BoxFit.cover),
-                          ),
-                          child: LayoutBuilder(
-                            builder: (context, constraints) => Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_left,
-                                      size: 30.sp,
-                                      color: orangeColor,
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(() => ProductViewPage(
+                                  imagePath: widget.productImagePath,
+                                  imagesPath: widget.imagesPath,
+                                ));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(widget.productImagePath),
+                                  fit: BoxFit.cover),
+                            ),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) => Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_left,
+                                        size: 30.sp,
+                                        color: orangeColor,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 16.w, vertical: 16.h),
-                                  child: Visibility(
-                                    visible: constraints.maxHeight >= _height,
-                                    child: Container(
-                                      height: 100.h,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8.w, vertical: 8.w),
-                                      alignment: Alignment.center,
-                                      child: ListView.separated(
-                                          scrollDirection: Axis.horizontal,
-                                          itemBuilder: (context, index) =>
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _selectedColor = index;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  height: 80.h,
-                                                  width: 90.w,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      16.r,
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.w, vertical: 16.h),
+                                    child: Visibility(
+                                      visible: constraints.maxHeight >= _height,
+                                      child: Container(
+                                        height: 100.h,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w, vertical: 8.w),
+                                        alignment: Alignment.center,
+                                        child: ListView.separated(
+                                            scrollDirection: Axis.horizontal,
+                                            itemBuilder: (context, index) =>
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _selectedColor = index;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    height: 80.h,
+                                                    width: 90.w,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        16.r,
+                                                      ),
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                            widget.imagesPath[
+                                                                index],
+                                                          ),
+                                                          fit: BoxFit.cover),
                                                     ),
-                                                    image: DecorationImage(
-                                                        image: AssetImage(
-                                                          widget.imagesPath[
-                                                              index],
-                                                        ),
-                                                        fit: BoxFit.cover),
                                                   ),
                                                 ),
-                                              ),
-                                          separatorBuilder: (context, index) =>
-                                              Gap(8.w),
-                                          itemCount: widget.imagesPath.length),
+                                            separatorBuilder:
+                                                (context, index) => Gap(8.w),
+                                            itemCount:
+                                                widget.imagesPath.length),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -342,9 +353,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       25.sp, FontWeight.bold, textColor),
                                 ),
                                 GestureDetector(
-                                  onTap: (){
-                                    Get.bottomSheet(CustomBottomSheet(children: [
-                                      Text('Your Promotional Code', style: myTextStyle(25.sp, FontWeight.bold, textColor),),
+                                  onTap: () {
+                                    Get.bottomSheet(
+                                        CustomBottomSheet(children: [
+                                      Text(
+                                        'Your Promotional Code',
+                                        style: myTextStyle(
+                                            25.sp, FontWeight.bold, textColor),
+                                      ),
                                       Gap(16.h),
                                       const CustomCouponCode(),
                                       Gap(8.h),
@@ -575,8 +591,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        customSnackMessage(
-                            title: 'Add to cart Successful');
+                        customSnackMessage(title: 'Add to cart Successful');
                         Get.to(() => const BottomNavBarPage());
                       },
                       focusColor: backgroundColor,

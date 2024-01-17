@@ -58,6 +58,26 @@ class _FilterPageState extends State<FilterPage> {
 
   final List<String> _shippingOptions = ['Bangladesh', 'Worldwide'];
   late String _selectedShippingOption;
+
+  final List<String> _categories = [
+    'Men',
+    'Women',
+    'Kids',
+    'Gadgets',
+    'Devices',
+  ];
+  final List<String> _selectedCategories = [];
+
+  void _toggleCategorySelection(String categoryName) {
+    setState(() {
+      if (_selectedCategories.contains(categoryName)) {
+        _selectedCategories.remove(categoryName);
+      } else {
+        _selectedCategories.add(categoryName);
+      }
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -70,7 +90,9 @@ class _FilterPageState extends State<FilterPage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppbarTextviewWithBack(
-        onPressedBack: () {},
+        onPressedBack: () {
+          Get.back();
+        },
         title: 'Filter',
       ),
       body: Container(
@@ -246,7 +268,49 @@ class _FilterPageState extends State<FilterPage> {
                           ],
                         )
                       ],
-                    )
+                    ),
+                    _buildExpansionTile(
+                      title: 'Category',
+                      subTitle: _selectedCategories.isEmpty
+                          ? 'All'
+                          : _selectedCategories.join(', '),
+                      children: [
+                        Wrap(
+                          children: [
+                            for (String categoryName in _categories)
+                              GestureDetector(
+                                onTap: () =>
+                                    _toggleCategorySelection(categoryName),
+                                child: Container(
+                                  height: 40.h,
+                                  width: 100.w,
+                                  alignment: Alignment.center,
+                                  margin:
+                                      EdgeInsets.only(right: 8.w, bottom: 8.h),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30.r),
+                                    border: Border.all(color: orangeColor),
+                                    color: _selectedCategories
+                                            .contains(categoryName)
+                                        ? orangeColor
+                                        : backgroundColor,
+                                  ),
+                                  child: Text(
+                                    categoryName,
+                                    style: myTextStyle(
+                                        15.sp,
+                                        FontWeight.normal,
+                                        _selectedCategories
+                                                .contains(categoryName)
+                                            ? backgroundColor
+                                            : textColor),
+                                  ),
+                                ),
+                              )
+                          ],
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -259,6 +323,7 @@ class _FilterPageState extends State<FilterPage> {
                     _selectedBrands.clear();
                     _selectedColors.clear();
                     _selectedSize.clear();
+                    _selectedCategories.clear();
                   });
                 },
                 rightButtonName: 'Apply',

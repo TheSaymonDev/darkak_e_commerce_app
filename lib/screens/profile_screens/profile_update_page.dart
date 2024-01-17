@@ -6,10 +6,12 @@ import 'package:darkak_e_commerce_app/reusable/widgets/custom_bottom_sheet.dart'
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_text_form_field.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_two_buttons.dart';
+import 'package:darkak_e_commerce_app/screens/authentication_screens/verify_email_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ProfileUpdatePage extends StatefulWidget {
   const ProfileUpdatePage({super.key});
@@ -24,6 +26,8 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
   final _dateOfBirthController = TextEditingController();
 
   final _dateOfMarriageController = TextEditingController();
+
+  final _mobileNumberController = TextEditingController();
 
   final _passwordController = TextEditingController();
 
@@ -81,14 +85,68 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                 validator: nameValidator,
               ),
               Gap(35.h),
-              CustomTextFormField(
-                labelText: 'Date of Birth',
-                controller: _dateOfBirthController,
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFormField(
+                      labelText: 'Date of Birth',
+                      controller: _dateOfBirthController,
+                      readOnly: true,
+                      suffixIcon: IconButton(
+                          onPressed: () async {
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2001),
+                              lastDate: DateTime(2024, 12, 31),
+                            );
+                            if (selectedDate != null) {
+                              // Update your controller with the selected date
+                              _dateOfBirthController.text =
+                                  DateFormat('dd/MM/yyyy').format(selectedDate);
+                            }
+                          },
+                          icon: Icon(
+                            Icons.calendar_month,
+                            size: 20.sp,
+                            color: orangeColor,
+                          )),
+                    ),
+                  ),
+                  Gap(40.w),
+                  Expanded(
+                    child: CustomTextFormField(
+                      labelText: 'Date of Marriage',
+                      controller: _dateOfMarriageController,
+                      readOnly: true,
+                      suffixIcon: IconButton(
+                          onPressed: () async {
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2001),
+                              lastDate: DateTime(2024, 12, 31),
+                            );
+                            if (selectedDate != null) {
+                              // Update your controller with the selected date
+                              _dateOfMarriageController.text =
+                                  DateFormat('dd/MM/yyyy').format(selectedDate);
+                            }
+                          },
+                          icon: Icon(
+                            Icons.calendar_month,
+                            size: 20.sp,
+                            color: orangeColor,
+                          )),
+                    ),
+                  ),
+                ],
               ),
               Gap(35.h),
               CustomTextFormField(
-                labelText: 'Date of Marriage',
-                controller: _dateOfMarriageController,
+                labelText: 'Mobile Number',
+                controller: _mobileNumberController,
+                keyBoardType: TextInputType.number,
               ),
               Gap(35.h),
               CustomTextFormField(
@@ -96,28 +154,14 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                 controller: _passwordController,
                 validator: passwordValidator,
                 readOnly: true,
-                suffixIcon: Padding(
-                  padding: EdgeInsets.only(right: 8.w),
-                  child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _isObscure = !_isObscure;
-                        });
-                      },
-                      icon: Icon(
-                        _isObscure ? Icons.visibility_off : Icons.visibility,
-                        color: textColor,
-                        size: 25.sp,
-                      )),
-                ),
-                obscureText: _isObscure,
+                obscureText: true,
               ),
               Gap(16.h),
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
                   onTap: () {
-                     _showBottomSheet();
+                    _showBottomSheet();
                   },
                   child: Text(
                     'Change password?',
@@ -170,6 +214,15 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                   )),
             ),
             obscureText: _isObscure,
+          ),
+          GestureDetector(
+            onTap: (){
+              Get.to(()=>VerifyEmailPage());
+            },
+            child: Text(
+              'Forgot Password',
+              style: myTextStyle(20.sp, FontWeight.bold, orangeColor),
+            ),
           ),
           Gap(35.h),
           CustomTextFormField(
@@ -226,5 +279,23 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
         ],
       ),
     );
+  }
+
+  void _getDateFromUser(BuildContext context) async {
+    DateTime? pickerDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2001),
+        lastDate: DateTime(2024));
+
+    if (pickerDate != null) {
+      setState(() {
+        String formattedDate = DateFormat('dd/MM/yyyy').format(pickerDate);
+        print("Dte $formattedDate");
+        _dateOfMarriageController.text = formattedDate;
+      });
+    } else {
+      print('it is null or something is wrong');
+    }
   }
 }

@@ -1,7 +1,7 @@
+import 'package:darkak_e_commerce_app/screens/home_screens/home_page.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/screens/cart_screen/cart_page.dart';
 import 'package:darkak_e_commerce_app/screens/wishlist_screen/favourite_page.dart';
-import 'package:darkak_e_commerce_app/screens/home_screens/home_page.dart';
 import 'package:darkak_e_commerce_app/screens/shop_screen/shop_page.dart';
 import 'package:darkak_e_commerce_app/screens/profile_screens/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
   final List<Widget> _widgetList = [
     const HomePage(),
-     ShopPage(),
+    const ShopPage(),
     const CartPage(),
     const FavouritePage(),
     const UserAccountPage(),

@@ -17,14 +17,15 @@ class AppbarSearchviewWithBack extends StatelessWidget implements PreferredSizeW
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor,
+      backgroundColor: Colors.white,
       elevation: 0,
+      shadowColor: greyColor.withOpacity(0.3),
       leading: IconButton(
         onPressed: onPressedBack,
         icon: Icon(Icons.keyboard_arrow_left, size: 26.sp, color: orangeColor,),
       ),
       title: SizedBox(
-        height: 50.h,
+        height: 40.h,
         width: double.infinity.w,
         child: TextField(
           onTap: onTap,
