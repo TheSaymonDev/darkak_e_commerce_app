@@ -2,7 +2,7 @@ import 'package:darkak_e_commerce_app/models/my_order_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/utility.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_outlined_button.dart';
 import 'package:darkak_e_commerce_app/screens/order_history_screen/order_details_screen/order_details_page.dart';
 import 'package:darkak_e_commerce_app/screens/order_tracking_screen/order_tracking_page.dart';
@@ -32,7 +32,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
       child: ListView.separated(
           itemBuilder: (context, index) {
             final myOrder = MyOrder.activeOrders[index];
-            return CustomCardStyle2(
+            return CustomCardStyle(
               width: double.infinity.w,
               child: Column(
                 children: [
@@ -141,7 +141,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                                             style: myTextStyle(20.sp,
                                                 FontWeight.normal, orangeColor),
                                           ),
-                                          CustomCardStyle2(
+                                          CustomCardStyle(
                                             width: 98.w,
                                             height: 35.h,
                                             padding: EdgeInsets.symmetric(

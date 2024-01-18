@@ -3,6 +3,7 @@ import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_dropdown_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_text_form_field.dart';
 import 'package:darkak_e_commerce_app/screens/payment_screen/payment_success_page.dart';
@@ -19,18 +20,27 @@ class CheckOutPage extends StatefulWidget {
   State<CheckOutPage> createState() => _CheckOutPageState();
 }
 
-class _CheckOutPageState extends State<CheckOutPage> {
+class _CheckOutPageState extends State<CheckOutPage>
+    with TickerProviderStateMixin {
   final _addressLine1Controller = TextEditingController();
   final _addressLine2Controller = TextEditingController();
 
-  final _nameOfCardController = TextEditingController();
-  final _cardNumberController = TextEditingController();
-  final _expiryDateController = TextEditingController();
-  final _cvvController = TextEditingController();
-
-  bool _isCheckedCard = false;
   int _currentStep = 0;
   DeliveryOptions? _selectedOption;
+
+  late final TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   List<Step> _stepList() {
     return [
       Step(
@@ -304,7 +314,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => Container(
+              itemBuilder: (context, index) => SizedBox(
                     width: double.infinity,
                     height: 100.h,
                     child: Row(
@@ -389,7 +399,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
               'Dhaka, Dhaka North,\nBanani Road No. 12 - 19',
               style: myTextStyle(20.sp, FontWeight.normal, textColor),
             ),
-            Checkbox(value: true, onChanged: (newValue){}, activeColor: orangeColor, shape: const CircleBorder(),)
+            Checkbox(
+              value: true,
+              onChanged: (newValue) {},
+              activeColor: orangeColor,
+              shape: const CircleBorder(),
+            )
           ],
         ),
         Divider(
@@ -402,18 +417,15 @@ class _CheckOutPageState extends State<CheckOutPage> {
           children: [
             Text(
               'Delivery charge',
-              style:
-              myTextStyle(20.sp, FontWeight.normal, textColor),
+              style: myTextStyle(20.sp, FontWeight.normal, textColor),
             ),
             Text(
               '----------------------',
-              style: myTextStyle(
-                  20.sp, FontWeight.normal, orangeColor),
+              style: myTextStyle(20.sp, FontWeight.normal, orangeColor),
             ),
             Text(
               '${takaSign}50',
-              style:
-              myTextStyle(20.sp, FontWeight.normal, textColor),
+              style: myTextStyle(20.sp, FontWeight.normal, textColor),
             )
           ],
         ),
@@ -424,18 +436,15 @@ class _CheckOutPageState extends State<CheckOutPage> {
           children: [
             Text(
               'Total Amount',
-              style:
-              myTextStyle(20.sp, FontWeight.normal, textColor),
+              style: myTextStyle(20.sp, FontWeight.normal, textColor),
             ),
             Text(
               '----------------------',
-              style: myTextStyle(
-                  20.sp, FontWeight.normal, orangeColor),
+              style: myTextStyle(20.sp, FontWeight.normal, orangeColor),
             ),
             Text(
               '${takaSign}2500',
-              style:
-              myTextStyle(20.sp, FontWeight.normal, textColor),
+              style: myTextStyle(20.sp, FontWeight.normal, textColor),
             )
           ],
         ),
@@ -447,92 +456,185 @@ class _CheckOutPageState extends State<CheckOutPage> {
     );
   }
 
-  Column _step4Content() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 50.h,
-                child: SvgPicture.asset(
+  List<String> mobileBankingImgPath = [
+    'assets/images/bkash.svg',
+    'assets/images/rocket.svg',
+    'assets/images/nagad.svg'
+  ];
+  int _currentMobileBankingMediumIndex = 0;
+
+  List<String> bankingImgPath = [
+    'assets/images/visa.png',
+    'assets/images/master_card.png',
+    'assets/images/american_express.png'
+  ];
+  int _currentCardMediumIndex = 0;
+
+  SizedBox _step4Content() {
+    return SizedBox(
+      height: 700.h,
+      child: Column(
+        children: [
+          TabBar(
+            padding: EdgeInsets.zero,
+            controller: _tabController,
+            indicatorColor: orangeColor,
+            tabs: [
+              Tab(
+                icon: SvgPicture.asset(
                   'assets/images/mobile-banking.svg',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
-            ),
-            Gap(4.w),
-            Expanded(
-              child: SizedBox(
-                height: 50.h,
-                child: SvgPicture.asset(
+              Tab(
+                icon: SvgPicture.asset(
                   'assets/images/credit-card.svg',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
-            ),
-            Gap(4.w),
-            Expanded(
-              child: SizedBox(
-                height: 50.h,
-                child: SvgPicture.asset(
+              Tab(
+                icon: SvgPicture.asset(
                   'assets/images/saved-card.svg',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
-            ),
-            Gap(4.w),
-            Expanded(
-              child: SizedBox(
-                height: 50.h,
-                child: SvgPicture.asset(
+              Tab(
+                icon: SvgPicture.asset(
                   'assets/images/wallet.svg',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
+            ],
+          ),
+          Gap(16.h),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                SizedBox(
+                  width: double.infinity.w,
+                  height: 400.h,
+                  child: Column(
+                    children: List.generate(
+                      mobileBankingImgPath.length,
+                      (index) => Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _currentMobileBankingMediumIndex = index;
+                            });
+                          },
+                          child: CustomCardStyle(
+                            width: double.infinity.w,
+                            height: 70.h,
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            border: Border.all(
+                                width: 2.w,
+                                color: _currentMobileBankingMediumIndex == index
+                                    ? orangeColor
+                                    : Colors.transparent),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(),
+                                SizedBox(
+                                  height: 60.h,
+                                  width: 80.w,
+                                  child: SvgPicture.asset(
+                                    mobileBankingImgPath[index],
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.done_all,
+                                  color:
+                                      _currentMobileBankingMediumIndex == index
+                                          ? Colors.green
+                                          : Colors.transparent,
+                                  size: 25.sp,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: double.infinity.w,
+                  height: 400.h,
+                  child: Column(
+                    children: List.generate(
+                      bankingImgPath.length,
+                      (index) => Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _currentCardMediumIndex = index;
+                            });
+                          },
+                          child: CustomCardStyle(
+                            width: double.infinity.w,
+                            height: 70.h,
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            border: Border.all(
+                                width: 2.w,
+                                color: _currentCardMediumIndex == index
+                                    ? orangeColor
+                                    : Colors.transparent),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(),
+                                SizedBox(
+                                  height: 60.h,
+                                  width: 80.w,
+                                  child: Image.asset(
+                                    bankingImgPath[index],
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.done_all,
+                                  color: _currentCardMediumIndex == index
+                                      ? Colors.green
+                                      : Colors.transparent,
+                                  size: 25.sp,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 400.h,
+                  child: Center(
+                    child: Text(
+                      'Cash on delivery',
+                      style: myTextStyle(25.sp, FontWeight.normal, textColor),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 400.h,
+                  child: Center(
+                    child: Text(
+                      'Wallet',
+                      style: myTextStyle(25.sp, FontWeight.normal, textColor),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        Gap(45.h),
-        CustomTextFormField(
-            labelText: 'Name on Card', controller: _nameOfCardController),
-        Gap(35.h),
-        CustomTextFormField(
-            labelText: 'Card Number', controller: _cardNumberController),
-        Gap(35.h),
-        Row(
-          children: [
-            Expanded(
-                child: CustomTextFormField(
-                    labelText: 'Expiry Date',
-                    controller: _expiryDateController)),
-            Gap(40.w),
-            Expanded(
-                child: CustomTextFormField(
-                    labelText: 'CVV', controller: _cvvController)),
-          ],
-        ),
-        Gap(40.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Checkbox(
-              value: _isCheckedCard,
-              onChanged: (value) {
-                setState(() {
-                  _isCheckedCard = !_isCheckedCard;
-                });
-              },
-              activeColor: orangeColor,
-            ),
-            Expanded(
-                child: Text(
-              'Billing address is the same as delivery address',
-              style: myTextStyle(20.sp, FontWeight.normal, textColor),
-            )),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 

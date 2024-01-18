@@ -4,7 +4,7 @@ import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_my_order_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_product_item_gridview.dart';
 import 'package:darkak_e_commerce_app/screens/order_tracking_screen/order_tracking_page.dart';
@@ -50,7 +50,7 @@ class OrderDetailsPage extends StatelessWidget {
                 'Order ID: $orderID',
                 style: myTextStyle(20.sp, FontWeight.normal, textColor),
               ),
-              CustomCardStyle2(
+              CustomCardStyle(
                   width: double.infinity.w,
                   padding: EdgeInsets.symmetric(vertical: 8.h),
                   child: Column(
@@ -152,7 +152,7 @@ class OrderDetailsPage extends StatelessWidget {
                                             style: myTextStyle(20.sp,
                                                 FontWeight.normal, orangeColor),
                                           ),
-                                          CustomCardStyle2(
+                                          CustomCardStyle(
                                             width: 98.w,
                                             height: 35.h,
                                             padding: EdgeInsets.symmetric(

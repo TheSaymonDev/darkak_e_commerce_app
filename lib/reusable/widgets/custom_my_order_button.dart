@@ -1,6 +1,6 @@
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -16,7 +16,7 @@ class CustomMyOrderButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: CustomCardStyle2(
+      child: CustomCardStyle(
           width: double.infinity.w,
           height: 58.h,
           padding: EdgeInsets.symmetric(horizontal: 8.w),

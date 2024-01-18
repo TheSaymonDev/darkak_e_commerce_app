@@ -1,7 +1,7 @@
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_text_form_field.dart';
 import 'package:darkak_e_commerce_app/screens/authentication_screens/otp_verification_page.dart';
@@ -19,13 +19,17 @@ class VerifyEmailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppbarTextviewWithBack(onPressedBack: (){Get.back();}),
+      appBar: AppbarTextviewWithBack(onPressedBack: () {
+        Get.back();
+      }),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
           child: CustomCardStyle(
+            width: double.infinity.w,
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -45,7 +49,7 @@ class VerifyEmailPage extends StatelessWidget {
                 Gap(40.h),
                 CustomOrangeButton(
                   onPressed: () {
-                    Get.to(()=>const OtpVerificationPage());
+                    Get.to(() => const OtpVerificationPage());
                   },
                   buttonName: 'SEND',
                   width: double.infinity.w,

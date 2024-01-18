@@ -3,7 +3,7 @@ import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_bottom_sheet.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_coupon_code.dart';
 import 'package:darkak_e_commerce_app/screens/bottom_nav_bar_screens/bottom_nav_bar_page.dart';
 import 'package:darkak_e_commerce_app/screens/product_details_screen/product_view_page.dart';
@@ -178,7 +178,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomCardStyle2(
+                                CustomCardStyle(
                                   width: 160.w,
                                   height: 40.h,
                                   padding:
@@ -217,7 +217,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     ],
                                   ),
                                 ),
-                                CustomCardStyle2(
+                                CustomCardStyle(
                                   width: 160.w,
                                   height: 40.h,
                                   padding:
@@ -244,7 +244,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomCardStyle2(
+                                CustomCardStyle(
                                   width: 160.w,
                                   height: 40.h,
                                   padding:
@@ -287,7 +287,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     ],
                                   ),
                                 ),
-                                CustomCardStyle2(
+                                CustomCardStyle(
                                   width: 160.w,
                                   height: 40.h,
                                   padding:

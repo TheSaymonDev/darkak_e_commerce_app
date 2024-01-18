@@ -2,7 +2,7 @@ import 'package:darkak_e_commerce_app/models/see_all_categories_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/screens/product_listing_screen/product_listing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,7 +65,7 @@ class _SeeAllCategoriesPageState extends State<SeeAllCategoriesPage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CustomCardStyle2(
+                              CustomCardStyle(
                                 isCircle: true,
                                 height: 26.h,
                                 width: 26.w,

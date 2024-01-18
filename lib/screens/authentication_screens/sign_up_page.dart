@@ -1,8 +1,8 @@
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
 import 'package:darkak_e_commerce_app/reusable/validator.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_orange_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_sign_in_with_button.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_text_form_field.dart';
@@ -35,7 +35,9 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppbarTextviewWithBack(onPressedBack: (){Get.back();}),
+      appBar: AppbarTextviewWithBack(onPressedBack: () {
+        Get.back();
+      }),
       body: Container(
         height: double.infinity.h,
         width: double.infinity.w,
@@ -51,10 +53,15 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Gap(40.h),
               CustomCardStyle(
+                width: double.infinity.w,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Sign Up', style: myTextStyle(30.sp, FontWeight.bold, textColor),),
+                    Text(
+                      'Sign Up',
+                      style: myTextStyle(30.sp, FontWeight.bold, textColor),
+                    ),
                     Gap(40.h),
                     CustomTextFormField(
                       labelText: 'Name',
@@ -69,7 +76,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Gap(35.h),
                     CustomTextFormField(
-                        labelText: 'Email', controller: _emailController, validator: emailValidator,),
+                      labelText: 'Email',
+                      controller: _emailController,
+                      validator: emailValidator,
+                    ),
                     Gap(35.h),
                     CustomTextFormField(
                       labelText: 'Password',
@@ -84,7 +94,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               });
                             },
                             icon: Icon(
-                              isObscure ? Icons.visibility_off : Icons.visibility,
+                              isObscure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                               color: textColor,
                               size: 25.sp,
                             )),
@@ -92,14 +104,21 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: isObscure,
                     ),
                     Gap(38.h),
-                    CustomOrangeButton(onPressed: () {
-                      Get.to(()=>const BottomNavBarPage());
-                    }, buttonName: 'SIGN UP', width: double.infinity.w,)
+                    CustomOrangeButton(
+                      onPressed: () {
+                        Get.to(() => const BottomNavBarPage());
+                      },
+                      buttonName: 'SIGN UP',
+                      width: double.infinity.w,
+                    )
                   ],
                 ),
               ),
               Gap(30.h),
-              Text('- OR -', style: myTextStyle(20.sp, FontWeight.normal, textColor),),
+              Text(
+                '- OR -',
+                style: myTextStyle(20.sp, FontWeight.normal, textColor),
+              ),
               Gap(30.h),
               CustomSignInWithButton(
                   onPressed: () {},
@@ -120,8 +139,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Gap(8.w),
                   GestureDetector(
-                    onTap: (){
-                      Get.to(()=>const SignInPage());
+                    onTap: () {
+                      Get.to(() => const SignInPage());
                     },
                     child: Text(
                       'Login',

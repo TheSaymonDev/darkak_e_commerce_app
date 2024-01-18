@@ -9,6 +9,7 @@ import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/count_down_timer.dart';
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/product_categories.dart';
 import 'package:darkak_e_commerce_app/screens/home_screens/home_page_components/slider.dart';
+import 'package:darkak_e_commerce_app/screens/notification_screen/notification_page.dart';
 import 'package:darkak_e_commerce_app/screens/product_listing_screen/product_listing_page.dart';
 import 'package:darkak_e_commerce_app/screens/search_results_screen/search_page.dart';
 import 'package:flutter/material.dart';
@@ -108,9 +109,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(()=>const NotificationPage());
+                },
                 icon: Icon(
-                  Icons.notifications,
+                  Icons.notification_add,
                   size: 25.sp,
                   color: orangeColor,
                 ),

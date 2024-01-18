@@ -1,7 +1,7 @@
 import 'package:darkak_e_commerce_app/models/home_categories_model.dart';
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
-import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style_2.dart';
+import 'package:darkak_e_commerce_app/reusable/widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/screens/category_and_sub_category_screens/sub_category/sub_category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +30,7 @@ class ProductCategories extends StatelessWidget {
                   onTap: (){
                     Get.to(()=>SubCategoryPage(subCategoryProductList: categoriesList.categoryProductList));
                   },
-                  child: CustomCardStyle2(
+                  child: CustomCardStyle(
                     isCircle: true,
                     width: 60.w,
                     height: 60.h,

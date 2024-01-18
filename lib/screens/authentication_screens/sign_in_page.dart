@@ -47,6 +47,8 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 Gap(40.h),
                 CustomCardStyle(
+                  width: double.infinity.w,
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -142,7 +144,9 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     Gap(8.w),
                     GestureDetector(
-                      onTap: (){Get.to(()=>const SignUpPage());},
+                      onTap: () {
+                        Get.to(() => const SignUpPage());
+                      },
                       child: Text(
                         'Create Account',
                         style: myTextStyle(20.sp, FontWeight.bold, orangeColor),

@@ -3,25 +3,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomCardStyle extends StatelessWidget {
-   CustomCardStyle({super.key,required this.child});
+  const CustomCardStyle({
+    super.key,
+    this.height,
+    required this.width,
+    required this.child,
+    this.padding,
+    this.isCircle = false, // Add a parameter for circle shape
+    this.border,
+  });
 
-  Widget child;
+  final double? height, width;
+  final Widget child;
+  final EdgeInsetsGeometry? padding;
+  final bool isCircle; // Flag for circle shape
+  final BoxBorder? border;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: backgroundColor,
       elevation: 4,
       shadowColor: backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4.r),
-      ),
+      shape: isCircle == true
+          ? const CircleBorder() // Use CircleBorder for circle shape
+          : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.r),
+            ),
       child: Container(
-        width: double.infinity.w,
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4.r),
-            color: backgroundColor
-        ),
+        height: height,
+        width: width,
+        padding: padding,
+        decoration: isCircle == true
+            ? BoxDecoration(color: backgroundColor, shape: BoxShape.circle)
+            : BoxDecoration(
+                color: backgroundColor,
+                border: border,
+                borderRadius: BorderRadius.circular(4.r)),
         child: child,
       ),
     );

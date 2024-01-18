@@ -215,16 +215,20 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
             ),
             obscureText: _isObscure,
           ),
-          GestureDetector(
-            onTap: (){
-              Get.to(()=>VerifyEmailPage());
-            },
-            child: Text(
-              'Forgot Password',
-              style: myTextStyle(20.sp, FontWeight.bold, orangeColor),
+          Gap(8.h),
+          Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(
+              onTap: (){
+                Get.to(()=>VerifyEmailPage());
+              },
+              child: Text(
+                'Forgot Password?',
+                style: myTextStyle(20.sp, FontWeight.bold, orangeColor),
+              ),
             ),
           ),
-          Gap(35.h),
+          Gap(30.h),
           CustomTextFormField(
             labelText: 'New Password',
             controller: _passwordController,

@@ -23,6 +23,8 @@ class SuccessfullyPage extends StatelessWidget {
           children: [
             const Spacer(),
             CustomCardStyle(
+              width: double.infinity.w,
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               child: Column(
                 children: [
                   Gap(40.h),
@@ -48,9 +50,11 @@ class SuccessfullyPage extends StatelessWidget {
             const Spacer(),
             CustomOrangeButton(
                 onPressed: () {
-                  Get.to(()=>const BottomNavBarPage());
-                }, buttonName: 'DONE', width: double.infinity.w),
-            Gap(32.h)
+                  Get.to(() => const BottomNavBarPage());
+                },
+                buttonName: 'DONE',
+                width: double.infinity.w),
+            Gap(32.h),
           ],
         ),
       ),

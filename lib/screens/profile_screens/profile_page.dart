@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/reusable/colors.dart';
 import 'package:darkak_e_commerce_app/reusable/styles.dart';
+import 'package:darkak_e_commerce_app/reusable/utility.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_bottom_sheet.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_flutter_switch.dart';
 import 'package:darkak_e_commerce_app/reusable/widgets/custom_two_buttons.dart';
@@ -7,6 +8,7 @@ import 'package:darkak_e_commerce_app/screens/authentication_screens/sign_in_pag
 import 'package:darkak_e_commerce_app/screens/order_history_screen/my_order_screen/my_order_page.dart';
 import 'package:darkak_e_commerce_app/screens/profile_screens/profile_update_page.dart';
 import 'package:darkak_e_commerce_app/screens/address_screen/address_view_page.dart';
+import 'package:darkak_e_commerce_app/screens/support_screen/support_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +24,10 @@ class UserAccountPage extends StatefulWidget {
 
 class _UserAccountPageState extends State<UserAccountPage> {
   bool _isNotification = false;
+
+  bool _isBalanceShow = false;
+  bool _isBalance = true;
+  bool _isAnimation = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +66,43 @@ class _UserAccountPageState extends State<UserAccountPage> {
                         'yourmail@gmail.com',
                         style: myTextStyle(20.sp, FontWeight.normal, textColor),
                       ),
+                      Gap(4.h),
+                      GestureDetector(
+                        onTap: changeState,
+                        child: Container(
+                          height: 30.h,
+                          width: 90.w,
+
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            color: orangeColor,
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              AnimatedOpacity(
+                                opacity: _isBalanceShow ? 1 : 0,
+                                duration: Duration(microseconds: 500),
+                                child: Text('${takaSign}100', style: myTextStyle(15.sp, FontWeight.bold, backgroundColor),),
+                              ),
+                              AnimatedOpacity(
+                                opacity: _isBalance ? 1 : 0,
+                                duration: Duration(microseconds: 300),
+                                child: Text('Check\nWallet', style: myTextStyle(12.sp, FontWeight.bold, backgroundColor),),
+                              ),
+                              AnimatedPositioned(
+                                child: CircleAvatar(
+                                  radius: 9.r,
+                                  backgroundColor: backgroundColor,
+                                ),
+                                duration: Duration(microseconds: 1100),
+                                left: _isAnimation == false?5.w:65.w,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   )
                 ],
@@ -105,6 +148,20 @@ class _UserAccountPageState extends State<UserAccountPage> {
                       child: _accountItem(
                           iconUrl: 'assets/images/my-order.svg',
                           title: 'My Order',
+                          widget: Icon(
+                            Icons.keyboard_arrow_right,
+                            color: orangeColor,
+                            size: 27.sp,
+                          )),
+                    ),
+                    Gap(20.h),
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => const SupportPage());
+                      },
+                      child: _accountItem(
+                          iconUrl: 'assets/images/support.svg',
+                          title: 'Help & Support',
                           widget: Icon(
                             Icons.keyboard_arrow_right,
                             color: orangeColor,
@@ -203,4 +260,16 @@ class _UserAccountPageState extends State<UserAccountPage> {
       ),
     );
   }
+
+  changeState() async{
+    _isAnimation=true;
+    _isBalance=false;
+    setState(() {
+    });
+    await Future.delayed(Duration(milliseconds: 800), ()=>setState(()=>_isBalanceShow=true));
+    await Future.delayed(Duration(milliseconds: 700), ()=>setState(()=>_isBalanceShow=false));
+    await Future.delayed(Duration(milliseconds: 400), ()=>setState(()=> _isAnimation = false));
+    await Future.delayed(Duration(milliseconds: 600), ()=>setState(()=> _isBalance = true));
+  }
 }
+
