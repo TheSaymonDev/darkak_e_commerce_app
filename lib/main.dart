@@ -1,14 +1,23 @@
-import 'package:darkak_e_commerce_app/screens/onboarding_screens/onboarding_page.dart';
+import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/shared_preferences.dart';
+import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
+import 'package:darkak_e_commerce_app/views/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  String? token = await readUserData('token');
+  runApp(MyApp(
+    screen: token != null ? const HomeScreen() : const OnboardingScreen(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+  final Widget? screen;
+  const MyApp({super.key, this.screen});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +28,53 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: child,
+          theme: ThemeData(
+            fontFamily: 'Gumela Arabic',
+            scaffoldBackgroundColor: whiteClr,
+            appBarTheme: const AppBarTheme(color: whiteClr),
+            textTheme: TextTheme(
+              bodyLarge: TextStyle(
+                fontSize: 25.sp,
+                color: blackClr,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+              bodyMedium: TextStyle(
+                fontSize: 20.sp,
+                color: blackClr,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+              bodySmall: TextStyle(
+                fontSize: 15.sp,
+                color: blackClr,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+              titleLarge: TextStyle(
+                fontSize: 25.sp,
+                color: blackClr,
+                fontWeight: FontWeight.bold,
+                height: 1,
+              ),
+              titleMedium: TextStyle(
+                fontSize: 20.sp,
+                color: blackClr,
+                fontWeight: FontWeight.bold,
+                height: 1,
+              ),
+              titleSmall: TextStyle(
+                fontSize: 15.sp,
+                color: blackClr,
+                fontWeight: FontWeight.bold,
+                height: 1,
+              ),
+            ),
+          ),
+          themeMode: ThemeMode.light,
+          home: screen,
         );
       },
-      child: const OnboardingPage(),
     );
   }
 }
