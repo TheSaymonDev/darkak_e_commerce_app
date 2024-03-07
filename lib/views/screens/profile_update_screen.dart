@@ -1,3 +1,4 @@
+import 'package:darkak_e_commerce_app/controllers/profile_update_controller.dart';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
@@ -21,17 +22,11 @@ class ProfileUpdateScreen extends StatefulWidget {
 }
 
 class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
-  final _nameController = TextEditingController();
 
-  final _dateOfBirthController = TextEditingController();
-
-  final _dateOfMarriageController = TextEditingController();
-
-  final _mobileNumberController = TextEditingController();
-
-  final _passwordController = TextEditingController();
-
+  final passwordController = TextEditingController();
   bool _isObscure = false;
+  final ProfileUpdateController _profileUpdateController =
+      Get.find<ProfileUpdateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,19 +47,21 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
             children: [
               Stack(
                 children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: SizedBox(
-                      height: 120.h,
-                      width: 120.w,
-                      child: CircleAvatar(
-                        backgroundColor: orangeClr,
-                        backgroundImage: const AssetImage(
-                          'assets/images/profile-photo.png',
-                        ),
+                  GetBuilder<ProfileUpdateController>(builder: (controller) {
+                    return GestureDetector(
+                      onTap: () => controller.getImage(),
+                      child: SizedBox(
+                        height: 120.h,
+                        width: 120.w,
+                        child: CircleAvatar(
+                          backgroundColor: orangeClr,
+                          backgroundImage: (controller.image == null)
+                              ? const AssetImage('assets/images/profile-photo.png')
+                              : FileImage(controller.image!) as ImageProvider,
+                        )
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                   Positioned(
                       right: 8,
                       top: 8,
@@ -81,7 +78,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
               Gap(64.h),
               CustomTextFormField(
                 labelText: 'Full Name',
-                controller: _nameController,
+                controller: _profileUpdateController.nameController,
                 validator: nameValidator,
               ),
               Gap(35.h),
@@ -90,7 +87,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   Expanded(
                     child: CustomTextFormField(
                       labelText: 'Date of Birth',
-                      controller: _dateOfBirthController,
+                      controller:
+                          _profileUpdateController.dateOfBirthController,
                       readOnly: true,
                       suffixIcon: IconButton(
                           onPressed: () async {
@@ -102,7 +100,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                             );
                             if (selectedDate != null) {
                               // Update your controller with the selected date
-                              _dateOfBirthController.text =
+                              _profileUpdateController
+                                      .dateOfBirthController.text =
                                   DateFormat('dd/MM/yyyy').format(selectedDate);
                             }
                           },
@@ -117,7 +116,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   Expanded(
                     child: CustomTextFormField(
                       labelText: 'Date of Marriage',
-                      controller: _dateOfMarriageController,
+                      controller:
+                          _profileUpdateController.dateOfMarriageController,
                       readOnly: true,
                       suffixIcon: IconButton(
                           onPressed: () async {
@@ -129,7 +129,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                             );
                             if (selectedDate != null) {
                               // Update your controller with the selected date
-                              _dateOfMarriageController.text =
+                              _profileUpdateController
+                                      .dateOfMarriageController.text =
                                   DateFormat('dd/MM/yyyy').format(selectedDate);
                             }
                           },
@@ -145,13 +146,14 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
               Gap(35.h),
               CustomTextFormField(
                 labelText: 'Mobile Number',
-                controller: _mobileNumberController,
-                keyBoardType: TextInputType.number,
+                controller: _profileUpdateController.mobileNumberController,
+                keyBoardType: TextInputType.phone,
+                readOnly: true,
               ),
               Gap(35.h),
               CustomTextFormField(
                 labelText: 'Password',
-                controller: _passwordController,
+                controller: _profileUpdateController.passwordController,
                 validator: passwordValidator,
                 readOnly: true,
                 obscureText: true,
@@ -170,15 +172,19 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 ),
               ),
               Gap(40.h),
-              CustomTwoButtons(
-                  leftButtonName: 'Cancel',
-                  rightButtonName: 'Save',
-                  onLeftButtonPressed: () {
-                    Get.back();
-                  },
-                  onRightButtonPressed: () {
-                    Get.back();
-                  })
+              GetBuilder<ProfileUpdateController>(
+                builder: (controller) => controller.isLoading == true
+                    ? customCircularProgressIndicator
+                    : CustomTwoButtons(
+                        leftButtonName: 'Cancel',
+                        rightButtonName: 'Save',
+                        onLeftButtonPressed: () {
+                          Get.back();
+                        },
+                        onRightButtonPressed: () {
+                          controller.formOnSubmit();
+                        }),
+              )
             ],
           ),
         ),
@@ -197,7 +203,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           Gap(50.h),
           CustomTextFormField(
             labelText: 'Old Password',
-            controller: _passwordController,
+            controller: passwordController,
             validator: passwordValidator,
             suffixIcon: Padding(
               padding: EdgeInsets.only(right: 8.w),
@@ -219,8 +225,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           Align(
             alignment: Alignment.topRight,
             child: GestureDetector(
-              onTap: (){
-                Get.to(()=>EmailVerificationScreen());
+              onTap: () {
+                Get.to(() => EmailVerificationScreen());
               },
               child: Text(
                 'Forgot Password?',
@@ -231,7 +237,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           Gap(30.h),
           CustomTextFormField(
             labelText: 'New Password',
-            controller: _passwordController,
+            controller: passwordController,
             validator: passwordValidator,
             readOnly: true,
             suffixIcon: Padding(
@@ -253,7 +259,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           Gap(35.h),
           CustomTextFormField(
             labelText: 'Confirm Password',
-            controller: _passwordController,
+            controller: passwordController,
             validator: passwordValidator,
             readOnly: true,
             suffixIcon: Padding(
@@ -285,21 +291,4 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     );
   }
 
-  void _getDateFromUser(BuildContext context) async {
-    DateTime? pickerDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2001),
-        lastDate: DateTime(2024));
-
-    if (pickerDate != null) {
-      setState(() {
-        String formattedDate = DateFormat('dd/MM/yyyy').format(pickerDate);
-        print("Dte $formattedDate");
-        _dateOfMarriageController.text = formattedDate;
-      });
-    } else {
-      print('it is null or something is wrong');
-    }
-  }
 }

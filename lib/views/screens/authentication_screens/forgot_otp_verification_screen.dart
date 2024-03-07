@@ -1,4 +1,4 @@
-import 'package:darkak_e_commerce_app/controllers/authentication_controllers/otp_verification_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/forget_otp_verification_controller.dart';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -11,12 +11,12 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpVerificationScreen extends StatelessWidget {
-
+class ForgotOtpVerificationScreen extends StatelessWidget {
   final String? userId;
-  OtpVerificationScreen({super.key, required this.userId});
+  ForgotOtpVerificationScreen({super.key, required this.userId});
 
-final OtpVerificationController _otpVerificationController = Get.find<OtpVerificationController>();
+  final ForgetOtpVerificationController _forgetOtpVerificationController =
+      Get.find<ForgetOtpVerificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ final OtpVerificationController _otpVerificationController = Get.find<OtpVerific
             width: double.infinity.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Form(
-              key: _otpVerificationController.formKey,
+              key: _forgetOtpVerificationController.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -44,13 +44,13 @@ final OtpVerificationController _otpVerificationController = Get.find<OtpVerific
                   ),
                   Gap(18.h),
                   Text(
-                    'A 6 - Digit PIN has been sent to your email address or mobile number, enter it below to continue',
-                    style: Get.textTheme.bodyMedium!.copyWith(color: greyClr)
-                  ),
+                      'A 6 - Digit PIN has been sent to your email address or mobile number, enter it below to continue',
+                      style:
+                          Get.textTheme.bodyMedium!.copyWith(color: greyClr)),
                   Gap(35.h),
                   PinCodeTextField(
                     validator: pinValidator,
-                    controller: _otpVerificationController.otpController,
+                    controller: _forgetOtpVerificationController.otpController,
                     appContext: context,
                     length: 6,
                     obscureText: false,
@@ -72,14 +72,14 @@ final OtpVerificationController _otpVerificationController = Get.find<OtpVerific
                         onTap: () {},
                         child: Text(
                           'Resend Code',
-                          style:
-                          Get.textTheme.titleMedium!.copyWith(color: orangeClr),
+                          style: Get.textTheme.titleMedium!
+                              .copyWith(color: orangeClr),
                         ),
                       ),
                     ],
                   ),
                   Gap(35.h),
-                  GetBuilder<OtpVerificationController>(
+                  GetBuilder<ForgetOtpVerificationController>(
                     builder: (controller) => controller.isLoading == true
                         ? customCircularProgressIndicator
                         : CustomElevatedButton(

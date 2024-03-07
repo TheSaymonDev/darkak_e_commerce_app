@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ShopScreen(),
     const CartScreen(),
     const WishListScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
 
   @override

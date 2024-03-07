@@ -1,7 +1,7 @@
-
 import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
@@ -28,7 +28,7 @@ class CustomTextFormField extends StatelessWidget {
       children: [
         Text(
           labelText,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyClr)),
+          style: Get.textTheme.bodyMedium!.copyWith(color: greyClr)),
         TextFormField(
           readOnly: readOnly,
           controller: controller,
@@ -36,16 +36,16 @@ class CustomTextFormField extends StatelessWidget {
           validator: validator,
           cursorColor: blackClr,
           keyboardType: keyBoardType,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Get.textTheme.bodyMedium,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 16.h),
             suffixIcon: suffixIcon,
             fillColor: Colors.grey.shade100,
             filled: true,
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(width: 1.5, color: orangeClr),
             ),
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(width: 1.5, color: orangeClr),
             ),
           ),

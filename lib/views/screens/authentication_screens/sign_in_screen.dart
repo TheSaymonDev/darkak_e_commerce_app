@@ -1,8 +1,7 @@
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_in_controller.dart';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
-import 'package:darkak_e_commerce_app/core/utils/http_client.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
-import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/auth_widgets/custom_sign_in_with_button.dart';
@@ -15,39 +14,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignInScreen extends StatelessWidget {
 
-  @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-
-  final _identityController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  bool isObscure = true;
-
-  final Map<String, String> _formValues = {"identity": "", "password": ""};
-  bool isLoading = false;
-  void _formOnSubmit() async {
-    if (_formKey.currentState?.validate() ?? false) {
-      setState(() {
-        isLoading = true;
-      });
-      _formValues["identity"] = _identityController.text.trim();
-      _formValues["password"] = _passwordController.text.trim();
-      bool loginSuccess = await logInRequest(_formValues);
-      if (loginSuccess == true) {
-        Get.offAll(const HomeScreen());
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    }
-  }
+  SignInScreen({super.key});
+  final SignInController _signInController = Get.find<SignInController>();
 
   @override
   Widget build(BuildContext context) {
@@ -70,15 +40,17 @@ class _SignInScreenState extends State<SignInScreen> {
                 Gap(40.h),
                 CustomCardStyle(
                   width: double.infinity.w,
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   child: Form(
-                    key: _formKey,
+                    key: _signInController.formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Welcome',
-                          style: Get.textTheme.titleLarge!.copyWith(fontSize: 30.sp),
+                          style: Get.textTheme.titleLarge!
+                              .copyWith(fontSize: 30.sp),
                         ),
                         Gap(10.h),
                         Text(
@@ -88,37 +60,37 @@ class _SignInScreenState extends State<SignInScreen> {
                         Gap(55.h),
                         CustomTextFormField(
                           labelText: 'Email or Mobile',
-                          controller: _identityController,
-                          validator: emailValidator,
+                          controller: _signInController.identifierController,
+                          validator: identifierValidator,
                         ),
                         Gap(35.h),
-                        CustomTextFormField(
-                          labelText: 'Password',
-                          controller: _passwordController,
-                          validator: passwordValidator,
-                          suffixIcon: Padding(
-                            padding: EdgeInsets.only(right: 8.w),
-                            child: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isObscure = !isObscure;
-                                  });
-                                },
-                                icon: Icon(
-                                  isObscure
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: blackClr,
-                                  size: 25.sp,
-                                )),
+                        GetBuilder<SignInController>(
+                          builder: (controller) => CustomTextFormField(
+                            labelText: 'Password',
+                            controller: controller.passwordController,
+                            validator: passwordValidator,
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.only(right: 8.w),
+                              child: IconButton(
+                                  onPressed: () {
+                                    controller.toggleObscure();
+                                  },
+                                  icon: Icon(
+                                    controller.isObscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: blackClr,
+                                    size: 25.sp,
+                                  )),
+                            ),
+                            obscureText: controller.isObscure,
                           ),
-                          obscureText: isObscure,
                         ),
                         Gap(20.h),
                         GestureDetector(
                           onTap: () {
                             Get.to(
-                              () => EmailVerificationScreen(),
+                              () =>  EmailVerificationScreen(),
                             );
                           },
                           child: Align(
@@ -130,12 +102,16 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         Gap(30.h),
-                        isLoading == true?customCircularProgressIndicator: CustomElevatedButton(
-                          onPressed: () {
-                            _formOnSubmit();
-                          },
-                          buttonName: 'SIGN IN',
-                          width: double.infinity.w,
+                        GetBuilder<SignInController>(
+                          builder: (controller) => controller.isLoading == true
+                              ? customCircularProgressIndicator
+                              : CustomElevatedButton(
+                                  onPressed: () {
+                                    controller.formOnSubmit();
+                                  },
+                                  buttonName: 'SIGN IN',
+                                  width: double.infinity.w,
+                                ),
                         ),
                       ],
                     ),
@@ -167,11 +143,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     Gap(8.w),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const SignUpScreen());
+                        Get.to(() =>  SignUpScreen());
                       },
                       child: Text(
                         'Create Account',
-                        style: Get.textTheme.titleMedium!.copyWith(color: orangeClr),
+                        style: Get.textTheme.titleMedium!
+                            .copyWith(color: orangeClr),
                       ),
                     ),
                   ],

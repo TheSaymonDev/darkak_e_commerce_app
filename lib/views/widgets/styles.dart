@@ -35,8 +35,8 @@ PinTheme pinTheme() {
     borderWidth: 1.w,
     inactiveFillColor: whiteClr,
     selectedFillColor: whiteClr,
-    fieldHeight: 55.h,
-    fieldWidth: 55.w,
+    fieldHeight: 50.h,
+    fieldWidth: 46.w,
     activeColor: const Color(0xffDDDDDD),
     selectedColor: orangeClr,
     inactiveColor: const Color(0xffDDDDDD),
@@ -88,7 +88,7 @@ Future<dynamic> showDialogBox({
 
 SnackbarController customErrorMessage({required dynamic message}) {
   return Get.snackbar('Error', message,
-      icon: Icon(Icons.error_outline, color: blackClr,),
+      icon: const Icon(Icons.error_outline, color: blackClr,),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: redClr,
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -98,7 +98,7 @@ SnackbarController customErrorMessage({required dynamic message}) {
 
 SnackbarController customSuccessMessage({required dynamic message}) {
   return Get.snackbar('Success', message,
-      icon: Icon(Icons.verified_outlined, color: blackClr,),
+      icon: const Icon(Icons.verified_outlined, color: blackClr,),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: greenClr,
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),

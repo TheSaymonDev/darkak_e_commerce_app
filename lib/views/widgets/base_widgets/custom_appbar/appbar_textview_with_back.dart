@@ -1,8 +1,7 @@
-
 import 'package:darkak_e_commerce_app/core/app_data.dart';
-import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class AppbarTextviewWithBack extends StatelessWidget implements PreferredSizeWidget {
 
@@ -28,7 +27,7 @@ class AppbarTextviewWithBack extends StatelessWidget implements PreferredSizeWid
         icon: Icon(Icons.keyboard_arrow_left, size: 26.sp, color: orangeClr,),
       ),
       title: title != null
-          ? Text(title!, style: myStyle(20.sp, FontWeight.bold, blackClr))
+          ? Text(title!, style: Get.textTheme.titleMedium)
           : null, // Use null if title is not provided
       bottom: tabBar,
       toolbarHeight: preferredSize.height,

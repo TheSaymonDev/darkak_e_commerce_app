@@ -1,29 +1,23 @@
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/set_password_controller.dart';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
-import 'package:darkak_e_commerce_app/views/screens/authentication_screens/verification_success_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_text_form_field.dart';
+import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class SetPasswordScreen extends StatefulWidget {
-  const SetPasswordScreen({super.key});
+class SetPasswordScreen extends StatelessWidget {
 
-  @override
-  State<SetPasswordScreen> createState() => _SetPasswordScreenState();
-}
+  final String? userId;
+  final String? otp;
+  SetPasswordScreen({super.key, required this.userId, required this.otp});
 
-class _SetPasswordScreenState extends State<SetPasswordScreen> {
-
-  final _newPasswordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  bool _isObscureNew = true;
-  bool _isObscureConfirm = true;
+  final SetPasswordController _setPasswordController= Get.find<SetPasswordController>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,66 +34,81 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
           child: CustomCardStyle(
             width: double.infinity.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Change Password',
-                  style: Get.textTheme.titleLarge!.copyWith(fontSize: 30.sp),
-                ),
-                Gap(36.h),
-                CustomTextFormField(
-                  labelText: 'New Password',
-                  controller: _newPasswordController,
-                  validator: passwordValidator,
-                  suffixIcon: Padding(
-                    padding: EdgeInsets.only(right: 8.w),
-                    child: IconButton(
+            child: Form(
+              key: _setPasswordController.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Change Password',
+                    style: Get.textTheme.titleLarge!.copyWith(fontSize: 30.sp),
+                  ),
+                  Gap(36.h),
+                  GetBuilder<SetPasswordController>(
+                    builder: (controller) {
+                      return CustomTextFormField(
+                        labelText: 'New Password',
+                        controller: controller.newPasswordController,
+                        validator: passwordValidator,
+                        suffixIcon: Padding(
+                          padding: EdgeInsets.only(right: 8.w),
+                          child: IconButton(
+                            onPressed: () {
+                              controller.toggleObscureN();
+                            },
+                            icon: Icon(
+                              controller.isObscureNew
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: blackClr,
+                              size: 25.sp,
+                            ),
+                          ),
+                        ),
+                        obscureText:  controller.isObscureNew,
+                      );
+                    }
+                  ),
+                  Gap(36.h),
+                  GetBuilder<SetPasswordController>(
+                    builder: (controller) {
+                      return CustomTextFormField(
+                        labelText: 'Confirm Password',
+                        controller: controller.confirmPasswordController,
+                        validator: (value) =>
+                            confirmPasswordValidator(value, controller.newPasswordController),
+                        suffixIcon: Padding(
+                          padding: EdgeInsets.only(right: 8.w),
+                          child: IconButton(
+                              onPressed: () {
+                               controller.toggleObscureC();
+                              },
+                              icon: Icon(
+                                controller.isObscureConfirm
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: blackClr,
+                                size: 25.sp,
+                              )),
+                        ),
+                        obscureText: controller.isObscureConfirm,
+                      );
+                    }
+                  ),
+                  Gap(50.h),
+                  GetBuilder<SetPasswordController>(
+                    builder: (controller) => controller.isLoading == true
+                        ? customCircularProgressIndicator
+                        : CustomElevatedButton(
                       onPressed: () {
-                        setState(() {
-                          _isObscureNew = !_isObscureNew;
-                        });
+                        controller.formOnSubmit(userId!, otp!);
                       },
-                      icon: Icon(
-                        _isObscureNew ? Icons.visibility_off : Icons.visibility,
-                        color: blackClr,
-                        size: 25.sp,
-                      ),
+                      buttonName: 'CONTINUE',
+                      width: double.infinity.w,
                     ),
                   ),
-                  obscureText: _isObscureNew,
-                ),
-                Gap(36.h),
-                CustomTextFormField(
-                  labelText: 'Confirm Password',
-                  controller: _confirmPasswordController,
-                  validator: passwordValidator,
-                  suffixIcon: Padding(
-                    padding: EdgeInsets.only(right: 8.w),
-                    child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _isObscureConfirm = !_isObscureConfirm;
-                          });
-                        },
-                        icon: Icon(
-                          _isObscureConfirm
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: blackClr,
-                          size: 25.sp,
-                        )),
-                  ),
-                  obscureText: _isObscureConfirm,
-                ),
-                Gap(50.h),
-                CustomElevatedButton(
-                    onPressed: () {
-                      Get.to(() => const VerificationSuccessScreen());
-                    },
-                    buttonName: 'CONTINUE',
-                    width: double.infinity.w),
-              ],
+                ],
+              ),
             ),
           ),
         ),

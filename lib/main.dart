@@ -1,3 +1,13 @@
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/forget_otp_verification_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/identity_verification_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/otp_verification_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/set_password_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_up_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_in_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/onboarding_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/profile_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/profile_update_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/shop_controller.dart';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/core/utils/shared_preferences.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
@@ -8,14 +18,14 @@ import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  String? token = await readUserData('token');
+  await SharedPreferencesService().init();
+  String token = SharedPreferencesService().getToken();
   runApp(MyApp(
-    screen: token != null ? const HomeScreen() : const OnboardingScreen(),
+    screen: token.isNotEmpty ? const HomeScreen() : const OnboardingScreen(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-
   final Widget? screen;
   const MyApp({super.key, this.screen});
 
@@ -72,9 +82,26 @@ class MyApp extends StatelessWidget {
             ),
           ),
           themeMode: ThemeMode.light,
+          initialBinding: ControllerBinder(),
           home: screen,
         );
       },
     );
+  }
+}
+
+class ControllerBinder extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(OnboardingController());
+    Get.put(SignInController());
+    Get.put(SignUpController());
+    Get.put(OtpVerificationController());
+    Get.put(IdentityVerificationController());
+    Get.put(ForgetOtpVerificationController());
+    Get.put(SetPasswordController());
+    Get.put(ProfileController());
+    Get.put(ProfileUpdateController());
+    Get.put(ShopController());
   }
 }

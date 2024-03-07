@@ -1,12 +1,11 @@
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_up_controller.dart';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
-import 'package:darkak_e_commerce_app/core/utils/http_client.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/auth_widgets/custom_sign_in_with_button.dart';
-import 'package:darkak_e_commerce_app/views/screens/authentication_screens/otp_verification_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -15,49 +14,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
 
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  final _nameController = TextEditingController();
-  final _mobileController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
-
-  bool isObscure = true;
-  String? userId;
-  final Map<String, String> _formValues = {
-    "name": "",
-    "mobile": "",
-    "email": "",
-    "password": "",
-  };
-  bool isLoading = false;
-  void _formOnSubmit() async {
-    if (_formKey.currentState?.validate() ?? false) {
-      setState(() {
-        isLoading = true;
-      });
-      _formValues["name"] = _nameController.text.trim();
-      _formValues["mobile"] = _mobileController.text.trim();
-      _formValues["email"] = _emailController.text.trim();
-      _formValues["password"] = _passwordController.text.trim();
-       userId = await registrationRequest(_formValues);
-      if (userId != null) {
-        Get.offAll(OtpVerificationScreen(userId: userId,));
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    }
-  }
+  final SignUpController _signUpController = Get.find<SignUpController>();
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: double.infinity.w,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 child: Form(
-                  key: _formKey,
+                  key: _signUpController.formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -95,52 +55,58 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Gap(40.h),
                       CustomTextFormField(
                         labelText: 'Name',
-                        controller: _nameController,
+                        controller: _signUpController.nameController,
                         validator: nameValidator,
                       ),
                       Gap(35.h),
                       CustomTextFormField(
                         labelText: 'Mobile Number',
-                        controller: _mobileController,
+                        controller: _signUpController.mobileController,
                         keyBoardType: TextInputType.phone,
                         validator: mobileValidator,
                       ),
                       Gap(35.h),
                       CustomTextFormField(
                         labelText: 'Email',
-                        controller: _emailController,
+                        controller: _signUpController.emailController,
                         validator: emailValidator,
                       ),
                       Gap(35.h),
-                      CustomTextFormField(
-                        labelText: 'Password',
-                        controller: _passwordController,
-                        validator: passwordValidator,
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.only(right: 8.w),
-                          child: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isObscure = !isObscure;
-                                });
-                              },
-                              icon: Icon(
-                                isObscure
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: blackClr,
-                                size: 25.sp,
-                              )),
-                        ),
-                        obscureText: isObscure,
+                      GetBuilder<SignUpController>(
+                        builder: (controller) {
+                          return CustomTextFormField(
+                            labelText: 'Password',
+                            controller: controller.passwordController,
+                            validator: passwordValidator,
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.only(right: 8.w),
+                              child: IconButton(
+                                  onPressed: () {
+                                   controller.toggleObscure();
+                                  },
+                                  icon: Icon(
+                                    controller.isObscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: blackClr,
+                                    size: 25.sp,
+                                  )),
+                            ),
+                            obscureText: controller.isObscure,
+                          );
+                        }
                       ),
                       Gap(38.h),
-                      isLoading == true?customCircularProgressIndicator: CustomElevatedButton(
-                        onPressed: () {
-                          _formOnSubmit();
-                        },
-                        buttonName: 'SIGN UP',
-                        width: double.infinity.w,
+                      GetBuilder<SignUpController>(
+                        builder: (controller) => controller.isLoading == true
+                            ? customCircularProgressIndicator
+                            : CustomElevatedButton(
+                          onPressed: () {
+                            controller.formOnSubmit();
+                          },
+                          buttonName: 'SIGN UP',
+                          width: double.infinity.w,
+                        ),
                       ),
                     ],
                   ),
@@ -172,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Gap(8.w),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => const SignInScreen());
+                      Get.to(() =>  SignInScreen());
                     },
                     child: Text(
                       'Login',

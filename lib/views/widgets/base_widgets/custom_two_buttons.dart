@@ -1,8 +1,7 @@
-
 import 'package:darkak_e_commerce_app/core/app_data.dart';
-import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CustomTwoButtons extends StatelessWidget {
   const CustomTwoButtons({
@@ -32,7 +31,7 @@ class CustomTwoButtons extends StatelessWidget {
                 color: whiteClr),
             child: Text(
               leftButtonName,
-              style: myStyle(20.sp, FontWeight.bold, blackClr),
+              style: Get.textTheme.titleMedium,
             ),
           ),
         ),
@@ -47,7 +46,7 @@ class CustomTwoButtons extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4.r), color: orangeClr),
             child: Text(
               rightButtonName,
-              style: myStyle(20.sp, FontWeight.bold, whiteClr),
+              style: Get.textTheme.titleMedium!.copyWith(color: whiteClr),
             ),
           ),
         ),
