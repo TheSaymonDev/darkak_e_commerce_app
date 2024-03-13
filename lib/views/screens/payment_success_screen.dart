@@ -34,7 +34,7 @@ class PaymentSuccessScreen extends StatelessWidget {
             Text('Your order will be delivered soon. Thank you for choosing our app!', style: myStyle(25.sp, FontWeight.bold, blackClr),textAlign: TextAlign.center,),
             const Spacer(),
             CustomElevatedButton(onPressed: (){
-              Get.offAll(()=>const HomeScreen());
+              Get.offAll(()=> HomeScreen());
             }, buttonName: 'Continue Shopping', width: double.infinity.w),
             Gap(40.h),
           ],

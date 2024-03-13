@@ -49,7 +49,7 @@ class VerificationSuccessScreen extends StatelessWidget {
             const Spacer(),
             CustomElevatedButton(
                 onPressed: () {
-                  Get.to(() => const HomeScreen());
+                  Get.to(() => HomeScreen());
                 },
                 buttonName: 'DONE',
                 width: double.infinity.w),

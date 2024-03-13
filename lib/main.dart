@@ -5,11 +5,10 @@ import 'package:darkak_e_commerce_app/controllers/authentication_controllers/set
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_up_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_in_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/onboarding_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/profile_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/profile_update_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/shop_controller.dart';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
-import 'package:darkak_e_commerce_app/core/utils/shared_preferences.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,7 @@ void main() async {
   await SharedPreferencesService().init();
   String token = SharedPreferencesService().getToken();
   runApp(MyApp(
-    screen: token.isNotEmpty ? const HomeScreen() : const OnboardingScreen(),
+    screen: token.isNotEmpty ? HomeScreen() : const OnboardingScreen(),
   ));
 }
 
@@ -100,8 +99,7 @@ class ControllerBinder extends Bindings {
     Get.put(IdentityVerificationController());
     Get.put(ForgetOtpVerificationController());
     Get.put(SetPasswordController());
+    Get.put(ProductListController());
     Get.put(ProfileController());
-    Get.put(ProfileUpdateController());
-    Get.put(ShopController());
   }
 }

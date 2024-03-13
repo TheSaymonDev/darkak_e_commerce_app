@@ -1,4 +1,4 @@
-import 'package:darkak_e_commerce_app/core/utils/shared_preferences.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:flutter/material.dart';
 
 const Color filledClr=  Color(0xffEAEAEA);

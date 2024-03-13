@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/utils/http_client.dart';
+import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/set_password.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -15,19 +16,25 @@ class SetPasswordController extends GetxController{
   bool isLoading = false;
 
   formOnSubmit(String userId, String otp) async{
-    if (formKey.currentState?.validate() ?? false) {
-      isLoading = true;
-      update();
-     final setPassword = SetPassword(userId: userId, password: newPasswordController.text.trim(), otp: otp);
-      bool setPasswordSuccess = await setPasswordRequest(setPassword);
-      if (setPasswordSuccess == true) {
-        customSuccessMessage(message: 'Password Changed Successfully');
-        navigateToSignInScreen();
-      } else {
-        customErrorMessage(message: 'Failed to change password');
-        isLoading = false;
+    try{
+      if (formKey.currentState?.validate() ?? false) {
+        isLoading = true;
         update();
+        final setPassword = SetPassword(userId: userId, password: newPasswordController.text.trim(), otp: otp);
+        final responseData = await ApiService().postApi('$baseUrl/users/reset-password', setPassword);
+        if (responseData != null) {
+          customSuccessMessage(message: 'Password Changed Successfully');
+          navigateToSignInScreen();
+        } else {
+          customErrorMessage(message: 'Failed to Change Password');
+          isLoading = false;
+          update();
+        }
       }
+    }catch(error){
+      customErrorMessage(message: error.toString());
+      isLoading = false;
+      update();
     }
   }
 

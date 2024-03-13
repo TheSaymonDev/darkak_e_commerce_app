@@ -1,57 +1,46 @@
 import 'package:darkak_e_commerce_app/core/app_data.dart';
-import 'package:darkak_e_commerce_app/models/product_review_model.dart';
-import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
+import 'package:darkak_e_commerce_app/models/final_product.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_bottom_sheet.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_coupon_code.dart';
 import 'package:darkak_e_commerce_app/views/screens/product_view_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/review_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/store_screen.dart';
+import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_bottom_sheet.dart';
+import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_coupon_code.dart';
+import 'package:darkak_e_commerce_app/views/widgets/product_details_screen_widgets/custom_drop_down.dart';
+import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen(
-      {super.key,
-      required this.productImagePath,
-      required this.productName,
-      required this.productPrice,
-      required this.productDiscount,
-      required this.productRating,
-      required this.attributes,
-      required this.customerReviews,
-      required this.color,
-      required this.imagesPath,
-      required this.productDescription,
-      required this.productId});
+class FinalProductDetailsScreen extends StatefulWidget {
 
-  final String productId, productImagePath, productName, productDescription;
-  final int productPrice, productDiscount;
-  final double productRating;
-  final List<String> imagesPath; // List of image URLs
-  final List<String> color;
-  final List<String> attributes;
-  final List<ProductReviewModel> customerReviews;
+  final Product products;
+  const FinalProductDetailsScreen({super.key, required this.products});
 
   @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+  State<FinalProductDetailsScreen> createState() =>
+      _FinalProductDetailsScreenState();
 }
 
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  int _selectedColor = 0;
+class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
+  int selectedImg = 0;
   final double _height = 400.h;
   bool _isExpanded = false;
   int _quantity = 1;
-  String _productSize = 'S';
+
+  List<String> sizes = ['S', 'M'];
+  int selectedSizeIndex = 0;
+
+  List<String> colors = ['Red', 'Blue'];
+  int selectedColorIndex = 0;
+
+  final double productRating = 4.5;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteClr,
       body: SafeArea(
         child: SizedBox(
           height: double.infinity.h,
@@ -69,15 +58,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         maxHeight: _height,
                         child: GestureDetector(
                           onTap: () {
-                            // Get.to(() => ProductViewPage(
-                            //       imagePath: widget.productImagePath,
-                            //       imagesPath: widget.imagesPath,
-                            //     ));
+                            Get.to(() => ProductViewPage(
+                              imagePath: widget.products.images![selectedImg].path,
+                              imagesPath: widget.products.images,
+                            ));
                           },
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage(widget.productImagePath),
+                                  image: NetworkImage(
+                                      '$imgUrl${widget.products.images![selectedImg].path}'),
                                   fit: BoxFit.cover),
                             ),
                             child: LayoutBuilder(
@@ -114,7 +104,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 GestureDetector(
                                                   onTap: () {
                                                     setState(() {
-                                                      _selectedColor = index;
+                                                      selectedImg = index;
                                                     });
                                                   },
                                                   child: Container(
@@ -126,9 +116,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                         16.r,
                                                       ),
                                                       image: DecorationImage(
-                                                          image: AssetImage(
-                                                            widget.imagesPath[
-                                                                index],
+                                                          image: NetworkImage(
+                                                            '$imgUrl${widget.products.images![index].path}',
                                                           ),
                                                           fit: BoxFit.cover),
                                                     ),
@@ -137,7 +126,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             separatorBuilder:
                                                 (context, index) => Gap(8.w),
                                             itemCount:
-                                                widget.imagesPath.length),
+                                                widget.products.images!.length),
                                       ),
                                     ),
                                   ),
@@ -155,22 +144,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    widget.productName,
-                                    style: myStyle(
-                                        25.sp, FontWeight.bold, blackClr),
-                                  ),
-                                ),
-                                Text(
-                                  widget.productId,
-                                  style:
-                                      myStyle(25.sp, FontWeight.bold, blackClr),
-                                ),
-                              ],
+                            Text(
+                              '${widget.products.name}',
+                              style: Get.textTheme.titleLarge,
                             ),
                             Gap(16.h),
                             Row(
@@ -185,32 +161,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     children: [
                                       Text(
                                         'Size:',
-                                        style: myStyle(
-                                            15.sp, FontWeight.normal, blackClr),
+                                        style: Get.textTheme.bodySmall,
                                       ),
                                       const Spacer(),
-                                      DropdownButton(
-                                        underline: const SizedBox(
-                                          height: 0,
-                                        ),
-                                        style: myStyle(
-                                            15.sp, FontWeight.bold, blackClr),
-                                        items: widget.attributes
-                                            .map((String item) {
-                                          return DropdownMenuItem(
-                                            value: item,
-                                            child: Text(item),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String? newValue) {
-                                          if (newValue != null) {
+                                      CustomDropdown(
+                                          initialSelectionIndex: selectedSizeIndex,
+                                          items: sizes,
+                                          onChanged: (newValue) {
                                             setState(() {
-                                              _productSize = newValue;
+                                              selectedSizeIndex =
+                                                  sizes.indexOf(newValue!);
                                             });
-                                          }
-                                        },
-                                        value: _productSize,
-                                      ),
+                                          })
                                       // buildSizeDropdown(widget.attributes),
                                     ],
                                   ),
@@ -228,11 +190,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             15.sp, FontWeight.normal, blackClr),
                                       ),
                                       const Spacer(),
-                                      Text(
-                                        widget.color[_selectedColor],
-                                        style: myStyle(
-                                            15.sp, FontWeight.bold, blackClr),
-                                      ),
+                                      CustomDropdown(
+                                          initialSelectionIndex: selectedColorIndex,
+                                          items: colors,
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              selectedColorIndex =
+                                                  colors.indexOf(newValue!);
+                                            });
+                                          })
                                     ],
                                   ),
                                 )
@@ -265,16 +231,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           color: greyClr,
                                         ),
                                       ),
-                                      Text(
-                                        _quantity.toString(),
-                                        style: myStyle(
-                                            15.sp, FontWeight.bold, blackClr),
-                                      ),
+                                      Text(_quantity.toString(),
+                                          style: Get.textTheme.titleSmall),
                                       InkWell(
                                         onTap: () {
-                                          setState(() {
-                                            _quantity++;
-                                          });
+                                          if (widget.products.alertQuantity !=
+                                              _quantity) {
+                                            setState(() {
+                                              _quantity++;
+                                            });
+                                          }
                                         },
                                         child: Icon(
                                           Icons.add,
@@ -298,15 +264,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       Icon(
                                         Icons.star,
                                         size: 20.sp,
-                                        color: widget.productRating < 4.5
+                                        color: productRating < 4.5
                                             ? greyClr
                                             : yellowClr,
                                       ),
                                       Gap(4.w),
                                       Text(
-                                        widget.productRating.toString(),
-                                        style: myStyle(
-                                            15.sp, FontWeight.bold, blackClr),
+                                        productRating.toString(),
+                                        style: Get.textTheme.titleSmall,
                                       ),
                                     ],
                                   ),
@@ -316,17 +281,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             Gap(16.h),
                             Text(
                               'Details',
-                              style: myStyle(20.sp, FontWeight.bold, blackClr),
+                              style: Get.textTheme.titleMedium,
                             ),
                             Gap(8.h),
                             Text(
-                              _isExpanded == true
-                                  ? widget.productDescription.substring(
-                                      0, widget.productDescription.length)
-                                  : widget.productDescription.substring(0, 100),
-                              style:
-                                  myStyle(20.sp, FontWeight.normal, blackClr),
-                            ),
+                                _isExpanded == true
+                                    ? '${widget.products.longDesc}'
+                                    : '${widget.products.shortDesc}',
+                                style: Get.textTheme.bodyMedium),
                             Gap(8.h),
                             GestureDetector(
                               onTap: () {
@@ -335,29 +297,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 });
                               },
                               child: Text(
-                                _isExpanded ? 'Show Less' : 'Show More',
-                                style: myStyle(
-                                    20.sp, FontWeight.normal, orangeClr),
-                              ),
+                                  _isExpanded ? 'Show Less' : 'Show More',
+                                  style: Get.textTheme.bodyMedium!
+                                      .copyWith(color: orangeClr)),
                             ),
                             Gap(16.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Promotional Code',
-                                  style:
-                                      myStyle(25.sp, FontWeight.bold, blackClr),
-                                ),
+                                Text('Promotional Code',
+                                    style: Get.textTheme.titleLarge),
                                 GestureDetector(
                                   onTap: () {
                                     Get.bottomSheet(
                                       CustomBottomSheet(children: [
-                                        Text(
-                                          'Your Promotional Code',
-                                          style: myStyle(
-                                              25.sp, FontWeight.bold, blackClr),
-                                        ),
+                                        Text('Your Promotional Code',
+                                            style: Get.textTheme.titleLarge),
                                         Gap(16.h),
                                         const CustomCouponCode(),
                                         Gap(8.h),
@@ -372,11 +327,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       ]),
                                     );
                                   },
-                                  child: Text(
-                                    'See all',
-                                    style: myStyle(
-                                        20.sp, FontWeight.normal, blackClr),
-                                  ),
+                                  child: Text('See all',
+                                      style: Get.textTheme.bodyMedium),
                                 ),
                               ],
                             ),
@@ -385,7 +337,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             Gap(16.h),
                             Text(
                               'Reviews',
-                              style: myStyle(20.sp, FontWeight.bold, blackClr),
+                              style: Get.textTheme.titleMedium,
                             ),
                             Gap(8.h),
                             InkWell(
@@ -403,129 +355,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                       ),
                     ),
-                    SliverList.separated(
-                      itemBuilder: (context, index) {
-                        final productReview = widget.customerReviews[index];
-                        return Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          width: double.infinity,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 46.h,
-                                width: 46.w,
-                                child: CircleAvatar(
-                                  backgroundColor: orangeClr,
-                                  backgroundImage:
-                                      AssetImage(productReview.profileImage),
-                                ),
-                              ),
-                              Gap(26.w),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          productReview.name,
-                                          style: myStyle(
-                                              20.sp, FontWeight.bold, blackClr),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.star,
-                                              size: 25.sp,
-                                              color: yellowClr,
-                                            ),
-                                            Text(
-                                              productReview.rating.toString(),
-                                              style: myStyle(20.sp,
-                                                  FontWeight.normal, blackClr),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    Gap(8.h),
-                                    Text(
-                                      productReview.message,
-                                      style: myStyle(
-                                          15.sp, FontWeight.normal, blackClr),
-                                    ),
-                                    Gap(8.h),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Row(
-                                            children: List.generate(
-                                                productReview
-                                                    .productImage.length,
-                                                (index) => Container(
-                                                      height: 58.h,
-                                                      width: 58.w,
-                                                      margin: EdgeInsets.only(
-                                                          right: 10.w),
-                                                      decoration: BoxDecoration(
-                                                          image: DecorationImage(
-                                                              image: AssetImage(
-                                                                  productReview
-                                                                          .productImage[
-                                                                      index]),
-                                                              fit: BoxFit
-                                                                  .cover)),
-                                                    )),
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Helpful',
-                                              style: myStyle(20.sp,
-                                                  FontWeight.normal, blackClr),
-                                            ),
-                                            Gap(4.w),
-                                            InkWell(
-                                              onTap: () {
-                                                productReview.toggleHelpful();
-                                                setState(() {});
-                                              },
-                                              child: SizedBox(
-                                                height: 20.h,
-                                                width: 22.w,
-                                                child: SvgPicture.asset(
-                                                  'assets/images/liked-icon.svg',
-                                                  fit: BoxFit.cover,
-                                                  colorFilter:
-                                                      productReview.isLiked ==
-                                                              true
-                                                          ? ColorFilter.mode(
-                                                              greyClr,
-                                                              BlendMode.srcIn)
-                                                          : null,
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) => Gap(20.h),
-                      itemCount: widget.customerReviews.length,
-                    ),
                     SliverToBoxAdapter(child: Gap(16.h))
                   ],
                 ),
@@ -537,7 +366,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   color: whiteClr,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
+                      color: blackClr.withOpacity(0.2),
                       spreadRadius: 1,
                       blurRadius: 5,
                       offset: const Offset(0, -3), // Offset for top shadow
@@ -555,11 +384,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           Text(
                             'Price',
-                            style: myStyle(15.sp, FontWeight.normal, greyClr),
+                            style: Get.textTheme.bodySmall!
+                                .copyWith(color: greyClr),
                           ),
                           Text(
                             '$takaSign${calculateTotal()}',
-                            style: myStyle(20.sp, FontWeight.bold, orangeClr),
+                            style: Get.textTheme.titleMedium!
+                                .copyWith(color: orangeClr),
                           ),
                         ],
                       ),
@@ -578,14 +409,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                           Text(
                             'Store',
-                            style: myStyle(20.sp, FontWeight.normal, blackClr),
+                            style: Get.textTheme.bodyMedium,
                           ),
                         ],
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        customSnackMessage(title: 'Add to cart Successful');
+                        customSuccessMessage(message: 'Add to cart Successful');
                         Get.to(() => HomeScreen());
                       },
                       focusColor: whiteClr,
@@ -598,7 +429,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             color: orangeClr),
                         child: Text(
                           'Add to cart',
-                          style: myStyle(20.sp, FontWeight.bold, whiteClr),
+                          style: Get.textTheme.titleMedium!
+                              .copyWith(color: whiteClr),
                         ),
                       ),
                     )
@@ -614,33 +446,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   int calculateTotal() {
     int total = 0;
-    total += widget.productPrice * _quantity;
+    total += widget.products.offerPrice! * _quantity;
     return total;
   }
-
-  // Widget buildSizeDropdown(List<String> sizes) {
-  //   String selectedSize = sizes.isNotEmpty ? sizes[0] : '';
-  //
-  //   return DropdownButton<String>(
-  //
-  //     value: selectedSize,
-  //     onChanged: (String? newSize) {
-  //       if (newSize != null) {
-  //         setState(() {
-  //           selectedSize=newSize;
-  //         });
-  //         // Handle the selected size
-  //         print('Selected Size: $newSize');
-  //       }
-  //     },
-  //     items: sizes.map((String size) {
-  //       return DropdownMenuItem<String>(
-  //         value: size,
-  //         child: Text(size),
-  //       );
-  //     }).toList(),
-  //   );
-  // }
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {

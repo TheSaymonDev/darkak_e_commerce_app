@@ -15,18 +15,62 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ProfileUpdateScreen extends StatefulWidget {
-  const ProfileUpdateScreen({super.key});
+  final String? id;
+  final String? imgUrl;
+  final String? name;
+  final String? dob;
+  final String? dom;
+  final String? mobile;
+  const ProfileUpdateScreen(
+      {super.key,
+      required this.id,
+      required this.imgUrl,
+      required this.name,
+      required this.dob,
+      required this.dom,
+      required this.mobile});
 
   @override
   State<ProfileUpdateScreen> createState() => _ProfileUpdateScreenState();
 }
 
 class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
-
   final passwordController = TextEditingController();
   bool _isObscure = false;
   final ProfileUpdateController _profileUpdateController =
-      Get.find<ProfileUpdateController>();
+      Get.put(ProfileUpdateController());
+
+  @override
+  void initState() {
+    super.initState();
+    _profileUpdateController.nameController.text = widget.name!;
+    _profileUpdateController.mobileNumberController.text = widget.mobile!;
+    _profileUpdateController.passwordController.text = '***********';
+    if (widget.dob != null) {
+      _profileUpdateController.dateOfBirthController.text =
+          formatDate(widget.dob!);
+    } else {
+      _profileUpdateController.dateOfBirthController.clear();
+    }
+    if (widget.dom != null) {
+      _profileUpdateController.dateOfMarriageController.text =
+          formatDate(widget.dom!);
+    } else {
+      _profileUpdateController.dateOfMarriageController.clear();
+    }
+  }
+
+  String formatDate(String dobString) {
+    try {
+      final date = DateTime.parse(dobString);
+      final formatter = DateFormat('yyyy-MM-dd');
+      return formatter.format(date);
+    } catch (error) {
+      // Handle parsing error (optional)
+      print("Error parsing date: $error");
+      return dobString; // Or return a default value
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,149 +87,161 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         width: double.infinity.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  GetBuilder<ProfileUpdateController>(builder: (controller) {
-                    return GestureDetector(
-                      onTap: () => controller.getImage(),
+          child: Form(
+            key: _profileUpdateController.formKey,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () =>
+                          _profileUpdateController.getImageFromGallery(),
                       child: SizedBox(
-                        height: 120.h,
-                        width: 120.w,
+                          height: 120.h,
+                          width: 120.w,
+                          child: GetBuilder<ProfileUpdateController>(
+                              builder: (controller) {
+                            return CircleAvatar(
+                              backgroundColor: orangeClr,
+                              backgroundImage: controller.image != null
+                                  ? FileImage(controller.image!)
+                                  : widget.imgUrl == null
+                                      ? NetworkImage(
+                                          'https://drive.google.com/file/d/12oHpQfU-mrt8LVhLAqSES7-XF6GAVc8H/view?usp=sharing')
+                                      : NetworkImage('$imgUrl${widget.imgUrl}')
+                                          as ImageProvider,
+                            );
+                          })),
+                    ),
+                    Positioned(
+                        right: 8,
+                        top: 8,
                         child: CircleAvatar(
-                          backgroundColor: orangeClr,
-                          backgroundImage: (controller.image == null)
-                              ? const AssetImage('assets/images/profile-photo.png')
-                              : FileImage(controller.image!) as ImageProvider,
-                        )
+                            radius: 15.r,
+                            backgroundColor: whiteClr,
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              size: 20.sp,
+                              color: blackClr,
+                            ))),
+                  ],
+                ),
+                Gap(64.h),
+                CustomTextFormField(
+                  labelText: 'Full Name',
+                  controller: _profileUpdateController.nameController,
+                  validator: Validators().nameValidator,
+                ),
+                Gap(35.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextFormField(
+                        labelText: 'Date of Birth',
+                        controller:
+                            _profileUpdateController.dateOfBirthController,
+                        readOnly: true,
+                        validator: Validators().dateValidator,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              DateTime? selectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2001),
+                                lastDate: DateTime(2024, 12, 31),
+                              );
+                              if (selectedDate != null) {
+                                // Update your controller with the selected date
+                                _profileUpdateController
+                                        .dateOfBirthController.text =
+                                    DateFormat('yyyy-MM-dd')
+                                        .format(selectedDate);
+                              }
+                            },
+                            icon: Icon(
+                              Icons.calendar_month,
+                              size: 20.sp,
+                              color: orangeClr,
+                            )),
                       ),
-                    );
-                  }),
-                  Positioned(
-                      right: 8,
-                      top: 8,
-                      child: CircleAvatar(
-                          radius: 15.r,
-                          backgroundColor: whiteClr,
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            size: 20.sp,
-                            color: blackClr,
-                          ))),
-                ],
-              ),
-              Gap(64.h),
-              CustomTextFormField(
-                labelText: 'Full Name',
-                controller: _profileUpdateController.nameController,
-                validator: nameValidator,
-              ),
-              Gap(35.h),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextFormField(
-                      labelText: 'Date of Birth',
-                      controller:
-                          _profileUpdateController.dateOfBirthController,
-                      readOnly: true,
-                      suffixIcon: IconButton(
-                          onPressed: () async {
-                            DateTime? selectedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2001),
-                              lastDate: DateTime(2024, 12, 31),
-                            );
-                            if (selectedDate != null) {
-                              // Update your controller with the selected date
-                              _profileUpdateController
-                                      .dateOfBirthController.text =
-                                  DateFormat('dd/MM/yyyy').format(selectedDate);
-                            }
-                          },
-                          icon: Icon(
-                            Icons.calendar_month,
-                            size: 20.sp,
-                            color: orangeClr,
-                          )),
                     ),
-                  ),
-                  Gap(40.w),
-                  Expanded(
-                    child: CustomTextFormField(
-                      labelText: 'Date of Marriage',
-                      controller:
-                          _profileUpdateController.dateOfMarriageController,
-                      readOnly: true,
-                      suffixIcon: IconButton(
-                          onPressed: () async {
-                            DateTime? selectedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2001),
-                              lastDate: DateTime(2024, 12, 31),
-                            );
-                            if (selectedDate != null) {
-                              // Update your controller with the selected date
-                              _profileUpdateController
-                                      .dateOfMarriageController.text =
-                                  DateFormat('dd/MM/yyyy').format(selectedDate);
-                            }
-                          },
-                          icon: Icon(
-                            Icons.calendar_month,
-                            size: 20.sp,
-                            color: orangeClr,
-                          )),
+                    Gap(40.w),
+                    Expanded(
+                      child: CustomTextFormField(
+                        labelText: 'Date of Marriage',
+                        controller:
+                            _profileUpdateController.dateOfMarriageController,
+                        readOnly: true,
+                        validator: Validators().dateValidator,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              DateTime? selectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2001),
+                                lastDate: DateTime(2024, 12, 31),
+                              );
+                              if (selectedDate != null) {
+                                // Update your controller with the selected date
+                                _profileUpdateController
+                                        .dateOfMarriageController.text =
+                                    DateFormat('yyyy-MM-dd')
+                                        .format(selectedDate);
+                              }
+                            },
+                            icon: Icon(
+                              Icons.calendar_month,
+                              size: 20.sp,
+                              color: orangeClr,
+                            )),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Gap(35.h),
-              CustomTextFormField(
-                labelText: 'Mobile Number',
-                controller: _profileUpdateController.mobileNumberController,
-                keyBoardType: TextInputType.phone,
-                readOnly: true,
-              ),
-              Gap(35.h),
-              CustomTextFormField(
-                labelText: 'Password',
-                controller: _profileUpdateController.passwordController,
-                validator: passwordValidator,
-                readOnly: true,
-                obscureText: true,
-              ),
-              Gap(16.h),
-              Align(
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () {
-                    _showBottomSheet();
-                  },
-                  child: Text(
-                    'Change password?',
-                    style: myStyle(20.sp, FontWeight.bold, orangeClr),
+                  ],
+                ),
+                Gap(35.h),
+                CustomTextFormField(
+                  labelText: 'Mobile Number',
+                  controller: _profileUpdateController.mobileNumberController,
+                  keyBoardType: TextInputType.phone,
+                  readOnly: true,
+                ),
+                Gap(35.h),
+                CustomTextFormField(
+                  labelText: 'Password',
+                  controller: _profileUpdateController.passwordController,
+                  validator: Validators().passwordValidator,
+                  readOnly: true,
+                  obscureText: true,
+                ),
+                Gap(16.h),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      _showBottomSheet();
+                    },
+                    child: Text(
+                      'Change password?',
+                      style: myStyle(20.sp, FontWeight.bold, orangeClr),
+                    ),
                   ),
                 ),
-              ),
-              Gap(40.h),
-              GetBuilder<ProfileUpdateController>(
-                builder: (controller) => controller.isLoading == true
-                    ? customCircularProgressIndicator
-                    : CustomTwoButtons(
-                        leftButtonName: 'Cancel',
-                        rightButtonName: 'Save',
-                        onLeftButtonPressed: () {
-                          Get.back();
-                        },
-                        onRightButtonPressed: () {
-                          controller.formOnSubmit();
-                        }),
-              )
-            ],
+                Gap(40.h),
+                GetBuilder<ProfileUpdateController>(builder: (controller) {
+                  return controller.isLoading == true
+                      ? customCircularProgressIndicator
+                      : CustomTwoButtons(
+                          leftButtonName: 'Cancel',
+                          rightButtonName: 'Save',
+                          onLeftButtonPressed: () {
+                            Get.back();
+                          },
+                          onRightButtonPressed: () {
+                            controller.formOnSubmit(widget.id);
+                          });
+                }),
+              ],
+            ),
           ),
         ),
       ),
@@ -204,7 +260,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           CustomTextFormField(
             labelText: 'Old Password',
             controller: passwordController,
-            validator: passwordValidator,
+            validator: Validators().passwordValidator,
             suffixIcon: Padding(
               padding: EdgeInsets.only(right: 8.w),
               child: IconButton(
@@ -238,7 +294,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           CustomTextFormField(
             labelText: 'New Password',
             controller: passwordController,
-            validator: passwordValidator,
+            validator: Validators().passwordValidator,
             readOnly: true,
             suffixIcon: Padding(
               padding: EdgeInsets.only(right: 8.w),
@@ -260,7 +316,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           CustomTextFormField(
             labelText: 'Confirm Password',
             controller: passwordController,
-            validator: passwordValidator,
+            validator: Validators().passwordValidator,
             readOnly: true,
             suffixIcon: Padding(
               padding: EdgeInsets.only(right: 8.w),
@@ -290,5 +346,4 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       ),
     );
   }
-
 }

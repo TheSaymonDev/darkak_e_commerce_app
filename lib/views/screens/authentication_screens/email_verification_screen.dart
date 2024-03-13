@@ -51,7 +51,7 @@ class EmailVerificationScreen extends StatelessWidget {
                     labelText: 'Email or Mobile',
                     controller:
                         _identityVerificationController.identifierController,
-                    validator: identifierValidator,
+                    validator: Validators().identifierValidator,
                   ),
                   Gap(40.h),
                   GetBuilder<IdentityVerificationController>(

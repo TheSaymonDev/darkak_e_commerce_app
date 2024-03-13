@@ -1,5 +1,6 @@
-import 'package:darkak_e_commerce_app/controllers/shop_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
 import 'package:darkak_e_commerce_app/models/product_query_model.dart';
+import 'package:darkak_e_commerce_app/views/screens/final_product_details_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/search_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_filtering_and_sorting.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_product_card.dart';
@@ -20,8 +21,6 @@ class ShopScreen extends StatefulWidget {
 }
 
 class ShopScreenState extends State<ShopScreen> {
-  final ShopController _shopController = Get.find<ShopController>();
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,26 +43,38 @@ class ShopScreenState extends State<ShopScreen> {
             const CustomFilteringAndSorting(),
             Gap(16.h),
             Expanded(
-              child: GetBuilder<ShopController>(builder: (controller) {
-                return controller.isLoading==true? Center(child: customCircularProgressIndicator): MasonryGridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 26.h,
-                  crossAxisSpacing: 30.w,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    // final productList = widget.productList[index];
-                    // final discountAmount =
-                    //     (productList.productPrice * productList.discounts) / 100;
-                    // final discountPrice = productList.productPrice - discountAmount.toInt();
-                    final product = controller.products![index];
-                    return CustomProductCard(
-                        productImgUrl: product['featured_image']['path'],
-                        productName: product['name'],
-                        productPrice: product['regular_price']);
-                  },
-                  itemCount: controller.products!.length,
-                );
+              child: GetBuilder<ProductListController>(builder: (controller) {
+                return controller.isLoading
+                    ? customCircularProgressIndicator
+                    : MasonryGridView.count(
+                        shrinkWrap: true,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 26.h,
+                        crossAxisSpacing: 30.w,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          final product = controller.products[index];
+                          final discountPercent = (product.regularPrice !=
+                                      null &&
+                                  product.offerPrice != null)
+                              ? ((product.regularPrice! - product.offerPrice!) /
+                                      product.regularPrice!) *
+                                  100
+                              : 0.0; // Or a suitable default value
+                          return CustomProductCard(
+                            productImgUrl: product.images![0].path,
+                            productName: product.name,
+                            productPrice: product.offerPrice,
+                            discountPrice: product.regularPrice,
+                            discount: discountPercent.toInt(),
+                            onTap: () {
+                              Get.to(() =>
+                                  FinalProductDetailsScreen(products: product));
+                            },
+                          );
+                        },
+                        itemCount: controller.products.length,
+                      );
               }),
             ),
           ],

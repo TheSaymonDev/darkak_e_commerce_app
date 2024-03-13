@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,14 +6,16 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class CustomProductCard extends StatelessWidget {
-  final String productImgUrl;
-  final String productName;
-  final int productPrice;
-  final String? discountPrice;
-  final String? discount;
+  final void Function()? onTap;
+  final String? productImgUrl;
+  final String? productName;
+  final int? productPrice;
+  final int? discountPrice;
+  final int? discount;
   final String? productRating;
   const CustomProductCard(
       {super.key,
+      required this.onTap,
       required this.productImgUrl,
       required this.productName,
       required this.productPrice,
@@ -37,7 +40,7 @@ class CustomProductCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: onTap,
               child: Container(
                 height: 230.h,
                 width: double.infinity.w,
@@ -45,7 +48,7 @@ class CustomProductCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
                     image: DecorationImage(
-                        image: NetworkImage('$imgUrl$productImgUrl'),
+                        image: CachedNetworkImageProvider('$imgUrl$productImgUrl'),
                         fit: BoxFit.cover)),
                 child: InkWell(
                   onTap: () {},
@@ -72,7 +75,7 @@ class CustomProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    productName,
+                    productName!,
                     style: Get.textTheme.bodyMedium,
                   ),
                   Text(

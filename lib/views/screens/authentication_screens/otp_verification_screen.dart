@@ -49,7 +49,7 @@ final OtpVerificationController _otpVerificationController = Get.find<OtpVerific
                   ),
                   Gap(35.h),
                   PinCodeTextField(
-                    validator: pinValidator,
+                    validator: Validators().pinValidator,
                     controller: _otpVerificationController.otpController,
                     appContext: context,
                     length: 6,

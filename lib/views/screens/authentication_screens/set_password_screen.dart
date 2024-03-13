@@ -49,7 +49,7 @@ class SetPasswordScreen extends StatelessWidget {
                       return CustomTextFormField(
                         labelText: 'New Password',
                         controller: controller.newPasswordController,
-                        validator: passwordValidator,
+                        validator: Validators().passwordValidator,
                         suffixIcon: Padding(
                           padding: EdgeInsets.only(right: 8.w),
                           child: IconButton(
@@ -76,7 +76,7 @@ class SetPasswordScreen extends StatelessWidget {
                         labelText: 'Confirm Password',
                         controller: controller.confirmPasswordController,
                         validator: (value) =>
-                            confirmPasswordValidator(value, controller.newPasswordController),
+                            Validators().confirmPasswordValidator(value, controller.newPasswordController),
                         suffixIcon: Padding(
                           padding: EdgeInsets.only(right: 8.w),
                           child: IconButton(

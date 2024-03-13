@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:darkak_e_commerce_app/core/app_data.dart';
-import 'package:darkak_e_commerce_app/core/utils/shared_preferences.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/identity_verification.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/otp_verification.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/set_password.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/sign_in.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/sign_up.dart';
+import 'package:darkak_e_commerce_app/models/product.dart';
 import 'package:darkak_e_commerce_app/models/user.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:http/http.dart' as http;
@@ -114,36 +115,46 @@ Future<bool> setPasswordRequest(SetPassword setPassword) async {
  }
 }
 
-Future<bool> profileUpdateRequest(String id, User user) async{
-  try{
-    var url = Uri.parse("$baseUrl/users/$id");
-    var postBody = jsonEncode(user);
-    print(postBody);
-    var response = await http.patch(url, headers: requestHeaderWithToken, body: postBody);
-    var resultCode = response.statusCode;
-    print(resultCode);
-    print(response.body);
-    if(resultCode == 200){
-      return true;
-    }else{
-      return false;
-    }
-  }catch(error){
-    customErrorMessage(message: error.toString());
-    throw Exception('Login failed: $error');
-  }
-}
+// Future<Profile> fetchProfile() async{
+//   var url = Uri.parse("$baseUrl/users/current");
+//   var response = await http.get(url);
+//   var resultCode = response.statusCode;
+//   if(resultCode == 200){
+//     final  data = json.decode(response.body);
+//     return Profile.fromJson(data);
+//   }else{
+//     throw Exception('Failed to fetch products: ${response.statusCode}');
+//   }
+// }
+//
+// Future<bool> profileUpdateRequest(String id, Profile user) async{
+//   try{
+//     var url = Uri.parse("$baseUrl/users/$id");
+//     var postBody = jsonEncode(user);
+//     print(postBody);
+//     var response = await http.patch(url, headers: requestHeaderWithToken, body: postBody);
+//     var resultCode = response.statusCode;
+//     print(resultCode);
+//     print(response.body);
+//     if(resultCode == 200){
+//       return true;
+//     }else{
+//       return false;
+//     }
+//   }catch(error){
+//     customErrorMessage(message: error.toString());
+//     throw Exception('Login failed: $error');
+//   }
+// }
 
-Future fetchProductRequest() async{
+Future<List<Product>> fetchProductRequest() async{
   var url = Uri.parse("$baseUrl/products");
   var response = await http.get(url);
   var resultCode = response.statusCode;
-  var responseBody = json.decode(response.body);
   if(resultCode==200){
-    return responseBody;
+    final List<dynamic> data = json.decode(response.body);
+    return data.map((item) => Product.fromJson(item)).toList();
   }else{
-    customErrorMessage(message: 'Something went wrong');
-    null;
+    throw Exception('Failed to fetch products: ${response.statusCode}');
   }
-
 }

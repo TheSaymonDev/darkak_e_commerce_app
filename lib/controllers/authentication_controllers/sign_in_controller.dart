@@ -1,4 +1,6 @@
-import 'package:darkak_e_commerce_app/core/utils/http_client.dart';
+import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/sign_in.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -13,22 +15,29 @@ class SignInController extends GetxController {
   bool isObscure = true;
 
   void formOnSubmit() async {
-    if (formKey.currentState?.validate() ?? false) {
-      isLoading = true;
-      update();
-      final signIn = SignIn(
-        identity: identifierController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      bool loginSuccess = await logInRequest(signIn);
-      if (loginSuccess == true) {
-        isLoading = false;
-       navigateToHomeScreen();
-      } else {
-        customErrorMessage(message: 'Log in failed');
-        isLoading = false;
+    try{
+      if (formKey.currentState?.validate() ?? false) {
+        isLoading = true;
         update();
+        final signIn = SignIn(
+          identity: identifierController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+        final responseData = await ApiService().postApi('$baseUrl/users/login', signIn);
+        if (responseData != null) {
+          SharedPreferencesService().saveToken(responseData['accessToken']);
+          customSuccessMessage(message: 'Successfully Log In');
+          navigateToHomeScreen();
+        } else {
+          customErrorMessage(message: 'Log In Failed');
+          isLoading = false;
+          update();
+        }
       }
+    }catch(error){
+      customErrorMessage(message: error.toString());
+      isLoading = false;
+      update();
     }
   }
 
@@ -38,7 +47,7 @@ class SignInController extends GetxController {
   }
 
   void navigateToHomeScreen(){
-    Get.offAll(()=>const HomeScreen());
+    Get.offAll(()=> HomeScreen());
     isLoading=false;
     identifierController.clear();
     passwordController.clear();

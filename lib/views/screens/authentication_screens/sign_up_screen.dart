@@ -56,20 +56,20 @@ class SignUpScreen extends StatelessWidget {
                       CustomTextFormField(
                         labelText: 'Name',
                         controller: _signUpController.nameController,
-                        validator: nameValidator,
+                        validator: Validators().nameValidator,
                       ),
                       Gap(35.h),
                       CustomTextFormField(
                         labelText: 'Mobile Number',
                         controller: _signUpController.mobileController,
                         keyBoardType: TextInputType.phone,
-                        validator: mobileValidator,
+                        validator: Validators().mobileValidator,
                       ),
                       Gap(35.h),
                       CustomTextFormField(
                         labelText: 'Email',
                         controller: _signUpController.emailController,
-                        validator: emailValidator,
+                        validator: Validators().emailValidator,
                       ),
                       Gap(35.h),
                       GetBuilder<SignUpController>(
@@ -77,7 +77,7 @@ class SignUpScreen extends StatelessWidget {
                           return CustomTextFormField(
                             labelText: 'Password',
                             controller: controller.passwordController,
-                            validator: passwordValidator,
+                            validator: Validators().passwordValidator,
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(right: 8.w),
                               child: IconButton(

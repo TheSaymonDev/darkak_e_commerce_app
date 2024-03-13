@@ -1,8 +1,7 @@
-
 import 'package:darkak_e_commerce_app/core/app_data.dart';
-import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CountDownTimer extends StatelessWidget {
@@ -26,22 +25,22 @@ class CountDownTimer extends StatelessWidget {
       children: [
         Text(
           'Flash Sell',
-          style: myStyle(25.sp, FontWeight.bold, blackClr),
+          style: Get.textTheme.titleLarge,
         ),
         const Spacer(),
         Text(
           'Closing in ',
-          style: myStyle(20.sp, FontWeight.normal, orangeClr),
+          style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr),
         ),
         _timerStyle(hour),
         Text(
           ':',
-          style: myStyle(20.sp, FontWeight.normal, orangeClr),
+          style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr),
         ),
         _timerStyle(minute),
         Text(
           ':',
-          style: myStyle(20.sp, FontWeight.normal, orangeClr),
+          style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr),
         ),
         _timerStyle(second),
       ],
@@ -58,7 +57,7 @@ class CountDownTimer extends StatelessWidget {
             borderRadius: BorderRadius.circular(2.r), color: orangeClr),
         child: Text(
           value,
-          style: myStyle(20.sp, FontWeight.normal, whiteClr),
+          style: Get.textTheme.bodyMedium!.copyWith(color: whiteClr),
         ));
   }
 }

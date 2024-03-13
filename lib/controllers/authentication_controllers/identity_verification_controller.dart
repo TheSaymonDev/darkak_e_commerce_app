@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/utils/http_client.dart';
+import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/identity_verification.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/forgot_otp_verification_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -13,20 +14,27 @@ class IdentityVerificationController extends GetxController {
   bool isLoading = false;
 
   void formOnSubmit() async {
-    if (formKey.currentState?.validate() ?? false) {
-      isLoading = true;
-      update();
-      final identityVerification =
-          IdentityVerification(identity: identifierController.text.trim());
-      userId = await verifyIdentifierRequest(identityVerification);
-      if (userId != null) {
-        customSuccessMessage(message: 'Sent Otp Your Mobile');
-        navigateToForgetOtpVerification();
-      } else {
-        customErrorMessage(message: 'Verification Failed');
-        isLoading = false;
+    try{
+      if (formKey.currentState?.validate() ?? false) {
+        isLoading = true;
         update();
+        final identityVerification =
+        IdentityVerification(identity: identifierController.text.trim());
+        final responseData = await ApiService().postApi('$baseUrl/users/forget-password', identityVerification);
+        if (responseData != null) {
+          userId=responseData['userId'];
+          customSuccessMessage(message: 'Sent Otp Your Mobile');
+          navigateToForgetOtpVerification();
+        } else {
+          customErrorMessage(message: 'Verification Failed');
+          isLoading = false;
+          update();
+        }
       }
+    }catch(error){
+      customErrorMessage(message: error.toString());
+      isLoading = false;
+      update();
     }
   }
 

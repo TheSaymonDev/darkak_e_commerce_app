@@ -1,6 +1,4 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/models/home_categories_model.dart';
-import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/sub_category_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +41,7 @@ class ProductCategories extends StatelessWidget {
                 ),
                 Text(
                   categoriesList.categoryName,
-                  style: myStyle(
-                      20.sp, FontWeight.normal, blackClr),
+                  style: Get.textTheme.bodyMedium,
                 ),
               ],
             );

@@ -1,4 +1,5 @@
 import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/models/final_product.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,8 +8,8 @@ class ProductViewPage extends StatefulWidget {
   const ProductViewPage(
       {super.key, required this.imagePath, required this.imagesPath});
 
-  final String imagePath;
-  final List<String> imagesPath;
+  final String? imagePath;
+  final List<Images>? imagesPath;
 
   @override
   State<ProductViewPage> createState() => _ProductViewPageState();
@@ -41,7 +42,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
       body: Center(
         child: PageView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: widget.imagesPath.length,
+          itemCount: widget.imagesPath!.length,
           itemBuilder: (context, index) => GestureDetector(
             onDoubleTapDown: (details){
               tapDownDetails = details;
@@ -62,7 +63,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
               transformationController: controller,
               child: AspectRatio(
                 aspectRatio: 1,
-                child: Image.asset(widget.imagesPath[index]),
+                child: Image.network('$imgUrl${widget.imagesPath![index].path}'),
               ),
             ),
           ),

@@ -150,7 +150,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
               CustomElevatedButton(
                   onPressed: () {
                     customSnackMessage(title: 'Review Send Successful');
-                    Get.to(()=>const HomeScreen());
+                    Get.to(()=> HomeScreen());
                   },
                   buttonName: 'Send Review',
                   width: double.infinity.w),

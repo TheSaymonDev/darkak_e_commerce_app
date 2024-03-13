@@ -61,14 +61,14 @@ class SignInScreen extends StatelessWidget {
                         CustomTextFormField(
                           labelText: 'Email or Mobile',
                           controller: _signInController.identifierController,
-                          validator: identifierValidator,
+                          validator: Validators().identifierValidator,
                         ),
                         Gap(35.h),
                         GetBuilder<SignInController>(
                           builder: (controller) => CustomTextFormField(
                             labelText: 'Password',
                             controller: controller.passwordController,
-                            validator: passwordValidator,
+                            validator: Validators().passwordValidator,
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(right: 8.w),
                               child: IconButton(

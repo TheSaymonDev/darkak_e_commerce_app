@@ -1,67 +1,70 @@
+import 'dart:developer';
 import 'dart:io';
-import 'package:darkak_e_commerce_app/core/utils/http_client.dart';
-import 'package:darkak_e_commerce_app/core/utils/shared_preferences.dart';
-import 'package:darkak_e_commerce_app/models/user.dart';
+import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileUpdateController extends GetxController{
+class ProfileUpdateController extends GetxController {
+  final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final dateOfBirthController = TextEditingController();
   final dateOfMarriageController = TextEditingController();
   final mobileNumberController = TextEditingController();
   final passwordController = TextEditingController();
-  File? image;
   bool isLoading = false;
 
-  @override
-  void onInit() async{
-    super.onInit();
-    _getUserData();
-  }
-
-  void formOnSubmit() async {
-    isLoading = true;
-    update();
-    final user = User(image: image, name: nameController.text, dob: dateOfBirthController.text, marriageDate: dateOfMarriageController.text);
-    bool profileUpdateSuccess = await profileUpdateRequest(SharedPreferencesService().getId(), user);
-    if(profileUpdateSuccess==true){
-      customSuccessMessage(message: 'Successfully Profile Update');
-      _navigateToBack();
-    }else{
-      customErrorMessage(message: 'Something went wrong');
-      isLoading = false;
-      update();
+  File? image;
+  Future<void> getImageFromGallery() async {
+    try {
+      final pickedFile = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 80);
+      if (pickedFile != null) {
+        image = File(pickedFile.path);
+        update();
+      }
+    } on PlatformException catch (e) {
+      customErrorMessage(message: e); // Handle platform exceptions
     }
   }
 
-  void _getUserData() async{
-    nameController.text = SharedPreferencesService().getUserName();
-    mobileNumberController.text = SharedPreferencesService().getMobile();
-    passwordController.text = '********';
+  void formOnSubmit(String? id) async {
+    if (formKey.currentState?.validate() ?? false) {
+      isLoading = true;
+      update();
+      try{
+        bool responseSuccess = await ApiService().patchMultiPartApi(
+          '$baseUrl/users/$id',
+          {
+            'name': nameController.text,
+            'dob': dateOfBirthController.text,
+            'marriageDate': dateOfMarriageController.text,
+          },
+          file: image,
+        );
+        if (responseSuccess==true) {
+          customSuccessMessage(message: 'Profile Successfully Updated');
+          _navigateToBack();
+        } else {
+          customErrorMessage(message: 'Something Went Wrong');
+          isLoading = false;
+          update();
+        }
+      }catch(error){
+        customErrorMessage(message: error.toString());
+        isLoading = false;
+        update();
+      }
+    }
   }
 
   void _navigateToBack() {
-    Get.off(()=> const HomeScreen());
     isLoading = false;
     update();
+    Get.off(() => const HomeScreen());
   }
-
-  Future<File?> getImage() async {
-    final getImage = ImagePicker();
-    final pickedFile = await getImage.pickImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-       image = File(pickedFile.path);
-       update();
-      return image; // Return the image file for further use
-    } else {
-      return null; // Handle cases where no image is picked
-    }
-  }
-
 }

@@ -49,7 +49,7 @@ class ForgotOtpVerificationScreen extends StatelessWidget {
                           Get.textTheme.bodyMedium!.copyWith(color: greyClr)),
                   Gap(35.h),
                   PinCodeTextField(
-                    validator: pinValidator,
+                    validator: Validators().pinValidator,
                     controller: _forgetOtpVerificationController.otpController,
                     appContext: context,
                     length: 6,
