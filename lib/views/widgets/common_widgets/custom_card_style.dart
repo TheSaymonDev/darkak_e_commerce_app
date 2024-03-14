@@ -1,5 +1,4 @@
-
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,7 +35,7 @@ class CustomCardStyle extends StatelessWidget {
         width: width,
         padding: padding,
         decoration: isCircle == true
-            ? BoxDecoration(color: whiteClr, shape: BoxShape.circle)
+            ? const BoxDecoration(color: whiteClr, shape: BoxShape.circle)
             : BoxDecoration(
                 color: whiteClr,
                 border: border,

@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/cart_product_item_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
@@ -35,7 +36,7 @@ class CartCheckout extends StatelessWidget {
                 style: myStyle(15.sp, FontWeight.normal, Colors.grey),
               ),
               Text(
-                '$takaSign${calculateTotal()}',
+                '${Urls.takaSign}${calculateTotal()}',
                 style: myStyle(20.sp, FontWeight.bold, orangeClr),
               )
             ],

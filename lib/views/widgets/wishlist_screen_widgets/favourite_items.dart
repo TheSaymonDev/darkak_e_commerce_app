@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/product_details_screen.dart';
@@ -78,7 +79,7 @@ class _FavouriteItemState extends State<FavouriteItem> {
                             25.sp, FontWeight.normal, blackClr),
                       ),
                       Text(
-                        '$takaSign${demoProductList[index].productPrice.toString()}',
+                        '${Urls.takaSign}${demoProductList[index].productPrice.toString()}',
                         style: myStyle(
                             20.sp, FontWeight.normal, orangeClr),
                       ),

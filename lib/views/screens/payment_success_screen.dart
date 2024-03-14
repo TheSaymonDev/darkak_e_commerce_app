@@ -1,4 +1,4 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
@@ -34,7 +34,7 @@ class PaymentSuccessScreen extends StatelessWidget {
             Text('Your order will be delivered soon. Thank you for choosing our app!', style: myStyle(25.sp, FontWeight.bold, blackClr),textAlign: TextAlign.center,),
             const Spacer(),
             CustomElevatedButton(onPressed: (){
-              Get.offAll(()=> HomeScreen());
+              Get.offAll(()=> const HomeScreen());
             }, buttonName: 'Continue Shopping', width: double.infinity.w),
             Gap(40.h),
           ],

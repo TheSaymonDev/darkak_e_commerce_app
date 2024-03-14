@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/models/product_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -89,7 +90,7 @@ class OrderDetailsPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: orangeClr,
                       ),
                       Column(
@@ -147,7 +148,7 @@ class OrderDetailsPage extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            '$takaSign${products[index].productPrice}',
+                                            '${Urls.takaSign}${products[index].productPrice}',
                                             style: myStyle(20.sp,
                                                 FontWeight.normal, orangeClr),
                                           ),

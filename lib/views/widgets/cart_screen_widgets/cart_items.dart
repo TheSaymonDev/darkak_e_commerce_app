@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/cart_product_item_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class _CartItemsState extends State<CartItems> {
                       Row(
                         children: [
                           Text(
-                            '$takaSign${cartProductList.productPrice.toString()}',
+                            '${Urls.takaSign}${cartProductList.productPrice.toString()}',
                             style: myStyle(20.sp,
                                 FontWeight.normal, orangeClr),
                           ),

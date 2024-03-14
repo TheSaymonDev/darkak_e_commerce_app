@@ -1,5 +1,10 @@
-import 'package:darkak_e_commerce_app/controllers/profile_controller.dart';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
+import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
+import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_bottom_sheet.dart';
+import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_two_buttons.dart';
 import 'package:darkak_e_commerce_app/views/widgets/profile_screen_widgets/profile_item_button.dart';
 import 'package:darkak_e_commerce_app/views/screens/address_screen/address_view_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/order_history_screens/my_order_screen.dart';
@@ -35,38 +40,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 120.h,
-                    width: 120.w,
-                    child: CircleAvatar(
-                      backgroundColor: orangeClr,
-                      backgroundImage: _profileController
-                                  .user?.profileImage?.path ==
-                              null
-                          ? const AssetImage(
-                              'assets/images/profile-photo.png',
-                            )
-                          : NetworkImage(
-                                  '$imgUrl${_profileController.user!.profileImage!.path}')
-                              as ImageProvider,
-                    ),
+                      height: 110.h,
+                      width: 110.w,
+                      child: GetBuilder<ProfileController>(
+                        builder: (controller) {
+                          return CircleAvatar(
+                            backgroundColor: orangeClr,
+                            backgroundImage: controller
+                                        .user?.profileImage?.path ==
+                                    null
+                                ? const AssetImage(
+                                    'assets/images/profile-photo.png',
+                                  )
+                                : NetworkImage(
+                                        '${Urls.imgUrl}${controller.user!.profileImage!.path}')
+                                    as ImageProvider,
+                          );
+                        },
+                      )),
+                  Gap(16.w),
+                  Expanded(
+                    child: GetBuilder<ProfileController>(builder: (controller) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            controller.user?.name ??
+                                'Fetching Profile...', // Use ?? for default value
+                            style: Get.textTheme.titleLarge,
+                          ),
+                          Gap(4.h),
+                          Text(
+                            controller.user?.email ?? '',
+                            style: Get.textTheme.bodyMedium,
+                          ),
+                        ],
+                      );
+                    }),
                   ),
-                  Gap(50.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        _profileController.user?.name ??
-                            'Fetching Profile...', // Use ?? for default value
-                        style: Get.textTheme.titleLarge,
-                      ),
-                      Gap(4.h),
-                      Text(
-                        _profileController.user?.email ?? '',
-                        style: Get.textTheme.bodyMedium,
-                      ),
-                    ],
-                  )
+                  InkWell(
+                    onTap: (){
+                      _profileController.refresh();
+                    },
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: Icon(Icons.refresh, color: orangeClr, size: 25.sp,)),
                 ],
               ),
             ),
@@ -80,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Get.to(() => ProfileUpdateScreen(
                               id: _profileController.user!.id,
                               imgUrl:
-                                  _profileController.user!.profileImage!.path,
+                                  _profileController.user?.profileImage?.path,
                               name: _profileController.user!.name,
                               dob: _profileController.user!.dob,
                               dom: _profileController.user!.marriageDate,
@@ -136,7 +154,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         })),
                     Gap(20.h),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        _showBottomSheet();
+                      },
                       child: const ProfileItemButton(
                           iconUrl: 'assets/images/logout.svg',
                           title: 'Logout',
@@ -152,37 +172,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // Future<dynamic> _showBottomSheet() {
-  //   return Get.bottomSheet(
-  //     CustomBottomSheet(
-  //       children: [
-  //         Center(
-  //           child: Text(
-  //             'Logout',
-  //             style: Get.textTheme.titleLarge,
-  //           ),
-  //         ),
-  //         Gap(20.h),
-  //         Center(
-  //           child: Text(
-  //             'Are you sure want to logout?',
-  //             style: Get.textTheme.bodyLarge,
-  //           ),
-  //         ),
-  //         Gap(50.h),
-  //         CustomTwoButtons(
-  //             leftButtonName: 'Cancel',
-  //             onLeftButtonPressed: () {
-  //               Get.back();
-  //             },
-  //             rightButtonName: 'Logout',
-  //             onRightButtonPressed: () {
-  //               SharedPreferencesService().clearUserData();
-  //               Get.offAll(() => SignInScreen());
-  //             }),
-  //         Gap(32.h)
-  //       ],
-  //     ),
-  //   );
-  // }
+  Future<dynamic> _showBottomSheet() {
+    return Get.bottomSheet(
+      CustomBottomSheet(
+        children: [
+          Center(
+            child: Text(
+              'Logout',
+              style: Get.textTheme.titleLarge,
+            ),
+          ),
+          Gap(20.h),
+          Center(
+            child: Text(
+              'Are you sure want to logout?',
+              style: Get.textTheme.bodyLarge,
+            ),
+          ),
+          Gap(50.h),
+          CustomTwoButtons(
+              leftButtonName: 'Cancel',
+              onLeftButtonPressed: () {
+                Get.back();
+              },
+              rightButtonName: 'Logout',
+              onRightButtonPressed: () {
+                SharedPreferencesService().clearUserData();
+                Get.offAll(() => SignInScreen());
+              }),
+          Gap(32.h)
+        ],
+      ),
+    );
+  }
 }

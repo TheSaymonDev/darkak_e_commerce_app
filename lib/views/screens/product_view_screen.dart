@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_product.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
               transformationController: controller,
               child: AspectRatio(
                 aspectRatio: 1,
-                child: Image.network('$imgUrl${widget.imagesPath![index].path}'),
+                child: Image.network('${Urls.imgUrl}${widget.imagesPath![index].path}'),
               ),
             ),
           ),

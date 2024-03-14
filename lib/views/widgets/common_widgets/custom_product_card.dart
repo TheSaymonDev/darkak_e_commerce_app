@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -48,7 +49,7 @@ class CustomProductCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
                     image: DecorationImage(
-                        image: CachedNetworkImageProvider('$imgUrl$productImgUrl'),
+                        image: CachedNetworkImageProvider('${Urls.imgUrl}$productImgUrl'),
                         fit: BoxFit.cover)),
                 child: InkWell(
                   onTap: () {},
@@ -79,7 +80,7 @@ class CustomProductCard extends StatelessWidget {
                     style: Get.textTheme.bodyMedium,
                   ),
                   Text(
-                    '$takaSign$productPrice',
+                    '${Urls.takaSign}$productPrice',
                     style: Get.textTheme.bodyMedium,
                   ),
                   Row(

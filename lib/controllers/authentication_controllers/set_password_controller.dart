@@ -1,13 +1,12 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/set_password.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SetPasswordController extends GetxController{
-
+class SetPasswordController extends GetxController {
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -15,13 +14,17 @@ class SetPasswordController extends GetxController{
   bool isObscureConfirm = true;
   bool isLoading = false;
 
-  formOnSubmit(String userId, String otp) async{
-    try{
-      if (formKey.currentState?.validate() ?? false) {
-        isLoading = true;
-        update();
-        final setPassword = SetPassword(userId: userId, password: newPasswordController.text.trim(), otp: otp);
-        final responseData = await ApiService().postApi('$baseUrl/users/reset-password', setPassword);
+  formOnSubmit(String userId, String otp) async {
+    if (formKey.currentState?.validate() ?? false) {
+      isLoading = true;
+      update();
+      final setPassword = SetPassword(
+          userId: userId,
+          password: newPasswordController.text.trim(),
+          otp: otp);
+      try {
+        final responseData =
+            await ApiService().postApi(Urls.setPasswordUrl, setPassword);
         if (responseData != null) {
           customSuccessMessage(message: 'Password Changed Successfully');
           navigateToSignInScreen();
@@ -30,11 +33,11 @@ class SetPasswordController extends GetxController{
           isLoading = false;
           update();
         }
+      } catch (error) {
+        customErrorMessage(message: error.toString());
+        isLoading = false;
+        update();
       }
-    }catch(error){
-      customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
     }
   }
 
@@ -49,8 +52,8 @@ class SetPasswordController extends GetxController{
   }
 
   void navigateToSignInScreen() {
-    Get.offAll(()=>SignInScreen());
-    isLoading=false;
+    Get.offAll(() => SignInScreen());
+    isLoading = false;
     newPasswordController.clear();
     confirmPasswordController.clear();
   }

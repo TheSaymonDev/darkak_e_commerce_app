@@ -1,7 +1,7 @@
 import 'package:darkak_e_commerce_app/controllers/home_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/profile_controller.dart';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/views/screens/cart_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/explore_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/profile_screen.dart';
@@ -27,13 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
     const ProfileScreen(),
   ];
 
-  final HomeScreenController _homeScreenController = Get.put(HomeScreenController());
-
-  final ProfileScreen _profileScreen = Get.put(const ProfileScreen());
+  final HomeScreenController _homeScreenController = Get.find<HomeScreenController>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Get.find<ProductListController>().fetchProducts();
     Get.find<ProfileController>().fetchProfile();

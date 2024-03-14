@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/product_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/product_details_screen.dart';
@@ -87,7 +88,7 @@ class _CustomProductItemGridViewState extends State<CustomProductItemGridView> {
                         height: 32.h,
                         width: 32.w,
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             shape: BoxShape.circle, color: whiteClr),
                         child: Icon(
                           productList.isFavourite == true
@@ -111,7 +112,7 @@ class _CustomProductItemGridViewState extends State<CustomProductItemGridView> {
                         style: myStyle(20.sp, FontWeight.normal, blackClr),
                       ),
                       Text(
-                        '$takaSign${productList.productPrice}',
+                        '${Urls.takaSign}${productList.productPrice}',
                         style:
                             myStyle(20.sp, FontWeight.normal, orangeClr),
                       ),

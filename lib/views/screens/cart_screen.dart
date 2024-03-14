@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/cart_product_item_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
@@ -94,7 +95,7 @@ class _CartScreenState extends State<CartScreen> {
                                        Row(
                                          children: [
                                            Text(
-                                             '$takaSign${cartProductList.productPrice.toString()}',
+                                             '${Urls.takaSign}${cartProductList.productPrice.toString()}',
                                              style: myStyle(20.sp,
                                                  FontWeight.normal, orangeClr),
                                            ),
@@ -196,7 +197,7 @@ class _CartScreenState extends State<CartScreen> {
                                      20.sp, FontWeight.normal, orangeClr),
                                ),
                                Text(
-                                 '$takaSign${calculateSubTotal()}',
+                                 '${Urls.takaSign}${calculateSubTotal()}',
                                  style:
                                  myStyle(20.sp, FontWeight.normal, blackClr),
                                )
@@ -224,7 +225,7 @@ class _CartScreenState extends State<CartScreen> {
                                      20.sp, FontWeight.normal, orangeClr),
                                ),
                                Text(
-                                 '${takaSign}50',
+                                 '${Urls.takaSign}50',
                                  style:
                                  myStyle(20.sp, FontWeight.normal, blackClr),
                                )
@@ -312,7 +313,7 @@ class _CartScreenState extends State<CartScreen> {
                         style: myStyle(15.sp, FontWeight.normal, Colors.grey),
                       ),
                       Text(
-                        '$takaSign${calculateSubTotal()+50}',
+                        '${Urls.takaSign}${calculateSubTotal()+50}',
                         style: myStyle(20.sp, FontWeight.bold, orangeClr),
                       )
                     ],

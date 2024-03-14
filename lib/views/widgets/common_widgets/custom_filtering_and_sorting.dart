@@ -1,5 +1,4 @@
-
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_bottom_sheet.dart';
 import 'package:darkak_e_commerce_app/views/screens/filter_screen.dart';

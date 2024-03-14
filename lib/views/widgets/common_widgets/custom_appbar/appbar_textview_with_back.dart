@@ -1,4 +1,4 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,6 @@ class AppbarTextviewWithBack extends StatelessWidget implements PreferredSizeWid
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: whiteClr,
       elevation: 0,
       centerTitle: true,
       leading: IconButton(

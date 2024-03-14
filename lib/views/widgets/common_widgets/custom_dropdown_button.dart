@@ -1,5 +1,4 @@
-
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
                 style: myStyle(20.sp, FontWeight.normal, greyClr),
               ),
               iconStyleData: IconStyleData(
-                icon: Icon(
+                icon: const Icon(
                   Icons.keyboard_arrow_down,
                   color: orangeClr,
                 ),
@@ -55,10 +54,10 @@ class CustomDropdownButton<T> extends StatelessWidget {
                 contentPadding: EdgeInsets.symmetric(horizontal: 0.w),
                 fillColor: whiteClr,
                 filled: true,
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(width: 2, color: orangeClr),
                 ),
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(width: 2, color: orangeClr),
                 ),
               ),

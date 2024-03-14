@@ -6,9 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class ProductList extends StatelessWidget {
+class CustomHorizontalProductList extends StatelessWidget {
   final List<Product>? productList;
-  const ProductList({super.key, required this.productList});
+  const CustomHorizontalProductList({super.key, required this.productList});
 
   @override
   Widget build(BuildContext context) {

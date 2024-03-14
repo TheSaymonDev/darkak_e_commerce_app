@@ -1,6 +1,6 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/sign_in.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -15,7 +15,6 @@ class SignInController extends GetxController {
   bool isObscure = true;
 
   void formOnSubmit() async {
-    try{
       if (formKey.currentState?.validate() ?? false) {
         isLoading = true;
         update();
@@ -23,23 +22,24 @@ class SignInController extends GetxController {
           identity: identifierController.text.trim(),
           password: passwordController.text.trim(),
         );
-        final responseData = await ApiService().postApi('$baseUrl/users/login', signIn);
-        if (responseData != null) {
-          SharedPreferencesService().saveToken(responseData['accessToken']);
-          customSuccessMessage(message: 'Successfully Log In');
-          navigateToHomeScreen();
-        } else {
-          customErrorMessage(message: 'Log In Failed');
+        try{
+          final responseData = await ApiService().postApi(Urls.signInUrl, signIn);
+          if (responseData != null) {
+            SharedPreferencesService().saveToken(responseData['accessToken']);
+            customSuccessMessage(message: 'Successfully Log In');
+            navigateToHomeScreen();
+          } else {
+            customErrorMessage(message: 'Log In Failed');
+            isLoading = false;
+            update();
+          }
+        }catch(error){
+          customErrorMessage(message: error.toString());
           isLoading = false;
           update();
         }
       }
-    }catch(error){
-      customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
     }
-  }
 
   void toggleObscure() {
     isObscure = !isObscure;
@@ -47,7 +47,7 @@ class SignInController extends GetxController {
   }
 
   void navigateToHomeScreen(){
-    Get.offAll(()=> HomeScreen());
+    Get.offAll(()=> const HomeScreen());
     isLoading=false;
     identifierController.clear();
     passwordController.clear();

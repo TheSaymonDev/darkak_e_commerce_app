@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:darkak_e_commerce_app/controllers/onboarding_controller.dart';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class OnboardingScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SvgPicture.asset(
-                          'assets/images/app-logo.svg',
+                          Urls.appLogoSvg,
                           height: 208.h,
                           width: 264.w,
                           fit: BoxFit.cover,

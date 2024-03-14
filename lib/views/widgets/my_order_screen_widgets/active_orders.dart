@@ -1,4 +1,6 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/my_order_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/order_history_screens/order_details_page.dart';
@@ -136,7 +138,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            '$takaSign${myOrder.products[index].productPrice}',
+                                            '${Urls.takaSign}${myOrder.products[index].productPrice}',
                                             style: myStyle(20.sp,
                                                 FontWeight.normal, orangeClr),
                                           ),

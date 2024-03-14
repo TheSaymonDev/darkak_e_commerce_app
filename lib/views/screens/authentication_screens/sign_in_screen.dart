@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_in_controller.dart';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
@@ -33,15 +34,14 @@ class SignInScreen extends StatelessWidget {
               children: [
                 Gap(30.h),
                 SvgPicture.asset(
-                  'assets/images/app-logo.svg',
+                  Urls.appLogoSvg,
                   height: 86.h,
                   width: 110.w,
                 ),
                 Gap(40.h),
                 CustomCardStyle(
                   width: double.infinity.w,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   child: Form(
                     key: _signInController.formKey,
                     child: Column(

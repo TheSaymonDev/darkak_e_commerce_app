@@ -1,4 +1,6 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,7 +38,7 @@ class CartTotalCost extends StatelessWidget {
                       20.sp, FontWeight.normal, orangeClr),
                 ),
                 Text(
-                  '${takaSign}3950',
+                  '${Urls.takaSign}3950',
                   style:
                   myStyle(20.sp, FontWeight.normal, blackClr),
                 )
@@ -64,7 +66,7 @@ class CartTotalCost extends StatelessWidget {
                       20.sp, FontWeight.normal, orangeClr),
                 ),
                 Text(
-                  '${takaSign}50',
+                  '${Urls.takaSign}50',
                   style:
                   myStyle(20.sp, FontWeight.normal, blackClr),
                 )

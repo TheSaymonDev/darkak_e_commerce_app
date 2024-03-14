@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:darkak_e_commerce_app/controllers/explore_screen_controller.dart';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/models/product_offer_model.dart';
 import 'package:darkak_e_commerce_app/views/screens/store_screen.dart';
 import 'package:flutter/material.dart';

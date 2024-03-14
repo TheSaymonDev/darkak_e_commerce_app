@@ -1,4 +1,6 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_two_buttons.dart';
@@ -141,7 +143,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     _buildExpansionTile(
                         title: 'Price',
                         subTitle:
-                            '$takaSign${_priceRange.start.toStringAsFixed(0)}-$takaSign${_priceRange.end.toStringAsFixed(0)}',
+                            '${Urls.takaSign}${_priceRange.start.toStringAsFixed(0)}-${Urls.takaSign}${_priceRange.end.toStringAsFixed(0)}',
                         children: [
                           SliderTheme(
                             data: SliderThemeData(

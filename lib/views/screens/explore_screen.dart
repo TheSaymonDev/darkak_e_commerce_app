@@ -1,8 +1,8 @@
 import 'package:darkak_e_commerce_app/controllers/explore_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/models/demo_product_list.dart';
-import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/product_list.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_horizontal_product_list.dart';
 import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/product_sector_title.dart';
 import 'package:darkak_e_commerce_app/views/screens/see_all_categories_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/brand_shop.dart';
@@ -112,7 +112,7 @@ class ExploreScreen extends StatelessWidget {
                   Gap(16.h),
                   GetBuilder<ProductListController>(
                     builder: (controller) {
-                      return controller.isLoading? customCircularProgressIndicator: ProductList(productList: controller.products);
+                      return controller.isLoading? customCircularProgressIndicator: CustomHorizontalProductList(productList: controller.products);
                     }
                   ),
                   Gap(16.h),
@@ -125,7 +125,7 @@ class ExploreScreen extends StatelessWidget {
                   Gap(8.h),
                   GetBuilder<ProductListController>(
                       builder: (controller) {
-                        return controller.isLoading? customCircularProgressIndicator: ProductList(productList: controller.products);
+                        return controller.isLoading? customCircularProgressIndicator: CustomHorizontalProductList(productList: controller.products);
                       }
                   ),
                   Gap(16.h),
@@ -143,7 +143,7 @@ class ExploreScreen extends StatelessWidget {
                   Gap(8.h),
                   GetBuilder<ProductListController>(
                       builder: (controller) {
-                        return controller.isLoading? customCircularProgressIndicator: ProductList(productList: controller.products);
+                        return controller.isLoading? customCircularProgressIndicator: CustomHorizontalProductList(productList: controller.products);
                       }
                   ),
                   Gap(16.h),
@@ -156,7 +156,7 @@ class ExploreScreen extends StatelessWidget {
                   Gap(8.h),
                   GetBuilder<ProductListController>(
                       builder: (controller) {
-                        return controller.isLoading? customCircularProgressIndicator: ProductList(productList: controller.products);
+                        return controller.isLoading? customCircularProgressIndicator: CustomHorizontalProductList(productList: controller.products);
                       }
                   ),
                   Gap(16.h),
@@ -169,7 +169,7 @@ class ExploreScreen extends StatelessWidget {
                   Gap(8.h),
                   GetBuilder<ProductListController>(
                       builder: (controller) {
-                        return controller.isLoading? customCircularProgressIndicator: ProductList(productList: controller.products);
+                        return controller.isLoading? customCircularProgressIndicator: CustomHorizontalProductList(productList: controller.products);
                       }
                   ),
                   Gap(16.h),
@@ -182,7 +182,7 @@ class ExploreScreen extends StatelessWidget {
                   Gap(8.h),
                   GetBuilder<ProductListController>(
                       builder: (controller) {
-                        return controller.isLoading? customCircularProgressIndicator: ProductList(productList: controller.products);
+                        return controller.isLoading? customCircularProgressIndicator: CustomHorizontalProductList(productList: controller.products);
                       }
                   ),
                   Gap(16.h),

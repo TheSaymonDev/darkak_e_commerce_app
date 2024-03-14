@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/controllers/profile_update_controller.dart';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
 import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
@@ -105,11 +106,9 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                               backgroundColor: orangeClr,
                               backgroundImage: controller.image != null
                                   ? FileImage(controller.image!)
-                                  : widget.imgUrl == null
-                                      ? NetworkImage(
-                                          'https://drive.google.com/file/d/12oHpQfU-mrt8LVhLAqSES7-XF6GAVc8H/view?usp=sharing')
-                                      : NetworkImage('$imgUrl${widget.imgUrl}')
-                                          as ImageProvider,
+                                  : widget.imgUrl != null
+                                  ? NetworkImage('${Urls.imgUrl}${widget.imgUrl}')
+                                  : const AssetImage( 'assets/images/profile-photo.png') as ImageProvider,
                             );
                           })),
                     ),

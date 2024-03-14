@@ -1,4 +1,5 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/delivery_option_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/payment_success_screen.dart';
@@ -324,7 +325,7 @@ class _CheckOutScreenState extends State<CheckOutScreen>
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4.r),
                               image: const DecorationImage(
-                                  image: AssetImage(sareeImage))),
+                                  image: AssetImage(Urls.sareeImage))),
                         ),
                         Gap(40.w),
                         Column(
@@ -339,7 +340,7 @@ class _CheckOutScreenState extends State<CheckOutScreen>
                             Row(
                               children: [
                                 Text(
-                                  '${takaSign}500',
+                                  '${Urls.takaSign}500',
                                   style: myStyle(
                                       20.sp, FontWeight.normal, orangeClr),
                                 ),
@@ -423,7 +424,7 @@ class _CheckOutScreenState extends State<CheckOutScreen>
               style: myStyle(20.sp, FontWeight.normal, orangeClr),
             ),
             Text(
-              '${takaSign}50',
+              '${Urls.takaSign}50',
               style: myStyle(20.sp, FontWeight.normal, blackClr),
             )
           ],
@@ -442,7 +443,7 @@ class _CheckOutScreenState extends State<CheckOutScreen>
               style: myStyle(20.sp, FontWeight.normal, orangeClr),
             ),
             Text(
-              '${takaSign}2500',
+              '${Urls.takaSign}2500',
               style: myStyle(20.sp, FontWeight.normal, blackClr),
             )
           ],

@@ -1,26 +1,27 @@
-import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/otp_verification.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/set_password_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ForgetOtpVerificationController extends GetxController{
+class ForgetOtpVerificationController extends GetxController {
   final otpController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
 
   void formOnSubmit(String userId) async {
-    try{
-      if (formKey.currentState?.validate() ?? false) {
-        isLoading = true;
-        update();
-        final otpVerification = OtpVerification(
-          userId: userId,
-          otp: otpController.text.trim(),
-        );
-        final responseData = await ApiService().postApi('$baseUrl/users/forget-password/otp-verify', otpVerification);
+    if (formKey.currentState?.validate() ?? false) {
+      isLoading = true;
+      update();
+      final otpVerification = OtpVerification(
+        userId: userId,
+        otp: otpController.text.trim(),
+      );
+      try {
+        final responseData = await ApiService()
+            .postApi(Urls.forgetOtpVerificationUrl, otpVerification);
         if (responseData != null) {
           customSuccessMessage(message: 'Otp Successfully Verified');
           navigateToSetPasswordScreen(userId);
@@ -29,16 +30,17 @@ class ForgetOtpVerificationController extends GetxController{
           isLoading = false;
           update();
         }
+      } catch (error) {
+        customErrorMessage(message: error.toString());
+        isLoading = false;
+        update();
       }
-    }catch(error){
-      customErrorMessage(message: error.toString());
-      isLoading = false;
-      update();
     }
   }
 
   void navigateToSetPasswordScreen(userId) {
-    Get.offAll(() =>  SetPasswordScreen(userId: userId, otp: otpController.text.trim()));
+    Get.offAll(() =>
+        SetPasswordScreen(userId: userId, otp: otpController.text.trim()));
     isLoading = false;
   }
 }

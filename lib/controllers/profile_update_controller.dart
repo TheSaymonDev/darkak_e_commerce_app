@@ -1,7 +1,6 @@
-import 'dart:developer';
 import 'dart:io';
-import 'package:darkak_e_commerce_app/core/app_data.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class ProfileUpdateController extends GetxController {
       update();
       try{
         bool responseSuccess = await ApiService().patchMultiPartApi(
-          '$baseUrl/users/$id',
+          '${Urls.profileUpdateUrl}/$id',
           {
             'name': nameController.text,
             'dob': dateOfBirthController.text,
