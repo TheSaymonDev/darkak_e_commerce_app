@@ -1,13 +1,14 @@
 import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
 import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/views/screens/search_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_filtering_and_sorting.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_query_tab.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_search_text_form_field.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_vertical_product_list.dart';
-import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_filtering_and_sorting.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_product_card.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_product_card_shimmer.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_query_tab.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_search_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
@@ -43,13 +44,43 @@ class ShopScreenState extends State<ShopScreen> {
             Expanded(
               child: GetBuilder<ProductListController>(builder: (controller) {
                 return controller.isLoading
-                    ? customCircularProgressIndicator
-                    : CustomVerticalProductList(productList: controller.products);
+                    ? _buildVerticalShimmerList
+                    : _buildVerticalProductList(controller);
               }),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  MasonryGridView _buildVerticalProductList(ProductListController controller) {
+    return MasonryGridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      mainAxisSpacing: 26.h,
+      crossAxisSpacing: 30.w,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        return CustomProductCard(
+          product: controller.productList[index],
+        );
+      },
+      itemCount: controller.productList.length,
+    );
+  }
+
+  MasonryGridView get _buildVerticalShimmerList{
+    return MasonryGridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      mainAxisSpacing: 26.h,
+      crossAxisSpacing: 30.w,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        return const CustomProductCardShimmer();
+      },
+      itemCount: 6,
     );
   }
 }

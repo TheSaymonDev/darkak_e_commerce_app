@@ -1,11 +1,11 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/product_review_model.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_bottom_sheet.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/product_details_screen_widgets/custom_coupon_code.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_bottom_sheet.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_coupon_code.dart';
 import 'package:darkak_e_commerce_app/views/screens/review_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/store_screen.dart';
 import 'package:flutter/material.dart';

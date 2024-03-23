@@ -1,6 +1,6 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/models/product_model.dart';
+import 'package:darkak_e_commerce_app/models/demo_product_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';

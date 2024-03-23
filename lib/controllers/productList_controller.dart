@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 
 class ProductListController extends GetxController{
   bool isLoading = true;
-  List<Product> products = [];
-  void fetchProducts() async{
+  List<Product> productList = [];
+  void getProductList() async{
     isLoading = true;
     update();
     try{
       List<dynamic> responseData = await ApiService().getApi(Urls.getAllProductsUrl);
       if(responseData.isNotEmpty){
-        products = responseData.map((item) => Product.fromJson(item)).toList();
+        productList = responseData.map((item) => Product.fromJson(item)).toList();
         isLoading=false;
         update();
       }else{

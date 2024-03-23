@@ -1,12 +1,12 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/models/home_categories_model.dart';
-import 'package:darkak_e_commerce_app/models/product_model.dart';
+import 'package:darkak_e_commerce_app/models/demo_product_model.dart';
 import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/views/screens/search_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_searchview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_filtering_and_sorting.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_product_item_gridview.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_query_tab.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_searchview_with_back.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_filtering_and_sorting.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_product_item_gridview.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_query_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

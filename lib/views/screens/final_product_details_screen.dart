@@ -1,13 +1,16 @@
+import 'package:darkak_e_commerce_app/controllers/add_to_cart_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/add_to_wishList_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/product_details_screen_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_product.dart';
-import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/product_view_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/review_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/store_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_bottom_sheet.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_coupon_code.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_bottom_sheet.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/product_details_screen_widgets/custom_coupon_code.dart';
 import 'package:darkak_e_commerce_app/views/widgets/product_details_screen_widgets/custom_drop_down.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +19,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class FinalProductDetailsScreen extends StatefulWidget {
-  final Product products;
-  const FinalProductDetailsScreen({super.key, required this.products});
+  final Product product;
+  const FinalProductDetailsScreen({super.key, required this.product});
 
   @override
   State<FinalProductDetailsScreen> createState() =>
@@ -25,18 +28,39 @@ class FinalProductDetailsScreen extends StatefulWidget {
 }
 
 class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
-  int selectedImg = 0;
   final double _height = 400.h;
-  bool _isExpanded = false;
-  int _quantity = 1;
-
-  List<String> sizes = ['S', 'M'];
-  int selectedSizeIndex = 0;
-
-  List<String> colors = ['Red', 'Blue'];
-  int selectedColorIndex = 0;
-
+  List<String> productSizes = [];
+  List<String> productColors = [];
   final double productRating = 4.5;
+
+  getSizes() {
+    for (int i = 0; i < widget.product.sizes!.length; i++) {
+      // Access the size object at the current index
+      ProductSizes productSize = widget.product.sizes![i];
+      // Add the size name to the sizes list
+      productSizes.add(productSize.name!); // Assuming name is non-null
+    }
+  }
+
+  getColors() {
+    for (int i = 0; i < widget.product.colors!.length; i++) {
+      ProductColors productColor = widget.product.colors![i];
+      productColors.add(productColor.name!);
+    }
+  }
+
+  final ProductDetailsScreenController _productDetailsScreenController =
+      Get.find<ProductDetailsScreenController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSizes();
+    getColors();
+    _productDetailsScreenController.selectedSize = productSizes[0];
+    _productDetailsScreenController.selectedColor = productColors[0];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,51 +76,7 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                         SliverPersistentHeader(
                             pinned: true,
                             floating: true,
-                            delegate: _SliverAppBarDelegate(
-                                minHeight: 200.h,
-                                maxHeight: _height,
-                                child: GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => ProductViewPage(
-                                          imagePath: widget.products
-                                              .images![selectedImg].path,
-                                          imagesPath: widget.products.images));
-                                    },
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    '${Urls.imgUrl}${widget.products.images![selectedImg].path}'),
-                                                fit: BoxFit.cover)),
-                                        child: LayoutBuilder(
-                                            builder: (context, constraints) =>
-                                                Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Align(
-                                                          alignment:
-                                                              Alignment.topLeft,
-                                                          child: IconButton(
-                                                              onPressed: () {
-                                                                Get.back();
-                                                              },
-                                                              icon: Icon(
-                                                                Icons
-                                                                    .keyboard_arrow_left,
-                                                                size: 30.sp,
-                                                                color:
-                                                                    orangeClr,
-                                                              ))),
-                                                      Padding(
-                                                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h,),
-                                                          child: Visibility(
-                                                              visible: constraints.maxHeight >=
-                                                                  _height,
-                                                              child:
-                                                                  buildMultipleImage))
-                                                    ])))))),
+                            delegate: _buildSliverAppBarDelegate),
                         SliverToBoxAdapter(
                             child: Container(
                                 margin: EdgeInsets.only(top: 16.h),
@@ -105,14 +85,45 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        '${widget.products.name}',
-                                        style: Get.textTheme.titleLarge,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            '${widget.product.name}',
+                                            style: Get.textTheme.titleLarge,
+                                          ),
+                                          GetBuilder<WishListItemController>(
+                                            builder: (controller) {
+                                              return InkWell(
+                                                borderRadius: BorderRadius.circular(8.r),
+                                                onTap: () async {
+                                                  if (controller.isInWishlist(widget.product.id!)) {
+                                                    controller.removeWishListItem(widget.product.id!);
+                                                  } else {
+                                                    Get.find<AddToWishListController>().addToWishList(widget.product.id!);
+                                                  }
+                                                },
+                                                child: Icon(
+                                                      controller.isInWishlist(
+                                                              widget.product.id!)
+                                                          ? Icons.favorite
+                                                          : Icons.favorite_border,
+                                                      size: 24.sp,
+                                                      color: controller
+                                                              .isInWishlist(widget
+                                                                  .product.id!)
+                                                          ? orangeClr
+                                                          : greyClr)
+                                                );
+                                            }
+                                          ),
+                                        ],
                                       ),
                                       Gap(16.h),
                                       buildProductAttributes,
                                       Gap(16.h),
-                                      buildProductDetails,
+                                      buildProductDescription,
                                       Gap(16.h),
                                       buildPromotionalCodeSection,
                                       Gap(16.h),
@@ -126,7 +137,8 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                                             Get.to(() => const ReviewScreen());
                                           },
                                           child: Text('Write your review',
-                                              style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr))),
+                                              style: Get.textTheme.bodyMedium!
+                                                  .copyWith(color: orangeClr))),
                                       Gap(30.h)
                                     ]))),
                         SliverToBoxAdapter(child: Gap(16.h))
@@ -156,10 +168,14 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                                       Text('Price',
                                           style: Get.textTheme.bodySmall!
                                               .copyWith(color: greyClr)),
-                                      Text(
-                                          '${Urls.takaSign}${calculateTotal()}',
-                                          style: Get.textTheme.titleMedium!
-                                              .copyWith(color: orangeClr))
+                                      GetBuilder<
+                                              ProductDetailsScreenController>(
+                                          builder: (controller) {
+                                        return Text(
+                                            '${Urls.takaSign}${controller.calculateTotal(widget.product.offerPrice!)}',
+                                            style: Get.textTheme.titleMedium!
+                                                .copyWith(color: orangeClr));
+                                      })
                                     ])),
                             InkWell(
                                 onTap: () {
@@ -173,26 +189,83 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                                       Text('Store',
                                           style: Get.textTheme.bodyMedium)
                                     ])),
-                            InkWell(
-                                onTap: () {
-                                  customSuccessMessage(
-                                      message: 'Add to cart Successful');
-                                  Get.to(() => const HomeScreen());
-                                },
-                                focusColor: whiteClr,
-                                child: Container(
-                                    width: 146.w,
-                                    height: 50.h,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(6.r),
-                                        color: orangeClr),
-                                    child: Text('Add to cart',
-                                        style: Get.textTheme.titleMedium!
-                                            .copyWith(color: whiteClr))))
+                            GetBuilder<AddToCartController>(
+                                builder: (controller) {
+                              return Visibility(
+                                visible: controller.isLoading == false,
+                                replacement: customCircularProgressIndicator,
+                                child: InkWell(
+                                    onTap: () {
+                                      controller.addToCart(
+                                          productId: widget.product.id!,
+                                          productSize:
+                                              _productDetailsScreenController
+                                                  .selectedSize!,
+                                          productColor:
+                                              _productDetailsScreenController
+                                                  .selectedColor!,
+                                          productQuantity:
+                                              _productDetailsScreenController
+                                                  .quantity
+                                                  .toString());
+                                    },
+                                    focusColor: whiteClr,
+                                    child: Container(
+                                        width: 146.w,
+                                        height: 50.h,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6.r),
+                                            color: orangeClr),
+                                        child: Text('Add to cart',
+                                            style: Get.textTheme.titleMedium!
+                                                .copyWith(color: whiteClr)))),
+                              );
+                            })
                           ]))
                 ]))));
+  }
+
+  _SliverAppBarDelegate get _buildSliverAppBarDelegate {
+    return _SliverAppBarDelegate(
+        minHeight: 200.h,
+        maxHeight: _height,
+        child: GestureDetector(onTap: () {
+          Get.to(() => ProductViewPage(
+              imagePath: widget.product
+                  .images![_productDetailsScreenController.selectedImg].path,
+              imagesPath: widget.product.images));
+        }, child:
+            GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+          return Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          '${Urls.imgUrl}${widget.product.images![controller.selectedImg].path}'),
+                      fit: BoxFit.cover)),
+              child: LayoutBuilder(
+                  builder: (context, constraints) => Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: IconButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    icon: Icon(Icons.keyboard_arrow_left,
+                                        size: 30.sp, color: orangeClr))),
+                            Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w,
+                                  vertical: 16.h,
+                                ),
+                                child: Visibility(
+                                    visible: constraints.maxHeight >= _height,
+                                    child: buildMultipleImage))
+                          ])));
+        })));
   }
 
   Column get buildPromotionalCodeSection {
@@ -223,65 +296,68 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
     ]);
   }
 
-  Column get buildProductDetails {
+  Column get buildProductDescription {
     return Column(children: [
       Text('Details', style: Get.textTheme.titleMedium),
       Gap(8.h),
-      Text(
-          _isExpanded == true
-              ? '${widget.products.longDesc}'
-              : '${widget.products.shortDesc}',
-          style: Get.textTheme.bodyMedium),
+      GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+        return Text(
+            controller.isExpanded == true
+                ? '${widget.product.longDesc}'
+                : '${widget.product.shortDesc}',
+            style: Get.textTheme.bodyMedium);
+      }),
       Gap(8.h),
-      GestureDetector(
-          onTap: () {
-            setState(() {
-              _isExpanded = !_isExpanded;
-            });
-          },
-          child: Text(_isExpanded ? 'Show Less' : 'Show More',
-              style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)))
+      GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+        return GestureDetector(
+            onTap: () => controller.toggleDes(),
+            child: Text(controller.isExpanded ? 'Show Less' : 'Show More',
+                style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)));
+      })
     ]);
   }
 
   Column get buildProductAttributes {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        CustomCardStyle(
-            width: 160.w,
-            height: 40.h,
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: Row(children: [
-              Text(
-                'Size:',
-                style: Get.textTheme.bodySmall,
-              ),
-              const Spacer(),
-              CustomDropdown(
-                  initialSelectionIndex: selectedSizeIndex,
-                  items: sizes,
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedSizeIndex = sizes.indexOf(newValue!);
-                    });
-                  })
-            ])),
-        CustomCardStyle(
-            width: 160.w,
-            height: 40.h,
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: Row(children: [
-              Text('Color:', style: Get.textTheme.bodySmall),
-              const Spacer(),
-              CustomDropdown(
-                  initialSelectionIndex: selectedColorIndex,
-                  items: colors,
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedColorIndex = colors.indexOf(newValue!);
-                    });
-                  })
-            ]))
+        GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+          return CustomCardStyle(
+              width: 160.w,
+              height: 40.h,
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Row(children: [
+                Text(
+                  'Size:   ${controller.selectedSize}',
+                  style: Get.textTheme.titleSmall,
+                ),
+                const Spacer(),
+                FittedBox(
+                  child: CustomDropdown(
+                      items: productSizes,
+                      onChanged: (newValue) =>
+                          controller.productSizeChange(newValue)),
+                )
+              ]));
+        }),
+        GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+          return CustomCardStyle(
+              width: 160.w,
+              height: 40.h,
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Row(children: [
+                Text(
+                  'Color:   ${controller.selectedColor}',
+                  style: Get.textTheme.titleSmall,
+                ),
+                const Spacer(),
+                FittedBox(
+                  child: CustomDropdown(
+                      items: productColors,
+                      onChanged: (newValue) =>
+                          controller.productColorChange(newValue)),
+                )
+              ]));
+        }),
       ]),
       Gap(16.h),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -293,32 +369,18 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                      onTap: () {
-                        setState(() {
-                          if (_quantity > 1) {
-                            _quantity--;
-                          }
-                        });
-                      },
-                      child: Icon(
-                        Icons.remove,
-                        size: 20.sp,
-                        color: greyClr,
-                      )),
-                  Text(_quantity.toString(), style: Get.textTheme.titleSmall),
+                      onTap: () =>
+                          _productDetailsScreenController.decrementQuantity(),
+                      child: Icon(Icons.remove, size: 20.sp, color: greyClr)),
+                  GetBuilder<ProductDetailsScreenController>(
+                      builder: (controller) {
+                    return Text('${controller.quantity}',
+                        style: Get.textTheme.titleSmall);
+                  }),
                   InkWell(
-                      onTap: () {
-                        if (widget.products.alertQuantity != _quantity) {
-                          setState(() {
-                            _quantity++;
-                          });
-                        }
-                      },
-                      child: Icon(
-                        Icons.add,
-                        size: 20.sp,
-                        color: greyClr,
-                      ))
+                      onTap: () => _productDetailsScreenController
+                          .incrementQuantity(widget.product.alertQuantity!),
+                      child: Icon(Icons.add, size: 20.sp, color: greyClr))
                 ])),
         CustomCardStyle(
             width: 160.w,
@@ -351,11 +413,8 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
         child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedImg = index;
-                  });
-                },
+                onTap: () =>
+                    _productDetailsScreenController.imageSelection(index),
                 child: Container(
                     height: 80.h,
                     width: 90.w,
@@ -363,16 +422,10 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                         borderRadius: BorderRadius.circular(16.r),
                         image: DecorationImage(
                             image: NetworkImage(
-                                '${Urls.imgUrl}${widget.products.images![index].path}'),
+                                '${Urls.imgUrl}${widget.product.images![index].path}'),
                             fit: BoxFit.cover)))),
             separatorBuilder: (context, index) => Gap(8.w),
-            itemCount: widget.products.images!.length));
-  }
-
-  int calculateTotal() {
-    int total = 0;
-    total += widget.products.offerPrice! * _quantity;
-    return total;
+            itemCount: widget.product.images!.length));
   }
 }
 

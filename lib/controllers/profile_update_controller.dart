@@ -1,22 +1,14 @@
 import 'dart:io';
+import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileUpdateController extends GetxController {
-  final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final dateOfBirthController = TextEditingController();
-  final dateOfMarriageController = TextEditingController();
-  final mobileNumberController = TextEditingController();
-  final passwordController = TextEditingController();
   bool isLoading = false;
-
   File? image;
   Future<void> getImageFromGallery() async {
     try {
@@ -31,39 +23,37 @@ class ProfileUpdateController extends GetxController {
     }
   }
 
-  void formOnSubmit(String? id) async {
-    if (formKey.currentState?.validate() ?? false) {
+  Future<bool> formOnSubmit({required String id, required String name, required String dob, required String marriageDate}) async {
       isLoading = true;
       update();
       try{
         bool responseSuccess = await ApiService().patchMultiPartApi(
           '${Urls.profileUpdateUrl}/$id',
           {
-            'name': nameController.text,
-            'dob': dateOfBirthController.text,
-            'marriageDate': dateOfMarriageController.text,
+            'name': name,
+            'dob': dob,
+            'marriageDate': marriageDate,
           },
           file: image,
         );
         if (responseSuccess==true) {
           customSuccessMessage(message: 'Profile Successfully Updated');
-          _navigateToBack();
+          Get.find<ProfileController>().getCurrentUser();
+          isLoading=false;
+          update();
+          return true;
         } else {
           customErrorMessage(message: 'Something Went Wrong');
           isLoading = false;
           update();
+          return false;
         }
       }catch(error){
         customErrorMessage(message: error.toString());
         isLoading = false;
         update();
+        return false;
       }
-    }
-  }
 
-  void _navigateToBack() {
-    isLoading = false;
-    update();
-    Get.off(() => const HomeScreen());
   }
 }

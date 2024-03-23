@@ -1,13 +1,4 @@
-import 'package:darkak_e_commerce_app/controllers/authentication_controllers/forget_otp_verification_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/authentication_controllers/identity_verification_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/authentication_controllers/otp_verification_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/authentication_controllers/set_password_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_up_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_in_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/home_screen_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/onboarding_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
+import 'package:darkak_e_commerce_app/controller_binders.dart';
 import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
@@ -90,18 +81,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ControllerBinder extends Bindings {
-  @override
-  void dependencies() {
-    Get.put(OnboardingController());
-    Get.put(SignInController());
-    Get.put(SignUpController());
-    Get.put(OtpVerificationController());
-    Get.put(IdentityVerificationController());
-    Get.put(ForgetOtpVerificationController());
-    Get.put(SetPasswordController());
-    Get.put(HomeScreenController());
-    Get.put(ProductListController());
-    Get.put(ProfileController());
-  }
-}
+

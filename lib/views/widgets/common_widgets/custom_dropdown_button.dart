@@ -3,6 +3,7 @@ import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CustomDropdownButton<T> extends StatelessWidget {
   const CustomDropdownButton({
@@ -10,11 +11,13 @@ class CustomDropdownButton<T> extends StatelessWidget {
     required this.items,
     required this.onChanged,
     required this.labelText,
+    this.validator
   });
 
   final List<T> items;
   final ValueChanged<T?> onChanged;
   final String labelText;
+  final String? Function(T?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +29,13 @@ class CustomDropdownButton<T> extends StatelessWidget {
         children: [
           Text(
             labelText,
-            style: myStyle(
-                20.sp, FontWeight.normal, blackClr.withOpacity(0.5)),
+            style: Get.textTheme.bodyMedium!.copyWith(color: blackClr.withOpacity(0.5))
           ),
           Expanded(
             child: DropdownButtonFormField2(
               hint: Text(
                 'Select',
-                style: myStyle(20.sp, FontWeight.normal, greyClr),
+                style: Get.textTheme.bodyMedium!.copyWith(color: greyClr)
               ),
               iconStyleData: IconStyleData(
                 icon: const Icon(
@@ -61,6 +63,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
                   borderSide: BorderSide(width: 2, color: orangeClr),
                 ),
               ),
+              validator: validator,
               items: items.map((item) {
                 return DropdownMenuItem<T>(
                   value: item,

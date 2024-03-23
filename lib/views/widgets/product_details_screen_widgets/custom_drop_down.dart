@@ -1,34 +1,34 @@
+import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomDropdown extends StatelessWidget {
-  final List<String> items;
-  final int initialSelectionIndex;
-  final void Function(String?) onChanged;
+class CustomDropdown<T> extends StatelessWidget {
+  final List<T> items;
+  final ValueChanged<T?> onChanged;
 
   const CustomDropdown({
     super.key,
     required this.items,
-    this.initialSelectionIndex = 0,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    String selectedItem = items.isNotEmpty ? items[initialSelectionIndex] : '';
-    return DropdownButton<String>(
+    return DropdownButton(
       underline: const SizedBox(
         height: 0,
       ),
       style: Get.textTheme.titleSmall,
-      items: items.map((String item) {
+      icon: const Icon(Icons.arrow_drop_down_circle_outlined, color: blackClr),
+      items: items.map((item) {
         return DropdownMenuItem(
           value: item,
-          child: Text(item),
+          child: Text(item.toString(),
+              style: Get.textTheme.bodyMedium),
         );
       }).toList(),
+      padding: EdgeInsets.zero,
       onChanged: onChanged,
-      value: selectedItem.isEmpty && items.isNotEmpty ? items[0] : selectedItem,
     );
   }
 }

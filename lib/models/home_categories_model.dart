@@ -1,5 +1,5 @@
 import 'package:darkak_e_commerce_app/models/demo_product_list.dart';
-import 'package:darkak_e_commerce_app/models/product_model.dart';
+import 'package:darkak_e_commerce_app/models/demo_product_model.dart';
 
 class Category {
   String categoryName, categoryImage;

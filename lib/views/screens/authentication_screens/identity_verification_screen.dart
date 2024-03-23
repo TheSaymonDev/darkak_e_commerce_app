@@ -1,10 +1,11 @@
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/identity_verification_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_text_form_field.dart';
+import 'package:darkak_e_commerce_app/views/screens/authentication_screens/forgot_otp_verification_screen.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +15,8 @@ import 'package:get/get.dart';
 class EmailVerificationScreen extends StatelessWidget {
   EmailVerificationScreen({super.key});
 
-  final IdentityVerificationController _identityVerificationController =
-      Get.find<IdentityVerificationController>();
+  final identifierController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class EmailVerificationScreen extends StatelessWidget {
             width: double.infinity.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Form(
-              key: _identityVerificationController.formKey,
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -49,22 +50,30 @@ class EmailVerificationScreen extends StatelessWidget {
                   Gap(50.h),
                   CustomTextFormField(
                     labelText: 'Email or Mobile',
-                    controller:
-                        _identityVerificationController.identifierController,
+                    controller: identifierController,
                     validator: Validators().identifierValidator,
                   ),
                   Gap(40.h),
                   GetBuilder<IdentityVerificationController>(
-                    builder: (controller) => controller.isLoading == true
-                        ? customCircularProgressIndicator
-                        : CustomElevatedButton(
-                            onPressed: () {
-                              controller.formOnSubmit();
-                            },
-                            buttonName: 'SEND',
-                            width: double.infinity.w,
-                          ),
-                  ),
+                    builder: (controller) => Visibility(
+                      visible: controller.isLoading == false,
+                      replacement: customCircularProgressIndicator,
+                      child: CustomElevatedButton(
+                          onPressed: () async {
+                            if (formKey.currentState?.validate() ?? false) {
+                              final result = await controller.formOnSubmit(
+                                  identity: identifierController.text.trim());
+                              if (result == true) {
+                                _clearData();
+                                Get.off(() => ForgotOtpVerificationScreen(
+                                    userId: controller.userId));
+                              }
+                            }
+                          },
+                          buttonName: 'SEND',
+                          width: double.infinity.w),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -72,5 +81,9 @@ class EmailVerificationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _clearData() {
+    identifierController.clear();
   }
 }

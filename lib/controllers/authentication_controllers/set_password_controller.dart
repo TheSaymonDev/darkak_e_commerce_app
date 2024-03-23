@@ -1,44 +1,47 @@
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/set_password.dart';
-import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SetPasswordController extends GetxController {
-  final newPasswordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+
   bool isObscureNew = true;
   bool isObscureConfirm = true;
   bool isLoading = false;
 
-  formOnSubmit(String userId, String otp) async {
-    if (formKey.currentState?.validate() ?? false) {
+  Future<bool> formOnSubmit({required String userId, required String otp, required String password}) async {
+
       isLoading = true;
       update();
       final setPassword = SetPassword(
           userId: userId,
-          password: newPasswordController.text.trim(),
+          password: password,
           otp: otp);
       try {
         final responseData =
             await ApiService().postApi(Urls.setPasswordUrl, setPassword);
-        if (responseData != null) {
+        if (responseData != null && responseData != 404) {
           customSuccessMessage(message: 'Password Changed Successfully');
-          navigateToSignInScreen();
+          return true;
+        } else if (responseData == 404) {
+          customErrorMessage(message: 'Verification Failed');
+          isLoading = false;
+          update();
+          return false;
         } else {
           customErrorMessage(message: 'Failed to Change Password');
           isLoading = false;
           update();
+          return false;
         }
       } catch (error) {
         customErrorMessage(message: error.toString());
         isLoading = false;
         update();
+        return false;
       }
-    }
+
   }
 
   void toggleObscureN() {
@@ -49,12 +52,5 @@ class SetPasswordController extends GetxController {
   void toggleObscureC() {
     isObscureConfirm = !isObscureConfirm;
     update();
-  }
-
-  void navigateToSignInScreen() {
-    Get.offAll(() => SignInScreen());
-    isLoading = false;
-    newPasswordController.clear();
-    confirmPasswordController.clear();
   }
 }

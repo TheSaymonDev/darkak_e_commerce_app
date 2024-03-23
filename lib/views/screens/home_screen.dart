@@ -1,8 +1,10 @@
+import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/home_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
-import 'package:darkak_e_commerce_app/views/screens/cart_screen.dart';
+import 'package:darkak_e_commerce_app/views/screens/checkout_screens/cart_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/explore_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/profile_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/shop_screen.dart';
@@ -32,8 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<ProductListController>().fetchProducts();
-    Get.find<ProfileController>().fetchProfile();
+    Get.find<ProductListController>().getProductList();
+    Get.find<ProfileController>().getCurrentUser();
+    Get.find<CartItemController>().getCartItem();
+    Get.find<WishListItemController>().getWishListItem();
   }
 
   @override

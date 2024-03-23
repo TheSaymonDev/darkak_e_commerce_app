@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

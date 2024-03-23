@@ -1,8 +1,8 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/models/demo_product_list.dart';
-import 'package:darkak_e_commerce_app/models/product_model.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_searchview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_product_item_gridview.dart';
+import 'package:darkak_e_commerce_app/models/demo_product_model.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_searchview_with_back.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_product_item_gridview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

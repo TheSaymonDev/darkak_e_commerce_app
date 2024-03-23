@@ -1,10 +1,10 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/models/address_model.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_edit_delete_buttons.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/address_screen/address_editable_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_edit_delete_buttons.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

@@ -17,12 +17,26 @@ class Validators{
     return null;
   }
 
-  String? dateValidator(value) {
+  String? dobValidator(value) {
     if (value == null || value.isEmpty) {
       return 'Please select a date';
     }
     return null;
   }
+
+  String? domValidator(String value, DateTime? selectedDob) {
+    if (value.isEmpty) {
+      return 'Please select a date';
+    } else if (selectedDob != null) {
+      final dom = DateTime.parse(value);
+      if (dom.isBefore(selectedDob)) {
+        return 'Date of Marriage must be after Date of Birth';
+      }
+    }
+    return null; // No validation errors
+  }
+
+
 
   String? emailValidator(value) {
     if (value!.isEmpty) {

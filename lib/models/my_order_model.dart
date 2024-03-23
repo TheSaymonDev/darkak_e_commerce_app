@@ -1,5 +1,5 @@
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/models/product_model.dart';
+import 'package:darkak_e_commerce_app/models/demo_product_model.dart';
 import 'package:darkak_e_commerce_app/models/product_review_model.dart';
 
 class MyOrder {

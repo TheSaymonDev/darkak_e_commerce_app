@@ -8,14 +8,27 @@ class ProfileController extends GetxController {
 
   bool isNotification = false;
   User? user;
+  bool isLoading = false;
 
-  Future<void> fetchProfile() async{
-    final responseData = await ApiService().getApi(Urls.getCurrentUserUrl, header: Urls.requestHeaderWithToken);
-    if(responseData != null){
-      user = User.fromJson(responseData['user']);
-    }else{
-      customErrorMessage(message: 'Something Went Wrong');
-    }
+  Future<void> getCurrentUser() async{
+    isLoading=true;
+    update();
+   try{
+     final responseData = await ApiService().getApi(Urls.getCurrentUserUrl, header: Urls.requestHeaderWithToken);
+     if(responseData != null){
+       user = User.fromJson(responseData['user']);
+       isLoading=false;
+       update();
+     }else{
+       customErrorMessage(message: 'Something Went Wrong');
+       isLoading=false;
+       update();
+     }
+   }catch (error) {
+     customErrorMessage(message: error.toString());
+     isLoading = false;
+     update();
+   }
   }
 
   void toggleNotification(newValue) {

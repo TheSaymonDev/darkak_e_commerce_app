@@ -1,10 +1,11 @@
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/otp_verification_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
+import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -16,7 +17,8 @@ class OtpVerificationScreen extends StatelessWidget {
   final String? userId;
   OtpVerificationScreen({super.key, required this.userId});
 
-final OtpVerificationController _otpVerificationController = Get.find<OtpVerificationController>();
+  final otpController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ final OtpVerificationController _otpVerificationController = Get.find<OtpVerific
             width: double.infinity.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Form(
-              key: _otpVerificationController.formKey,
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,7 +52,7 @@ final OtpVerificationController _otpVerificationController = Get.find<OtpVerific
                   Gap(35.h),
                   PinCodeTextField(
                     validator: Validators().pinValidator,
-                    controller: _otpVerificationController.otpController,
+                    controller: otpController,
                     appContext: context,
                     length: 6,
                     obscureText: false,
@@ -80,16 +82,25 @@ final OtpVerificationController _otpVerificationController = Get.find<OtpVerific
                   ),
                   Gap(35.h),
                   GetBuilder<OtpVerificationController>(
-                    builder: (controller) => controller.isLoading == true
-                        ? customCircularProgressIndicator
-                        : CustomElevatedButton(
-                      onPressed: () {
-                        controller.formOnSubmit(userId!);
-                      },
-                      buttonName: 'CONTINUE',
-                      width: double.infinity.w,
+                    builder: (controller) => Visibility(
+                      visible: controller.isLoading == false,
+                      replacement: customCircularProgressIndicator,
+                      child: CustomElevatedButton(
+                          onPressed: () async {
+                            if (formKey.currentState?.validate() ?? false) {
+                              final result = await controller.formOnSubmit(
+                                  userId: userId!,
+                                  otp: otpController.text.trim());
+                              if (result == true) {
+                                _clearData();
+                                Get.offAll(()=> const HomeScreen());
+                              }
+                            }
+                          },
+                          buttonName: 'CONTINUE',
+                          width: double.infinity.w),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -97,5 +108,9 @@ final OtpVerificationController _otpVerificationController = Get.find<OtpVerific
         ),
       ),
     );
+  }
+
+  void _clearData() {
+    otpController.clear();
   }
 }

@@ -8,7 +8,7 @@ class Product {
   ProductGroup? productGroup;
   ProductGroup? brand;
   Warranty? warranty;
-  List<Sizes>? sizes;
+  List<ProductSizes>? sizes;
   List<ProductColors>? colors;
   Unit? unit;
   List<Images>? images;
@@ -70,9 +70,9 @@ class Product {
         ? Warranty.fromJson(json['warranty'])
         : null;
     if (json['sizes'] != null) {
-      sizes = <Sizes>[];
+      sizes = <ProductSizes>[];
       json['sizes'].forEach((v) {
-        sizes!.add(Sizes.fromJson(v));
+        sizes!.add(ProductSizes.fromJson(v));
       });
     }
     if (json['colors'] != null) {
@@ -377,15 +377,15 @@ class ProductColors {
   }
 }
 
-class Sizes {
+class ProductSizes {
   String? id;
   String? name;
   String? description;
   bool? isActive;
 
-  Sizes({this.id, this.name, this.description, this.isActive});
+  ProductSizes({this.id, this.name, this.description, this.isActive});
 
-  Sizes.fromJson(Map<String, dynamic> json) {
+  ProductSizes.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];

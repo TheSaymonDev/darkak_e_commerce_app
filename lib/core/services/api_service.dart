@@ -26,6 +26,8 @@ class ApiService {
     log(response.body.toString());
     if (response.statusCode == 200 || response.statusCode == 201) {
       return jsonDecode(response.body);
+    }else if(response.statusCode == 404){
+      return 404;
     } else {
       return null;
     }
@@ -68,4 +70,17 @@ class ApiService {
       }
     }
   }
+
+  Future<dynamic> deleteApi(String url) async {
+    log(url.toString());
+    final response = await http.delete(Uri.parse(url), headers: Urls.requestHeaderWithToken);
+    log(response.statusCode.toString());
+    log(response.body.toString());
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      return null;
+    }
+  }
+
 }

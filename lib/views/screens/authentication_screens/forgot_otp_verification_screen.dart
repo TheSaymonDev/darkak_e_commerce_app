@@ -1,10 +1,11 @@
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/forget_otp_verification_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
+import 'package:darkak_e_commerce_app/views/screens/authentication_screens/set_password_screen.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_card_style.dart';
-import 'package:darkak_e_commerce_app/views/widgets/base_widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -15,8 +16,8 @@ class ForgotOtpVerificationScreen extends StatelessWidget {
   final String? userId;
   ForgotOtpVerificationScreen({super.key, required this.userId});
 
-  final ForgetOtpVerificationController _forgetOtpVerificationController =
-      Get.find<ForgetOtpVerificationController>();
+  final otpController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class ForgotOtpVerificationScreen extends StatelessWidget {
             width: double.infinity.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Form(
-              key: _forgetOtpVerificationController.formKey,
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,7 +51,7 @@ class ForgotOtpVerificationScreen extends StatelessWidget {
                   Gap(35.h),
                   PinCodeTextField(
                     validator: Validators().pinValidator,
-                    controller: _forgetOtpVerificationController.otpController,
+                    controller: otpController,
                     appContext: context,
                     length: 6,
                     obscureText: false,
@@ -80,16 +81,24 @@ class ForgotOtpVerificationScreen extends StatelessWidget {
                   ),
                   Gap(35.h),
                   GetBuilder<ForgetOtpVerificationController>(
-                    builder: (controller) => controller.isLoading == true
-                        ? customCircularProgressIndicator
-                        : CustomElevatedButton(
-                      onPressed: () {
-                        controller.formOnSubmit(userId!);
-                      },
-                      buttonName: 'CONTINUE',
-                      width: double.infinity.w,
+                    builder: (controller) => Visibility(
+                      visible: controller.isLoading == false,
+                      replacement: customCircularProgressIndicator,
+                      child: CustomElevatedButton(
+                          onPressed: () async {
+                            if (formKey.currentState?.validate() ?? false) {
+                              final result = await controller.formOnSubmit(
+                                userId: userId!,
+                              otp: otpController.text.trim());
+                              if (result == true) {
+                               Get.offAll(()=> SetPasswordScreen(userId: userId, otp: otpController.text));
+                              }
+                            }
+                          },
+                          buttonName: 'CONTINUE',
+                          width: double.infinity.w),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -97,5 +106,9 @@ class ForgotOtpVerificationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _clearData() {
+    otpController.clear();
   }
 }

@@ -1,46 +1,44 @@
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/authentication_models/otp_verification.dart';
-import 'package:darkak_e_commerce_app/views/screens/authentication_screens/set_password_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ForgetOtpVerificationController extends GetxController {
-  final otpController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+
   bool isLoading = false;
 
-  void formOnSubmit(String userId) async {
-    if (formKey.currentState?.validate() ?? false) {
+  Future<bool> formOnSubmit({required String userId, required String otp}) async {
       isLoading = true;
       update();
       final otpVerification = OtpVerification(
         userId: userId,
-        otp: otpController.text.trim(),
+        otp: otp,
       );
       try {
         final responseData = await ApiService()
             .postApi(Urls.forgetOtpVerificationUrl, otpVerification);
-        if (responseData != null) {
+        if (responseData != null && responseData != 404) {
           customSuccessMessage(message: 'Otp Successfully Verified');
-          navigateToSetPasswordScreen(userId);
+          isLoading=false;
+          update();
+          return true;
+        } else if (responseData == 404) {
+          customErrorMessage(message: 'Invalid OTP');
+          isLoading = false;
+          update();
+          return false;
         } else {
           customErrorMessage(message: 'Otp Verification Failed');
           isLoading = false;
           update();
+          return false;
         }
       } catch (error) {
         customErrorMessage(message: error.toString());
         isLoading = false;
         update();
+        return false;
       }
-    }
-  }
-
-  void navigateToSetPasswordScreen(userId) {
-    Get.offAll(() =>
-        SetPasswordScreen(userId: userId, otp: otpController.text.trim()));
-    isLoading = false;
   }
 }
