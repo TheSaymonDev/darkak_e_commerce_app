@@ -1,4 +1,5 @@
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
+import 'package:darkak_e_commerce_app/core/utils/validator.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_dropdown_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -17,21 +18,9 @@ class _AddressSectionScreenState extends State<AddressSectionScreen> {
   List<String> addressList = ['Address 1', 'Address 2', 'Address 3'];
   String? selectedAddress;
 
-  final _zipCodeController = TextEditingController();
-
   final List<String> _divisionList = ['Dhaka', 'Chittagong'];
-  String? _selectedDivision;
-
   final List<String> _districtList = ['Cumilla', 'Feni'];
-  String? _selectedDistrict;
-
   final List<String> _subDistrictList = ['Chandina', 'Devidwar'];
-  String? _selectedSubDistrict;
-
-  final _addressLine1Controller = TextEditingController();
-  final _addressLine2Controller = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
 
   final CheckOutScreenController _checkOutScreenController = Get.find<CheckOutScreenController>();
 
@@ -52,32 +41,23 @@ class _AddressSectionScreenState extends State<AddressSectionScreen> {
           Gap(40.h),
           CustomTextFormField(
             labelText: 'Address Line 1',
-            controller: _addressLine1Controller,
-            validator: (value) {
-              if (value != null) {
-                'Please Enter Your Address';
-              }
-              return null;
-            },
+            controller: _checkOutScreenController.addressLine1Controller,
+            validator: Validators().addressLine1Validator,
           ),
           Gap(35.h),
           CustomTextFormField(
-              labelText: 'Address Line 2', controller: _addressLine2Controller),
+              labelText: 'Address Line 2',
+              controller: _checkOutScreenController.addressLine2Controller),
           Gap(35.h),
           Row(
             children: [
               Expanded(
                 child: CustomDropdownButton(
                     items: _divisionList,
-                    validator: (value) {
-                      if (value != null) {
-                        'Please Select Division';
-                      }
-                      return null;
-                    },
+                    validator: Validators().dropdownValidator,
                     onChanged: (newValue) {
                       setState(() {
-                        _selectedDivision = newValue;
+                        _checkOutScreenController.selectedDivision = newValue;
                       });
                     },
                     labelText: 'Division'),
@@ -86,14 +66,9 @@ class _AddressSectionScreenState extends State<AddressSectionScreen> {
               Expanded(
                 child: CustomDropdownButton(
                     items: _districtList,
-                    validator: (value) {
-                      if (value != null) {
-                        'Please Select District';
-                      }
-                      return null;
-                    },
+                    validator: Validators().dropdownValidator,
                     onChanged: (newValue) {
-                      _selectedDistrict = newValue;
+                      _checkOutScreenController.selectedDistrict = newValue;
                     },
                     labelText: 'District'),
               ),
@@ -105,15 +80,11 @@ class _AddressSectionScreenState extends State<AddressSectionScreen> {
               Expanded(
                 child: CustomDropdownButton(
                     items: _subDistrictList,
-                    validator: (value) {
-                      if (value != null) {
-                        'Please Select Sub-District';
-                      }
-                      return null;
-                    },
+                    validator: Validators().dropdownValidator,
                     onChanged: (newValue) {
                       setState(() {
-                        _selectedSubDistrict = newValue;
+                        _checkOutScreenController.selectedSubDistrict =
+                            newValue;
                       });
                     },
                     labelText: 'Sub-District'),
@@ -122,14 +93,9 @@ class _AddressSectionScreenState extends State<AddressSectionScreen> {
               Expanded(
                   child: CustomTextFormField(
                 labelText: 'Zip Code',
-                controller: _zipCodeController,
+                controller: _checkOutScreenController.zipCodeController,
                 keyBoardType: TextInputType.number,
-                validator: (value) {
-                  if (value != null) {
-                    'Please Enter Zipcode';
-                  }
-                  return null;
-                },
+                validator: Validators().zipCodeValidator,
               ))
             ],
           ),

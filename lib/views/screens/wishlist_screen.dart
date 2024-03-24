@@ -101,13 +101,11 @@ class _WishListScreenState extends State<WishListScreen> {
                                                   color: yellowClr,
                                                   size: 20.sp),
                                               Text('4.5',
-                                                  style:
-                                                      Get.textTheme.bodyMedium),
+                                                  style: Get.textTheme.bodyMedium),
                                               Gap(16.w),
                                               InkWell(
                                                 onTap: () async {
-                                                  controller.removeWishListItem(
-                                                      product.id!);
+                                                  controller.removeWishListItem(product.id!);
                                                 },
                                                 child: Icon(
                                                   Icons.favorite,

@@ -10,6 +10,7 @@ import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/home_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/onboarding_screen_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/order_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/product_details_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
@@ -35,5 +36,6 @@ class ControllerBinder extends Bindings {
     Get.put(WishListItemController());
     Get.put(ProductDetailsScreenController());
     Get.put(CheckOutScreenController());
+    Get.put(OrderController());
   }
 }

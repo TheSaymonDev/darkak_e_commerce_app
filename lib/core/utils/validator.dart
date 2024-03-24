@@ -17,6 +17,27 @@ class Validators{
     return null;
   }
 
+  String? zipCodeValidator(value) {
+    if (value!.isEmpty) {
+      return 'Please enter zipcode.';
+    }
+    return null;
+  }
+
+  String? addressLine1Validator(value) {
+    if (value!.isEmpty) {
+      return 'Please enter your address.';
+    }
+    return null;
+  }
+
+  String? dropdownValidator(value) {
+    if (value == null) {
+      return 'Please select an item.';
+    }
+    return null;
+  }
+
   String? dobValidator(value) {
     if (value == null || value.isEmpty) {
       return 'Please select a date';

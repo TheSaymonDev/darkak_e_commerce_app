@@ -10,4 +10,12 @@ class CheckOutScreenController extends GetxController{
   }
 
   final formKey = GlobalKey<FormState>();
+  final addressLine1Controller = TextEditingController();
+  final addressLine2Controller = TextEditingController();
+  String? selectedDivision;
+  String? selectedDistrict;
+  String? selectedSubDistrict;
+  final zipCodeController = TextEditingController();
+
+  String? finalAddress;
 }

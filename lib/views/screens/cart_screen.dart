@@ -6,7 +6,7 @@ import 'package:darkak_e_commerce_app/models/cart_item.dart';
 import 'package:darkak_e_commerce_app/views/screens/final_product_details_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
-import 'package:darkak_e_commerce_app/views/screens/checkout_screen.dart';
+import 'package:darkak_e_commerce_app/views/screens/checkout_screens/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -89,7 +89,10 @@ class _CartScreenState extends State<CartScreen> {
           const Spacer(),
           CustomElevatedButton(
               onPressed: () {
-                Get.to(() => const CheckOutScreen());
+                Get.to(() => CheckOutScreen(
+                      cartItemList: _cartItemController.cartItemList,
+                      totalAmount: _cartItemController.calculateSubTotal(),
+                    ));
               },
               buttonName: 'Checkout',
               width: 146.w)

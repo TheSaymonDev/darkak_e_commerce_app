@@ -1,20 +1,23 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class PaymentMethodSectionScreen extends StatefulWidget {
   const PaymentMethodSectionScreen({super.key});
 
   @override
-  State<PaymentMethodSectionScreen> createState() => _PaymentMethodSectionScreenState();
+  State<PaymentMethodSectionScreen> createState() =>
+      _PaymentMethodSectionScreenState();
 }
 
-class _PaymentMethodSectionScreenState extends State<PaymentMethodSectionScreen> with TickerProviderStateMixin{
-
+class _PaymentMethodSectionScreenState extends State<PaymentMethodSectionScreen>
+    with TickerProviderStateMixin {
   List<String> mobileBankingImgPath = [
     'assets/images/bkash.svg',
     'assets/images/rocket.svg',
@@ -55,6 +58,12 @@ class _PaymentMethodSectionScreenState extends State<PaymentMethodSectionScreen>
             tabs: [
               Tab(
                 icon: SvgPicture.asset(
+                  'assets/images/saved-card.svg',
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              Tab(
+                icon: SvgPicture.asset(
                   'assets/images/mobile-banking.svg',
                   fit: BoxFit.fitWidth,
                 ),
@@ -62,12 +71,6 @@ class _PaymentMethodSectionScreenState extends State<PaymentMethodSectionScreen>
               Tab(
                 icon: SvgPicture.asset(
                   'assets/images/credit-card.svg',
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              Tab(
-                icon: SvgPicture.asset(
-                  'assets/images/saved-card.svg',
                   fit: BoxFit.fitWidth,
                 ),
               ),
@@ -85,122 +88,166 @@ class _PaymentMethodSectionScreenState extends State<PaymentMethodSectionScreen>
               controller: _tabController,
               children: [
                 SizedBox(
-                  width: double.infinity.w,
                   height: 400.h,
                   child: Column(
-                    children: List.generate(
-                      mobileBankingImgPath.length,
-                          (index) => Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _currentMobileBankingMediumIndex = index;
-                            });
-                          },
-                          child: CustomCardStyle(
-                            width: double.infinity.w,
-                            height: 70.h,
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            border: Border.all(
-                                width: 2.w,
-                                color: _currentMobileBankingMediumIndex == index
-                                    ? orangeClr
-                                    : Colors.transparent),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const SizedBox(),
-                                SizedBox(
-                                  height: 60.h,
-                                  width: 80.w,
-                                  child: SvgPicture.asset(
-                                    mobileBankingImgPath[index],
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.done_all,
-                                  color:
-                                  _currentMobileBankingMediumIndex == index
-                                      ? Colors.green
-                                      : Colors.transparent,
-                                  size: 25.sp,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Lottie.asset(Urls.cashOnDeliveryLottie),
+                      Text('Cash on delivery is available now',
+                          style: Get.textTheme.bodyLarge),
+                    ],
                   ),
                 ),
                 SizedBox(
                   width: double.infinity.w,
                   height: 400.h,
-                  child: Column(
-                    children: List.generate(
-                      bankingImgPath.length,
+                  child: Stack(
+                    children: [
+                      Column(
+                        children: List.generate(
+                          mobileBankingImgPath.length,
                           (index) => Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _currentCardMediumIndex = index;
-                            });
-                          },
-                          child: CustomCardStyle(
-                            width: double.infinity.w,
-                            height: 70.h,
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            border: Border.all(
-                                width: 2.w,
-                                color: _currentCardMediumIndex == index
-                                    ? orangeClr
-                                    : Colors.transparent),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const SizedBox(),
-                                SizedBox(
-                                  height: 60.h,
-                                  width: 80.w,
-                                  child: Image.asset(
-                                    bankingImgPath[index],
-                                    fit: BoxFit.fill,
-                                  ),
+                            padding: EdgeInsets.only(bottom: 16.h),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _currentMobileBankingMediumIndex = index;
+                                });
+                              },
+                              child: CustomCardStyle(
+                                width: double.infinity.w,
+                                height: 70.h,
+                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                border: Border.all(
+                                    width: 2.w,
+                                    color: _currentMobileBankingMediumIndex ==
+                                            index
+                                        ? orangeClr
+                                        : Colors.transparent),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const SizedBox(),
+                                    SizedBox(
+                                      height: 60.h,
+                                      width: 80.w,
+                                      child: SvgPicture.asset(
+                                        mobileBankingImgPath[index],
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.done_all,
+                                      color: _currentMobileBankingMediumIndex ==
+                                              index
+                                          ? Colors.green
+                                          : Colors.transparent,
+                                      size: 25.sp,
+                                    )
+                                  ],
                                 ),
-                                Icon(
-                                  Icons.done_all,
-                                  color: _currentCardMediumIndex == index
-                                      ? Colors.green
-                                      : Colors.transparent,
-                                  size: 25.sp,
-                                )
-                              ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                      Positioned(
+                          child: Container(
+                              alignment: Alignment.center,
+                              height: double.infinity.h,
+                              width: double.infinity.w,
+                              color: Colors.white70,
+                              child: Image.asset(
+                                Urls.lockPng,
+                                width: 100.w,
+                              )))
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: double.infinity.w,
+                  height: 400.h,
+                  child: Stack(
+                    children: [
+                      Column(
+                        children: List.generate(
+                          bankingImgPath.length,
+                          (index) => Padding(
+                            padding: EdgeInsets.only(bottom: 16.h),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _currentCardMediumIndex = index;
+                                });
+                              },
+                              child: CustomCardStyle(
+                                width: double.infinity.w,
+                                height: 70.h,
+                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                border: Border.all(
+                                    width: 2.w,
+                                    color: _currentCardMediumIndex == index
+                                        ? orangeClr
+                                        : Colors.transparent),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const SizedBox(),
+                                    SizedBox(
+                                      height: 60.h,
+                                      width: 80.w,
+                                      child: Image.asset(
+                                        bankingImgPath[index],
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.done_all,
+                                      color: _currentCardMediumIndex == index
+                                          ? Colors.green
+                                          : Colors.transparent,
+                                      size: 25.sp,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                          child: Container(
+                              alignment: Alignment.center,
+                              height: double.infinity.h,
+                              width: double.infinity.w,
+                              color: Colors.white70,
+                              child: Image.asset(
+                                Urls.lockPng,
+                                width: 100.w,
+                              )))
+                    ],
                   ),
                 ),
                 SizedBox(
                   height: 400.h,
-                  child: Center(
-                    child: Text(
-                      'Cash on delivery',
-                      style: Get.textTheme.bodyLarge
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 400.h,
-                  child: Center(
-                    child: Text(
-                      'Wallet',
-                      style: Get.textTheme.bodyLarge
-                    ),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Text('Wallet', style: Get.textTheme.bodyLarge),
+                      ),
+                      Positioned(
+                          child: Container(
+                              alignment: Alignment.center,
+                              height: double.infinity.h,
+                              width: double.infinity.w,
+                              color: Colors.white70,
+                              child: Image.asset(
+                                Urls.lockPng,
+                                width: 100.w,
+                              )))
+                    ],
                   ),
                 ),
               ],

@@ -6,11 +6,15 @@ class Urls{
   static const String takaSign = '৳';
   static const String myBankCard = 'assets/images/card.png';
   static const String _lottiePath = 'assets/lotties';
+  static const String _imagePath = 'assets/images';
 
   static String emptyCartLottie = '$_lottiePath/empty_cart.json';
   static String emptyWishListLottie = '$_lottiePath/empty_wishlist.json';
+  static String cashOnDeliveryLottie = '$_lottiePath/cash_on_delivery.json';
 
   static const String appLogoSvg = 'assets/images/app-logo.svg';
+
+  static String lockPng = '$_imagePath/lock.png';
 
   static const String imgUrl = 'https://api.darkak.com.bd/';
   static const String _baseUrl = "https://api.darkak.com.bd/api/v1";
@@ -32,4 +36,5 @@ class Urls{
   static String addToWishListUrl = '$_baseUrl/wishlist';
   static String getWishListProductUrl = '$_baseUrl/wishlist';
   static String removeWishListItemUrl = '$_baseUrl/wishlist';
+  static String createOrderUrl = '$_baseUrl/orders';
 }

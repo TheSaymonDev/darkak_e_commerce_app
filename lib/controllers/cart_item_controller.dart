@@ -66,14 +66,14 @@ class CartItemController extends GetxController {
     }
   }
 
-  double calculateSubTotal() {
-    double subTotal = 0;
+  int calculateSubTotal() {
+    double subTotal = 0.0;
     for (var item in cartItemList) {
       subTotal += item.products!.offerPrice != null
           ? item.quantity! * item.products!.offerPrice!
           : 0.0;
-      // Ensure that the result of multiplication is casted to double
     }
-    return subTotal;
+    int roundSubTotal = subTotal.round();
+    return roundSubTotal;
   }
 }
