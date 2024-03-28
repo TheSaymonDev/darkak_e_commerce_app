@@ -1,19 +1,24 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:darkak_e_commerce_app/controllers/brand_list_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/brand_wised_product_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/category_list_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/category_wised_product_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/explore_screen_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
-import 'package:darkak_e_commerce_app/models/demo_product_list.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
+import 'package:darkak_e_commerce_app/views/screens/all_categories_screen.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_product_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_search_text_form_field.dart';
 import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/horizontal_shimmer_list.dart';
 import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/product_sector_title.dart';
-import 'package:darkak_e_commerce_app/views/screens/see_all_categories_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/brand_shop.dart';
 import 'package:darkak_e_commerce_app/views/screens/notification_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/product_listing_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/search_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/count_down_timer.dart';
-import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/product_categories.dart';
 import 'package:darkak_e_commerce_app/views/widgets/explore_screen_widgets/slider_with_indicator.dart';
+import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -24,6 +29,12 @@ class ExploreScreen extends StatelessWidget {
 
   final ExploreScreenController _exploreScreenController =
       Get.put(ExploreScreenController());
+  final BrandWisedProductListController _brandWisedProductListController =
+      Get.find<BrandWisedProductListController>();
+  final CategoryWisedProductListController _categoryWisedProductListController =
+      Get.find<CategoryWisedProductListController>();
+  final ProductListController _productListController = Get.find<ProductListController>();
+  final CategoryListController _categoryListController = Get.find<CategoryListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +90,15 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(const SeeAllCategoriesScreen());
+                          Get.to(()=> AllCategoriesScreen(categoryList: _categoryListController.categoryList));
                         },
                         title: 'Categories'),
                     Gap(8.h),
-                    const ProductCategories(),
+                    GetBuilder<CategoryListController>(builder: (controller) {
+                      return controller.isLoading == true
+                          ? customCircularProgressIndicator
+                          : _buildCategoryList(controller);
+                    }),
                     Gap(16.h),
                     GetBuilder<ExploreScreenController>(builder: (controller) {
                       return CountDownTimer(duration: controller.duration);
@@ -97,8 +112,7 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(() => ProductListingScreen(
-                              productList: demoProductList));
+                         Get.to(()=> ProductListingScreen(productList: _productListController.productList));
                         },
                         title: 'Best Selling'),
                     Gap(8.h),
@@ -108,14 +122,19 @@ class ExploreScreen extends StatelessWidget {
                           : _buildHorizontalProductList(controller);
                     }),
                     Gap(16.h),
-                    ProductSectorTitle(onTap: () {}, title: 'Featured Brands'),
+                    ProductSectorTitle(onTap: () {
+                      Get.to(()=> ProductListingScreen(productList: _productListController.productList));
+                    }, title: 'Featured Brands'),
                     Gap(8.h),
-                    const BrandShop(),
+                    GetBuilder<BrandListController>(builder: (controller) {
+                      return controller.isLoading == true
+                          ? customCircularProgressIndicator
+                          : _buildBrandList(controller);
+                    }),
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(() => ProductListingScreen(
-                              productList: demoProductList));
+                          Get.to(()=> ProductListingScreen(productList: _productListController.productList));
                         },
                         title: 'New Arrival'),
                     Gap(8.h),
@@ -127,8 +146,7 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(() => ProductListingScreen(
-                              productList: demoProductList));
+                          Get.to(()=> ProductListingScreen(productList: _productListController.productList));
                         },
                         title: 'Just For You'),
                     Gap(8.h),
@@ -140,8 +158,7 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(() => ProductListingScreen(
-                              productList: demoProductList));
+                          Get.to(()=> ProductListingScreen(productList: _productListController.productList));
                         },
                         title: 'Top Trending(Week)'),
                     Gap(8.h),
@@ -153,8 +170,7 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(() => ProductListingScreen(
-                              productList: demoProductList));
+                          Get.to(()=> ProductListingScreen(productList: _productListController.productList));
                         },
                         title: 'Recent Added Products'),
                     Gap(8.h),
@@ -166,6 +182,100 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h)
                   ])))
         ]);
+  }
+
+  SizedBox _buildBrandList(BrandListController controller) {
+    return SizedBox(
+      height: 80.h,
+      width: double.infinity.w,
+      child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            final brand = controller.brandList[index];
+            return GestureDetector(
+              onTap: () {
+                _brandWisedProductListController
+                    .filterProductByBrand(brand.id!);
+                Get.to(() => ProductListingScreen(
+                    productList: _brandWisedProductListController.productList));
+              },
+              child: CustomCard(
+                  width: 180.w,
+                  height: double.infinity.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 40.h,
+                        width: 40.w,
+                        child: CircleAvatar(
+                          backgroundImage: CachedNetworkImageProvider(
+                              '${Urls.imgUrl}${brand.image!.path}'),
+                        ),
+                      ),
+                      Gap(26.w),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            brand.name ?? '',
+                            style: Get.textTheme.titleLarge,
+                          ),
+                          Text('120 Products',
+                              style: Get.textTheme.bodySmall!
+                                  .copyWith(color: greyClr)),
+                        ],
+                      ),
+                    ],
+                  )),
+            );
+          },
+          separatorBuilder: (context, index) => Gap(30.w),
+          itemCount: controller.brandList.length),
+    );
+  }
+
+  SizedBox _buildCategoryList(CategoryListController controller) {
+    return SizedBox(
+      height: 95.h,
+      width: double.infinity,
+      child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            final category = controller.categoryList[index];
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  borderRadius: BorderRadius.circular(50.r),
+                  onTap: () {
+                    _categoryWisedProductListController
+                        .getFilterProductByCategory(category.id!);
+                    Get.to(() => ProductListingScreen(
+                        productList:
+                            _categoryWisedProductListController.productList));
+                  },
+                  child: CustomCard(
+                    isCircle: true,
+                    width: 60.w,
+                    height: 60.h,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+                    child: CachedNetworkImage(
+                        imageUrl: '${Urls.imgUrl}${category.image!.path}'),
+                  ),
+                ),
+                Text(
+                  category.name ?? '',
+                  style: Get.textTheme.bodyMedium,
+                ),
+              ],
+            );
+          },
+          separatorBuilder: (context, index) => Gap(24.w),
+          itemCount: controller.categoryList.length),
+    );
   }
 
   SizedBox _buildHorizontalProductList(ProductListController controller) {

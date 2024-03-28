@@ -2,7 +2,7 @@ import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart'
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/screens/final_product_details_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,7 +41,7 @@ class _WishListScreenState extends State<WishListScreen> {
                             Get.to(() =>
                                 FinalProductDetailsScreen(product: product));
                           },
-                          child: CustomCardStyle(
+                          child: CustomCard(
                             width: double.infinity.w,
                             height: 120.h,
                             padding: EdgeInsets.symmetric(vertical: 16.h),

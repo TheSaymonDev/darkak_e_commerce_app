@@ -2,7 +2,7 @@ import 'package:darkak_e_commerce_app/controllers/add_to_wishList_controller.dar
 import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/models/cart_item.dart';
+import 'package:darkak_e_commerce_app/models/final_cart_item.dart';
 import 'package:darkak_e_commerce_app/views/screens/final_product_details_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';

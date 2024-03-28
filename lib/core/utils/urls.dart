@@ -37,4 +37,7 @@ class Urls{
   static String getWishListProductUrl = '$_baseUrl/wishlist';
   static String removeWishListItemUrl = '$_baseUrl/wishlist';
   static String createOrderUrl = '$_baseUrl/orders';
+  static String getAllCategoryUrl = '$_baseUrl/categories';
+  static String getAllBrandUrl = '$_baseUrl/brands';
+  static String getMyOrderUrl = '$_baseUrl/orders';
 }

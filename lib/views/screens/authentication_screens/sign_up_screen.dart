@@ -4,7 +4,7 @@ import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/otp_verification_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -46,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
                 width: 110.w,
               ),
               Gap(40.h),
-              CustomCardStyle(
+              CustomCard(
                 width: double.infinity.w,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 child: Form(

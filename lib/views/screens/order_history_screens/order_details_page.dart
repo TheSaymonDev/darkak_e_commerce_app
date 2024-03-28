@@ -1,14 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/demo_product_list.dart';
-import 'package:darkak_e_commerce_app/models/demo_product_model.dart';
+import 'package:darkak_e_commerce_app/models/final_my_order.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_my_order_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_product_item_gridview.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/order_tracking_page.dart';
-import 'package:darkak_e_commerce_app/views/screens/product_listing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -16,16 +16,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class OrderDetailsPage extends StatelessWidget {
-  const OrderDetailsPage(
-      {super.key,
-      required this.orderID,
-      required this.date,
-      required this.products,
-      required this.orderStatus});
+  const OrderDetailsPage({
+    super.key,
+    required this.myOrder,
+    required this.orderStatus,
+  });
 
-  final String orderID;
-  final DateTime date;
-  final List<ProductModel> products;
+  final MyOrder myOrder;
   final String orderStatus;
 
   @override
@@ -47,10 +44,10 @@ class OrderDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Order ID: $orderID',
-                style: myStyle(20.sp, FontWeight.normal, blackClr),
+                'Order ID: ${myOrder.orderId}',
+                style: Get.textTheme.bodyMedium
               ),
-              CustomCardStyle(
+              CustomCard(
                   width: double.infinity.w,
                   padding: EdgeInsets.symmetric(vertical: 8.h),
                   child: Column(
@@ -78,13 +75,13 @@ class OrderDetailsPage extends StatelessWidget {
                                     : orderStatus == 'Completed'
                                         ? 'Order Delivered'
                                         : 'Order Cancelled',
-                                style: myStyle(
-                                    25.sp, FontWeight.normal, blackClr),
+                                style:
+                                    myStyle(25.sp, FontWeight.normal, blackClr),
                               ),
                               Text(
-                                DateFormat('d MMMM, y').format(date),
-                                style: myStyle(
-                                    15.sp, FontWeight.normal, blackClr),
+                                DateFormat('d MMMM, y').format(DateTime.now()),
+                                style:
+                                    myStyle(15.sp, FontWeight.normal, blackClr),
                               ),
                             ],
                           ),
@@ -95,7 +92,7 @@ class OrderDetailsPage extends StatelessWidget {
                       ),
                       Column(
                         children: List.generate(
-                          products.length,
+                          myOrder.carts!.length,
                           (index) => Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8.w, vertical: 16.h),
@@ -107,38 +104,35 @@ class OrderDetailsPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4.r),
                                     image: DecorationImage(
-                                        image: AssetImage(
-                                            products[index].productImagePath),
+                                        image: CachedNetworkImageProvider('${Urls.imgUrl}${myOrder.carts![index].products!.images![0].path}'),
                                         fit: BoxFit.cover),
                                   ),
                                 ),
                                 Gap(16.w),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        products[index].productName,
-                                        style: myStyle(
-                                            25.sp, FontWeight.normal, blackClr),
+                                        '${myOrder.carts![index].products!.name}',
+                                        style: Get.textTheme.bodyLarge
                                       ),
                                       SizedBox(
                                         height: 20.h,
                                         child: Row(
                                           children: [
                                             Text(
-                                              'Size: ${products[index].attributes[0]}',
-                                              style: myStyle(20.sp,
-                                                  FontWeight.normal, blackClr),
+                                              'Size: ${myOrder.carts![index].size}',
+                                              style: Get.textTheme.bodyMedium
                                             ),
                                             VerticalDivider(
                                               color: blackClr,
                                               thickness: 2.w,
                                             ),
                                             Text(
-                                              'Qty: ${products[index].quantity.toString()}',
-                                              style: myStyle(20.sp,
-                                                  FontWeight.normal, blackClr),
+                                              'Qty: ${myOrder.carts![index].quantity.toString()}',
+                                              style: Get.textTheme.bodyMedium
                                             ),
                                           ],
                                         ),
@@ -148,12 +142,11 @@ class OrderDetailsPage extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            '${Urls.takaSign}${products[index].productPrice}',
-                                            style: myStyle(20.sp,
-                                                FontWeight.normal, orangeClr),
+                                            '${Urls.takaSign}${myOrder.carts![index].products!.offerPrice}',
+                                            style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)
                                           ),
-                                          CustomCardStyle(
-                                            width: 98.w,
+                                          CustomCard(
+                                            width: 110.w,
                                             height: 35.h,
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 8.w),
@@ -161,16 +154,12 @@ class OrderDetailsPage extends StatelessWidget {
                                               children: [
                                                 Text(
                                                   'Color:',
-                                                  style: myStyle(
-                                                      15.sp,
-                                                      FontWeight.normal,
-                                                      blackClr),
+                                                  style: Get.textTheme.bodySmall
                                                 ),
                                                 const Spacer(),
                                                 Text(
-                                                  products[index].color[0],
-                                                  style: myStyle(15.sp,
-                                                      FontWeight.bold, blackClr),
+                                                  '${myOrder.carts![index].color}',
+                                                  style: Get.textTheme.titleSmall
                                                 ),
                                               ],
                                             ),
@@ -194,13 +183,17 @@ class OrderDetailsPage extends StatelessWidget {
                   children: [
                     CustomMyOrderButton(
                         onTap: () {
-                          Get.to(()=> OrderTrackingScreen(orderID: orderID,));
+                          Get.to(() => OrderTrackingScreen(
+                                orderID: myOrder.orderId!,
+                              ));
                         },
                         icon: Icons.card_giftcard,
                         title: 'Track Order'),
                     Gap(8.h),
                     CustomMyOrderButton(
-                        onTap: () {}, icon: Icons.cancel, title: 'Cancel Order'),
+                        onTap: () {},
+                        icon: Icons.cancel,
+                        title: 'Cancel Order'),
                   ],
                 ),
               ),
@@ -210,7 +203,9 @@ class OrderDetailsPage extends StatelessWidget {
                   children: [
                     CustomMyOrderButton(
                         onTap: () {
-                          Get.to(()=> OrderTrackingScreen(orderID: orderID,));
+                          Get.to(() => OrderTrackingScreen(
+                                orderID: myOrder.orderId!,
+                              ));
                         },
                         icon: Icons.card_giftcard,
                         title: 'Track Order'),
@@ -232,7 +227,7 @@ class OrderDetailsPage extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(()=>ProductListingScreen(productList: demoProductList));
+                      // Get.to(()=>ProductListingScreen(productList: demoProductList));
                     },
                     child: Text(
                       'See all',
@@ -242,7 +237,9 @@ class OrderDetailsPage extends StatelessWidget {
                 ],
               ),
               Gap(8.h),
-              CustomProductItemGridView(productList: demoProductList, physics: const NeverScrollableScrollPhysics()),
+              CustomProductItemGridView(
+                  productList: demoProductList,
+                  physics: const NeverScrollableScrollPhysics()),
               Gap(16.h),
             ],
           ),

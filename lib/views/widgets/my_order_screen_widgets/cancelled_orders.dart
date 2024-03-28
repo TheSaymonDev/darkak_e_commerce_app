@@ -1,7 +1,7 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/my_order_model.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/order_history_screens/order_details_page.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class CancelledOrders extends StatelessWidget {
       child: ListView.separated(
           itemBuilder: (context, index) {
             final myOrder = MyOrder.cancelledOrders[index];
-            return CustomCardStyle(
+            return CustomCard(
               width: double.infinity.w,
               child: Column(
                 children: [
@@ -52,11 +52,11 @@ class CancelledOrders extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            Get.to(() => OrderDetailsPage(
-                                orderID: myOrder.orderID,
-                                date: myOrder.date,
-                                products: myOrder.products,
-                                orderStatus: 'Cancelled'));
+                            // Get.to(() => OrderDetailsPage(
+                            //     orderID: myOrder.orderID,
+                            //     date: myOrder.date,
+                            //     products: myOrder.products,
+                            //     orderStatus: 'Cancelled'));
                           },
                           icon: Icon(
                             Icons.keyboard_arrow_right_outlined,
@@ -67,7 +67,7 @@ class CancelledOrders extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: orangeClr,
                   ),
                   Column(
@@ -132,7 +132,7 @@ class CancelledOrders extends StatelessWidget {
                                             style: myStyle(20.sp,
                                                 FontWeight.normal, orangeClr),
                                           ),
-                                          CustomCardStyle(
+                                          CustomCard(
                                             width: 98.w,
                                             height: 35.h,
                                             padding: EdgeInsets.symmetric(

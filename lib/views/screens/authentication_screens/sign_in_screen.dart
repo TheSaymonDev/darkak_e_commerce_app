@@ -2,7 +2,7 @@ import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sig
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -42,7 +42,7 @@ class SignInScreen extends StatelessWidget {
                   width: 110.w,
                 ),
                 Gap(40.h),
-                CustomCardStyle(
+                CustomCard(
                     width: double.infinity.w,
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),

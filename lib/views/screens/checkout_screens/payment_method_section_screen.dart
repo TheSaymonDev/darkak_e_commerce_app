@@ -1,6 +1,6 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -114,7 +114,7 @@ class _PaymentMethodSectionScreenState extends State<PaymentMethodSectionScreen>
                                   _currentMobileBankingMediumIndex = index;
                                 });
                               },
-                              child: CustomCardStyle(
+                              child: CustomCard(
                                 width: double.infinity.w,
                                 height: 70.h,
                                 padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -181,7 +181,7 @@ class _PaymentMethodSectionScreenState extends State<PaymentMethodSectionScreen>
                                   _currentCardMediumIndex = index;
                                 });
                               },
-                              child: CustomCardStyle(
+                              child: CustomCard(
                                 width: double.infinity.w,
                                 height: 70.h,
                                 padding: EdgeInsets.symmetric(horizontal: 16.w),

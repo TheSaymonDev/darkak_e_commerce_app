@@ -2,7 +2,7 @@ import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/models/demo_product_list.dart';
 import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_searchview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_filtering_and_sorting.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_product_item_gridview.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_query_tab.dart';
@@ -36,7 +36,7 @@ class _StorePageState extends State<StorePage> {
           child: Column(
             children: [
               Gap(16.h),
-              CustomCardStyle(
+              CustomCard(
                   height: 100.h,
                   width: double.infinity.w,
                   padding:

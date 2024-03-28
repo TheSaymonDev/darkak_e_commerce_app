@@ -1,7 +1,7 @@
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/order_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
-import 'package:darkak_e_commerce_app/models/cart_item.dart';
+import 'package:darkak_e_commerce_app/models/final_cart_item.dart';
 import 'package:darkak_e_commerce_app/views/screens/checkout_screens/address_section_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/checkout_screens/delivery_type_section_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/checkout_screens/payment_method_section_screen.dart';

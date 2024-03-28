@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:darkak_e_commerce_app/controllers/my_order_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/models/my_order_model.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_outlined_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/order_history_screens/order_details_page.dart';
@@ -13,9 +14,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ActiveOrders extends StatefulWidget {
-  const ActiveOrders({
-    super.key,
-  });
+  final MyOrderController controller;
+  const ActiveOrders({super.key, required this.controller});
 
   @override
   State<ActiveOrders> createState() => _ActiveOrdersState();
@@ -31,8 +31,8 @@ class _ActiveOrdersState extends State<ActiveOrders> {
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: ListView.separated(
           itemBuilder: (context, index) {
-            final myOrder = MyOrder.activeOrders[index];
-            return CustomCardStyle(
+            final myOrder = widget.controller.myOrderList[index];
+            return CustomCard(
               width: double.infinity.w,
               child: Column(
                 children: [
@@ -46,24 +46,22 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Order ID: ${myOrder.orderID}',
-                              style: myStyle(
-                                  20.sp, FontWeight.normal, blackClr),
+                              'Order ID: ${myOrder.orderId}',
+                              style:
+                                  myStyle(20.sp, FontWeight.normal, blackClr),
                             ),
                             Gap(4.h),
                             Text(
-                              DateFormat('d MMMM, y').format(myOrder.date),
-                              style: myStyle(
-                                  15.sp, FontWeight.normal, blackClr),
+                              DateFormat('d MMMM, y').format(DateTime.now()),
+                              style:
+                                  myStyle(15.sp, FontWeight.normal, blackClr),
                             ),
                           ],
                         ),
                         IconButton(
                           onPressed: () {
                             Get.to(() => OrderDetailsPage(
-                                  orderID: myOrder.orderID,
-                                  date: myOrder.date,
-                                  products: myOrder.products,
+                                 myOrder: myOrder,
                                   orderStatus: 'Active',
                                 ));
                           },
@@ -76,138 +74,125 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                       ],
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: orangeClr,
                   ),
                   Column(
                     children: List.generate(
-                      myOrder.products.length,
-                      (index) => Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.w, vertical: 16.h),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  height: 80.h,
-                                  width: 77.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4.r),
-                                    image: DecorationImage(
-                                        image: AssetImage(myOrder
-                                            .products[index].productImagePath),
-                                        fit: BoxFit.cover),
-                                  ),
+                      myOrder.carts!.length,
+                      (index) {
+                        final cartItem = myOrder.carts![index];
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 8.w, vertical: 16.h),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 80.h,
+                                width: 77.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4.r),
+                                  image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                          '${Urls.imgUrl}${cartItem.products!.images![0].path}'),
+                                      fit: BoxFit.cover),
                                 ),
-                                Gap(16.w),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        myOrder.products[index].productName,
-                                        style: myStyle(25.sp,
-                                            FontWeight.normal, blackClr),
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              'Size: ${myOrder.products[index].attributes[0]}',
-                                              style: myStyle(20.sp,
-                                                  FontWeight.normal, blackClr),
-                                            ),
-                                            VerticalDivider(
-                                              color: blackClr,
-                                              thickness: 2.w,
-                                            ),
-                                            Text(
-                                              'Qty: ${myOrder.products[index].quantity.toString()}',
-                                              style: myStyle(20.sp,
-                                                  FontWeight.normal, blackClr),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                              ),
+                              Gap(16.w),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${cartItem.products!.name}',
+                                      style: Get.textTheme.bodyLarge
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                      child: Row(
                                         children: [
                                           Text(
-                                            '${Urls.takaSign}${myOrder.products[index].productPrice}',
-                                            style: myStyle(20.sp,
-                                                FontWeight.normal, orangeClr),
+                                            'Size: ${cartItem.size}',
+                                            style: Get.textTheme.bodyMedium
                                           ),
-                                          CustomCardStyle(
-                                            width: 98.w,
-                                            height: 35.h,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8.w),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  'Color:',
-                                                  style: myStyle(
-                                                      15.sp,
-                                                      FontWeight.normal,
-                                                      blackClr),
-                                                ),
-                                                const Spacer(),
-                                                Text(
-                                                  myOrder
-                                                      .products[index].color[0],
-                                                  style: myStyle(
-                                                      15.sp,
-                                                      FontWeight.bold,
-                                                      blackClr),
-                                                ),
-                                              ],
-                                            ),
-                                          )
+                                          VerticalDivider(
+                                            color: blackClr,
+                                            thickness: 2.w,
+                                          ),
+                                          Text(
+                                            'Qty: ${cartItem.quantity.toString()}',
+                                            style: Get.textTheme.bodyMedium
+                                          ),
                                         ],
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            Gap(8.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomOutlinedButton(
-                                    onPressed: () {
-                                      showDialogBox(
-                                          title: 'Cancel',
-                                          middleText:
-                                              'Are you sure want to cancel?',
-                                          onPressedCancel: () {
-                                            Get.back();
-                                          },
-                                          onPressedConfirm: () {
-                                            setState(() {
-                                              myOrder.products.removeAt(index);
-                                              Get.back();
-                                            });
-                                          });
-                                    },
-                                    buttonName: 'Cancel',
-                                    buttonWidth: 150.w),
-                                CustomOutlinedButton(
-                                    onPressed: () {
-                                      Get.to(() => OrderTrackingScreen(
-                                          orderID: myOrder.orderID));
-                                    },
-                                    buttonName: 'Track Order',
-                                    buttonWidth: 150.w),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '${Urls.takaSign}${cartItem.products!.offerPrice}',
+                                          style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)
+                                        ),
+                                        CustomCard(
+                                          width: 110.w,
+                                          height: 35.h,
+                                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                'Color:',
+                                                style: Get.textTheme.bodyMedium
+                                              ),
+                                              const Spacer(),
+                                              Text(
+                                                '${cartItem.color}',
+                                                style: Get.textTheme.titleSmall
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h, top: 8.h),
+                    child: Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomOutlinedButton(
+                            onPressed: () {
+                              showDialogBox(
+                                  title: 'Cancel',
+                                  middleText:
+                                      'Are you sure want to cancel?',
+                                  onPressedCancel: () {
+                                    Get.back();
+                                  },
+                                  onPressedConfirm: () {
+                                  Get.back();
+                                  });
+                            },
+                            buttonName: 'Cancel',
+                            buttonWidth: 150.w),
+                        CustomOutlinedButton(
+                            onPressed: () {
+                              Get.to(() => OrderTrackingScreen(
+                                  orderID: myOrder.orderId!));
+                            },
+                            buttonName: 'Track Order',
+                            buttonWidth: 150.w),
+                      ],
                     ),
                   ),
                 ],
@@ -215,8 +200,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
             );
           },
           separatorBuilder: (context, index) => Gap(10.h),
-          itemCount: MyOrder.activeOrders.length),
+          itemCount: widget.controller.myOrderList.length),
     );
   }
-
 }

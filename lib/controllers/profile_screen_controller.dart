@@ -1,6 +1,6 @@
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/models/user.dart';
+import 'package:darkak_e_commerce_app/models/final_user.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:get/get.dart';
 

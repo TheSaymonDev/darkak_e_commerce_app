@@ -1,7 +1,7 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/my_order_model.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_outlined_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/order_history_screens/order_details_page.dart';
@@ -31,7 +31,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
       child: ListView.separated(
           itemBuilder: (context, index) {
             final myOrder = MyOrder.completedOrders[index];
-            return CustomCardStyle(
+            return CustomCard(
               width: double.infinity.w,
               child: Column(
                 children: [
@@ -59,11 +59,11 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                         ),
                         IconButton(
                           onPressed: () {
-                            Get.to(() => OrderDetailsPage(
-                                orderID: myOrder.orderID,
-                                date: myOrder.date,
-                                products: myOrder.products,
-                                orderStatus: 'Completed'));
+                            // Get.to(() => OrderDetailsPage(
+                            //     orderID: myOrder.orderID,
+                            //     date: myOrder.date,
+                            //     products: myOrder.products,
+                            //     orderStatus: 'Completed'));
                           },
                           icon: Icon(
                             Icons.keyboard_arrow_right_outlined,
@@ -139,7 +139,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                                             style: myStyle(20.sp,
                                                 FontWeight.normal, orangeClr),
                                           ),
-                                          CustomCardStyle(
+                                          CustomCard(
                                             width: 98.w,
                                             height: 35.h,
                                             padding: EdgeInsets.symmetric(

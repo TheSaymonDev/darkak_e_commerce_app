@@ -6,12 +6,17 @@ import 'package:darkak_e_commerce_app/controllers/authentication_controllers/otp
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/set_password_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_in_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/sign_up_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/brand_list_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/brand_wised_product_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/category_list_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/category_wised_product_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/home_screen_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/my_order_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/onboarding_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/order_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/product_details_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
@@ -37,5 +42,10 @@ class ControllerBinder extends Bindings {
     Get.put(ProductDetailsScreenController());
     Get.put(CheckOutScreenController());
     Get.put(OrderController());
+    Get.put(CategoryListController());
+    Get.put(BrandListController());
+    Get.put(BrandWisedProductListController());
+    Get.put(CategoryWisedProductListController());
+    Get.put(MyOrderController());
   }
 }

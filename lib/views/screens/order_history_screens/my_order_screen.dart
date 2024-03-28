@@ -1,3 +1,4 @@
+import 'package:darkak_e_commerce_app/controllers/my_order_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -8,8 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class MyOrderScreen extends StatelessWidget {
+class MyOrderScreen extends StatefulWidget {
   const MyOrderScreen({super.key});
+
+  @override
+  State<MyOrderScreen> createState() => _MyOrderScreenState();
+}
+
+class _MyOrderScreenState extends State<MyOrderScreen> {
+
 
   // Helper function to filter orders based on status
   // List<MyOrder> getOrdersByStatus(String status) {
@@ -17,6 +25,13 @@ class MyOrderScreen extends StatelessWidget {
   //       .where((order) => order.orderStatus == status)
   //       .toList();
   // }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get.find<MyOrderController>().getMyOrderList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +46,9 @@ class MyOrderScreen extends StatelessWidget {
           },
           title: 'My Order',
           tabBar: TabBar(
-            labelStyle: myStyle(20.sp, FontWeight.bold, blackClr),
-            unselectedLabelStyle: myStyle(
-                20.sp, FontWeight.normal, blackClr.withOpacity(0.5)),
+            labelStyle: Get.textTheme.titleMedium,
+            unselectedLabelStyle:
+                Get.textTheme.bodyMedium!.copyWith(color: greyClr),
             indicatorWeight: 6.h,
             indicatorColor: orangeClr,
             padding: EdgeInsets.symmetric(vertical: 0.h),
@@ -46,9 +61,15 @@ class MyOrderScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            ActiveOrders(),
+            GetBuilder<MyOrderController>(builder: (controller) {
+              return controller.isLoading == true
+                  ? customCircularProgressIndicator
+                  : ActiveOrders(
+                      controller: controller,
+                    );
+            }),
             CompletedOrders(),
             CancelledOrders(),
           ],

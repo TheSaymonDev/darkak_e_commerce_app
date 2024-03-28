@@ -9,7 +9,7 @@ import 'package:darkak_e_commerce_app/views/screens/product_view_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/review_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/store_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_bottom_sheet.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/product_details_screen_widgets/custom_coupon_code.dart';
 import 'package:darkak_e_commerce_app/views/widgets/product_details_screen_widgets/custom_drop_down.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -321,7 +321,7 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         GetBuilder<ProductDetailsScreenController>(builder: (controller) {
-          return CustomCardStyle(
+          return CustomCard(
               width: 160.w,
               height: 40.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -340,7 +340,7 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
               ]));
         }),
         GetBuilder<ProductDetailsScreenController>(builder: (controller) {
-          return CustomCardStyle(
+          return CustomCard(
               width: 160.w,
               height: 40.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -361,7 +361,7 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
       ]),
       Gap(16.h),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        CustomCardStyle(
+        CustomCard(
             width: 160.w,
             height: 40.h,
             padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -382,7 +382,7 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                           .incrementQuantity(widget.product.alertQuantity!),
                       child: Icon(Icons.add, size: 20.sp, color: greyClr))
                 ])),
-        CustomCardStyle(
+        CustomCard(
             width: 160.w,
             height: 40.h,
             padding: EdgeInsets.symmetric(horizontal: 8.w),

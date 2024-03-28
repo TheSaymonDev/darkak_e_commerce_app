@@ -4,7 +4,7 @@ class Product {
   int? alertQuantity;
   String? name;
   Model? model;
-  Category? category;
+  CategoryP? category;
   ProductGroup? productGroup;
   ProductGroup? brand;
   Warranty? warranty;
@@ -59,7 +59,7 @@ class Product {
     name = json['name'];
     model = json['model'] != null ? Model.fromJson(json['model']) : null;
     category = json['category'] != null
-        ? Category.fromJson(json['category'])
+        ? CategoryP.fromJson(json['category'])
         : null;
     productGroup = json['productGroup'] != null
         ? ProductGroup.fromJson(json['productGroup'])
@@ -192,7 +192,7 @@ class Model {
   }
 }
 
-class Category {
+class CategoryP {
   String? id;
   String? name;
   String? description;
@@ -200,7 +200,7 @@ class Category {
   String? brand;
   bool? isActive;
 
-  Category(
+  CategoryP(
       {this.id,
         this.name,
         this.description,
@@ -208,7 +208,7 @@ class Category {
         this.brand,
         this.isActive});
 
-  Category.fromJson(Map<String, dynamic> json) {
+  CategoryP.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];

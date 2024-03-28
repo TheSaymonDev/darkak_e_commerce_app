@@ -1,6 +1,8 @@
+import 'package:darkak_e_commerce_app/controllers/brand_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/category_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/home_screen_controller.dart';
-import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
@@ -39,6 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.find<ProfileController>().getCurrentUser();
       Get.find<CartItemController>().getCartItem();
       Get.find<WishListItemController>().getWishListItem();
+      Get.find<CategoryListController>().getCategoryList();
+      Get.find<BrandListController>().getBrandList();
     });
   }
 

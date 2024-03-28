@@ -1,5 +1,5 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_search_text_form_field.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/search_screen.dart';
@@ -22,7 +22,7 @@ class FixedSearchBar extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {},
-              child: CustomCardStyle(
+              child: CustomCard(
                 isCircle: true,
                 height: 28.h,
                 width: 28.h,
@@ -41,7 +41,7 @@ class FixedSearchBar extends StatelessWidget {
             const Spacer(),
             InkWell(
               onTap: () {},
-              child: CustomCardStyle(
+              child: CustomCard(
                 isCircle: true,
                 height: 40.h,
                 width: 40.h,

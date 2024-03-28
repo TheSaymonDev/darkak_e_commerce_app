@@ -1,7 +1,7 @@
 import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/models/add_to_cart.dart';
+import 'package:darkak_e_commerce_app/models/final_add_to_cart.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:get/get.dart';
 

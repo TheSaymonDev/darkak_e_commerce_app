@@ -2,11 +2,11 @@ import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomCardStyle extends StatelessWidget {
-  const CustomCardStyle({
+class CustomCard extends StatelessWidget {
+  const CustomCard({
     super.key,
     this.height,
-    required this.width,
+    this.width,
     required this.child,
     this.padding,
     this.isCircle = false, // Add a parameter for circle shape
@@ -32,7 +32,7 @@ class CustomCardStyle extends StatelessWidget {
             ),
       child: Container(
         height: height,
-        width: width,
+        width: width ?? double.infinity,
         padding: padding,
         decoration: isCircle == true
             ? const BoxDecoration(color: whiteClr, shape: BoxShape.circle)

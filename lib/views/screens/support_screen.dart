@@ -1,6 +1,6 @@
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card_style.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +28,7 @@ class SupportPage extends StatelessWidget {
         child: Column(
           children: [
             Gap(40.h),
-            CustomCardStyle(
+            CustomCard(
               width: double.infinity.w,
               border: Border.all(color: orangeClr, width: 1.w),
               child: Column(

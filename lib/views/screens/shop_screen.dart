@@ -1,4 +1,4 @@
-import 'package:darkak_e_commerce_app/controllers/productList_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/views/screens/search_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_filtering_and_sorting.dart';
