@@ -10,9 +10,9 @@ import 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesService().init();
-  String token = SharedPreferencesService().getToken();
+  final showHome = SharedPreferencesService().getSavedScreen();
   runApp(MyApp(
-    screen: token.isNotEmpty ? const HomeScreen() : const OnboardingScreen(),
+    screen: showHome == true ? const HomeScreen() : OnboardingScreen(),
   ));
 }
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             fontFamily: 'Gumela Arabic',
-            scaffoldBackgroundColor: whiteClr,
+            scaffoldBackgroundColor: const Color(0xFFFAF9F6),
             appBarTheme: const AppBarTheme(color: whiteClr),
             textTheme: TextTheme(
               bodyLarge: TextStyle(
@@ -80,5 +80,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

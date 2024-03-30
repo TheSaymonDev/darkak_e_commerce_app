@@ -30,8 +30,7 @@ class _WishListScreenState extends State<WishListScreen> {
                     height: double.infinity,
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: ListView.builder(
-                      shrinkWrap: true,
+                    child: ListView.separated(
                       scrollDirection: Axis.vertical,
                       padding: EdgeInsets.only(top: 16.h),
                       itemBuilder: (context, index) {
@@ -43,23 +42,23 @@ class _WishListScreenState extends State<WishListScreen> {
                           },
                           child: CustomCard(
                             width: double.infinity.w,
-                            height: 120.h,
-                            padding: EdgeInsets.symmetric(vertical: 16.h),
                             child: Row(
                               children: [
                                 Container(
-                                  height: double.infinity,
+                                  height: 120.h,
                                   width: 120.w,
                                   alignment: Alignment.topRight,
                                   decoration: BoxDecoration(
+                                    color: Colors.cyan,
                                     borderRadius: BorderRadius.circular(4.r),
                                     image: DecorationImage(
                                       image: NetworkImage(
                                           '${Urls.imgUrl}${product.images![0].path}'),
+                                      fit: BoxFit.cover
                                     ),
                                   ),
                                 ),
-                                Gap(50.w),
+                                Gap(40.w),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
@@ -126,6 +125,7 @@ class _WishListScreenState extends State<WishListScreen> {
                           ),
                         );
                       },
+                      separatorBuilder: (context, index) => Gap(8.h),
                       itemCount: controller.wishListItem.length,
                     ),
                   ),

@@ -1,18 +1,75 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:darkak_e_commerce_app/controllers/onboarding_screen_controller.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
+import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:geolocator/geolocator.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
+
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  bool _locationPermissionGranted = false;
+
+  String _currentLocation = '';
+
+  Future<void> _checkLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    _locationPermissionGranted = permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse;
+    setState(() {}); // Update UI based on permission status
+  }
+
+  Future<void> _getCurrentLocation() async {
+    if (_locationPermissionGranted) {
+      try {
+        Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.low,
+          timeLimit: const Duration(seconds: 5),
+        );
+
+        List<Placemark> placeMarks = await placemarkFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
+
+        Placemark placeMark =
+            placeMarks[0]; // Assuming first result is accurate
+        _currentLocation =
+            '${placeMark.locality}, ${placeMark.country}'; // Format as desired
+      } catch (error) {
+        debugPrint('Error getting location: $error');
+        _currentLocation = 'Unable to determine location.';
+      }
+
+      SharedPreferencesService().saveLocation(_currentLocation);
+    }
+  }
+
+  Future<void> _navigateToHomeScreen() async {
+    await _checkLocationPermission();
+    if (_locationPermissionGranted) {
+      await _getCurrentLocation();
+    }
+    Get.offAll(const HomeScreen(
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +83,8 @@ class OnboardingScreen extends StatelessWidget {
               builder: (controller) {
                 return CarouselSlider.builder(
                   itemCount: 3,
-                  itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
+                  itemBuilder:
+                      (BuildContext context, int itemIndex, int pageViewIndex) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -52,7 +110,8 @@ class OnboardingScreen extends StatelessWidget {
                     );
                   },
                   options: CarouselOptions(
-                    onPageChanged: (index, reason) => controller.onPageChange(index),
+                    onPageChanged: (index, reason) =>
+                        controller.onPageChange(index),
                     initialPage: 0,
                     height: 569.h,
                     autoPlay: true,
@@ -65,7 +124,8 @@ class OnboardingScreen extends StatelessWidget {
             GetBuilder<OnboardingController>(
               builder: (controller) {
                 return SmoothPageIndicator(
-                  controller: PageController(initialPage: controller.currentPage),
+                  controller:
+                      PageController(initialPage: controller.currentPage),
                   count: 3,
                   effect: ExpandingDotsEffect(
                     dotHeight: 5.0.h,
@@ -80,7 +140,8 @@ class OnboardingScreen extends StatelessWidget {
             const Spacer(),
             CustomElevatedButton(
               onPressed: () {
-                Get.to(() => SignInScreen());
+                SharedPreferencesService().saveScreen(true);
+                _navigateToHomeScreen();
               },
               buttonName: 'Get Start',
               width: 310.w,

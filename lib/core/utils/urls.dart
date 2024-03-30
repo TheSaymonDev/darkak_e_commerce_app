@@ -12,7 +12,7 @@ class Urls{
   static String emptyWishListLottie = '$_lottiePath/empty_wishlist.json';
   static String cashOnDeliveryLottie = '$_lottiePath/cash_on_delivery.json';
 
-  static const String appLogoSvg = 'assets/images/app-logo.svg';
+  static const String appLogoSvg = 'assets/images/app_logo.svg';
 
   static String lockPng = '$_imagePath/lock.png';
 

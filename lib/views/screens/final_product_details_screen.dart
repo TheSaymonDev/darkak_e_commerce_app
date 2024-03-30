@@ -2,9 +2,11 @@ import 'package:darkak_e_commerce_app/controllers/add_to_cart_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/add_to_wishList_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/product_details_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_product.dart';
+import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/product_view_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/review_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/store_screen.dart';
@@ -94,30 +96,44 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                                             style: Get.textTheme.titleLarge,
                                           ),
                                           GetBuilder<WishListItemController>(
-                                            builder: (controller) {
-                                              return InkWell(
-                                                borderRadius: BorderRadius.circular(8.r),
+                                              builder: (controller) {
+                                            return InkWell(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.r),
                                                 onTap: () async {
-                                                  if (controller.isInWishlist(widget.product.id!)) {
-                                                    controller.removeWishListItem(widget.product.id!);
+                                                  String token =
+                                                      SharedPreferencesService()
+                                                          .getToken();
+                                                  if (token.isNotEmpty) {
+                                                    if (controller.isInWishlist(
+                                                        widget.product.id!)) {
+                                                      controller
+                                                          .removeWishListItem(
+                                                              widget
+                                                                  .product.id!);
+                                                    } else {
+                                                      Get.find<
+                                                              AddToWishListController>()
+                                                          .addToWishList(widget
+                                                              .product.id!);
+                                                    }
                                                   } else {
-                                                    Get.find<AddToWishListController>().addToWishList(widget.product.id!);
+                                                    Get.offAll(
+                                                        () => SignInScreen());
                                                   }
                                                 },
                                                 child: Icon(
-                                                      controller.isInWishlist(
-                                                              widget.product.id!)
-                                                          ? Icons.favorite
-                                                          : Icons.favorite_border,
-                                                      size: 24.sp,
-                                                      color: controller
-                                                              .isInWishlist(widget
-                                                                  .product.id!)
-                                                          ? orangeClr
-                                                          : greyClr)
-                                                );
-                                            }
-                                          ),
+                                                    controller.isInWishlist(
+                                                            widget.product.id!)
+                                                        ? Icons.favorite
+                                                        : Icons.favorite_border,
+                                                    size: 24.sp,
+                                                    color: controller
+                                                            .isInWishlist(widget
+                                                                .product.id!)
+                                                        ? orangeClr
+                                                        : greyClr));
+                                          }),
                                         ],
                                       ),
                                       Gap(16.h),
@@ -196,18 +212,24 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                                 replacement: customCircularProgressIndicator,
                                 child: InkWell(
                                     onTap: () {
-                                      controller.addToCart(
-                                          productId: widget.product.id!,
-                                          productSize:
-                                              _productDetailsScreenController
-                                                  .selectedSize!,
-                                          productColor:
-                                              _productDetailsScreenController
-                                                  .selectedColor!,
-                                          productQuantity:
-                                              _productDetailsScreenController
-                                                  .quantity
-                                                  .toString());
+                                      String token =
+                                          SharedPreferencesService().getToken();
+                                      if (token.isNotEmpty) {
+                                        controller.addToCart(
+                                            productId: widget.product.id!,
+                                            productSize:
+                                                _productDetailsScreenController
+                                                    .selectedSize!,
+                                            productColor:
+                                                _productDetailsScreenController
+                                                    .selectedColor!,
+                                            productQuantity:
+                                                _productDetailsScreenController
+                                                    .quantity
+                                                    .toString());
+                                      } else {
+                                        Get.offAll(SignInScreen());
+                                      }
                                     },
                                     focusColor: whiteClr,
                                     child: Container(
@@ -297,24 +319,27 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
   }
 
   Column get buildProductDescription {
-    return Column(children: [
-      Text('Details', style: Get.textTheme.titleMedium),
-      Gap(8.h),
-      GetBuilder<ProductDetailsScreenController>(builder: (controller) {
-        return Text(
-            controller.isExpanded == true
-                ? '${widget.product.longDesc}'
-                : '${widget.product.shortDesc}',
-            style: Get.textTheme.bodyMedium);
-      }),
-      Gap(8.h),
-      GetBuilder<ProductDetailsScreenController>(builder: (controller) {
-        return GestureDetector(
-            onTap: () => controller.toggleDes(),
-            child: Text(controller.isExpanded ? 'Show Less' : 'Show More',
-                style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)));
-      })
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Details', style: Get.textTheme.titleMedium),
+        Gap(8.h),
+        GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+          return Text(
+              controller.isExpanded == true
+                  ? '${widget.product.longDesc}'
+                  : '${widget.product.shortDesc}',
+              style: Get.textTheme.bodyMedium);
+        }),
+        Gap(8.h),
+        GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+          return GestureDetector(
+              onTap: () => controller.toggleDes(),
+              child: Text(controller.isExpanded ? 'Show Less' : 'Show More',
+                  style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)));
+        })
+      ],
+    );
   }
 
   Column get buildProductAttributes {

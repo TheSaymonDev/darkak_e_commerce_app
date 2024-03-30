@@ -5,6 +5,7 @@ import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_bottom_sheet.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_flutter_switch.dart';
+import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_outlined_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_shimmer.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_two_buttons.dart';
 import 'package:darkak_e_commerce_app/views/widgets/profile_screen_widgets/profile_item_button.dart';
@@ -14,6 +15,7 @@ import 'package:darkak_e_commerce_app/views/screens/profile_update_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/support_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +31,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String token = SharedPreferencesService().getToken();
+    return token.isNotEmpty ? _buildLoggedProfileScreen : _buildWithOutLoggedProfileScreen;
+  }
+
+  Future<dynamic> _showBottomSheet() {
+    return Get.bottomSheet(
+      CustomBottomSheet(
+        children: [
+          Center(
+            child: Text(
+              'Logout',
+              style: Get.textTheme.titleLarge,
+            ),
+          ),
+          Gap(20.h),
+          Center(
+            child: Text(
+              'Are you sure want to logout?',
+              style: Get.textTheme.bodyLarge,
+            ),
+          ),
+          Gap(50.h),
+          CustomTwoButtons(
+              leftButtonName: 'Cancel',
+              onLeftButtonPressed: () {
+                Get.back();
+              },
+              rightButtonName: 'Logout',
+              onRightButtonPressed: () {
+                SharedPreferencesService().clearUserData();
+                Get.offAll(() => SignInScreen());
+              }),
+          Gap(32.h)
+        ],
+      ),
+    );
+  }
+
+  Widget get _buildLoggedProfileScreen{
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -47,22 +88,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         builder: (controller) {
                           return controller.isLoading == true
                               ? CustomShimmer(
-                                  height: 110.h,
-                                  width: 110.w,
-                                  isCircle: true,
-                                )
+                            height: 110.h,
+                            width: 110.w,
+                            isCircle: true,
+                          )
                               : CircleAvatar(
-                                  backgroundColor: orangeClr,
-                                  backgroundImage: controller
-                                              .user?.profileImage?.path ==
-                                          null
-                                      ? const AssetImage(
-                                          'assets/images/profile-photo.png',
-                                        )
-                                      : NetworkImage(
-                                              '${Urls.imgUrl}${controller.user!.profileImage!.path}')
-                                          as ImageProvider,
-                                );
+                            backgroundColor: orangeClr,
+                            backgroundImage: controller
+                                .user?.profileImage?.path ==
+                                null
+                                ? const AssetImage(
+                              'assets/images/profile-photo.png',
+                            )
+                                : NetworkImage(
+                                '${Urls.imgUrl}${controller.user!.profileImage!.path}')
+                            as ImageProvider,
+                          );
                         },
                       )),
                   Gap(16.w),
@@ -97,13 +138,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     GestureDetector(
                       onTap: () {
                         Get.to(() => ProfileUpdateScreen(
-                              id: _profileController.user!.id,
-                              imgUrl: _profileController.user?.profileImage?.path,
-                              name: _profileController.user!.name,
-                              dob: _profileController.user!.dob,
-                              dom: _profileController.user!.marriageDate,
-                              mobile: _profileController.user!.mobile,
-                            ));
+                          id: _profileController.user!.id,
+                          imgUrl: _profileController.user?.profileImage?.path,
+                          name: _profileController.user!.name,
+                          dob: _profileController.user!.dob,
+                          dom: _profileController.user!.marriageDate,
+                          mobile: _profileController.user!.mobile,
+                        ));
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/profile-edit.svg',
@@ -146,12 +187,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         title: 'Notifications',
                         widget: GetBuilder<ProfileController>(
                             builder: (controller) {
-                          return CustomFlutterSwitch(
-                              onToggle: (newValue) {
-                                controller.toggleNotification(newValue);
-                              },
-                              value: controller.isNotification);
-                        })),
+                              return CustomFlutterSwitch(
+                                  onToggle: (newValue) {
+                                    controller.toggleNotification(newValue);
+                                  },
+                                  value: controller.isNotification);
+                            })),
                     Gap(20.h),
                     GestureDetector(
                       onTap: () {
@@ -172,36 +213,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<dynamic> _showBottomSheet() {
-    return Get.bottomSheet(
-      CustomBottomSheet(
-        children: [
-          Center(
-            child: Text(
-              'Logout',
-              style: Get.textTheme.titleLarge,
+  Widget get _buildWithOutLoggedProfileScreen{
+    return SafeArea(
+      child: SizedBox(
+        width: double.infinity.w,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Gap(20.h),
+            Text('Welcome To', style: Get.textTheme.titleLarge,),
+            SvgPicture.asset(
+              Urls.appLogoSvg,
+              height: 86.h,
+              width: 110.w,
             ),
-          ),
-          Gap(20.h),
-          Center(
-            child: Text(
-              'Are you sure want to logout?',
-              style: Get.textTheme.bodyLarge,
-            ),
-          ),
-          Gap(50.h),
-          CustomTwoButtons(
-              leftButtonName: 'Cancel',
-              onLeftButtonPressed: () {
-                Get.back();
-              },
-              rightButtonName: 'Logout',
-              onRightButtonPressed: () {
-                SharedPreferencesService().clearUserData();
-                Get.offAll(() => SignInScreen());
-              }),
-          Gap(32.h)
-        ],
+            Gap(8.h),
+            Text('Mart', style: Get.textTheme.titleSmall,),
+            Gap(32.h),
+            Text('Continue Shopping Please Sign In Or Sign Up', style: Get.textTheme.bodyMedium,),
+            Gap(16.h),
+            CustomOutlinedButton(onPressed: (){
+              Get.offAll(()=> SignInScreen());
+            }, buttonName: 'Sign In', buttonWidth: 150.w)
+          ],
+        ),
       ),
     );
   }

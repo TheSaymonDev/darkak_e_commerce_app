@@ -5,6 +5,7 @@ import 'package:darkak_e_commerce_app/controllers/home_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/views/screens/cart_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/explore_screen.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
+
   const HomeScreen({super.key});
 
   @override
@@ -38,11 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<ProductListController>().getProductList();
-      Get.find<ProfileController>().getCurrentUser();
-      Get.find<CartItemController>().getCartItem();
-      Get.find<WishListItemController>().getWishListItem();
       Get.find<CategoryListController>().getCategoryList();
       Get.find<BrandListController>().getBrandList();
+      String token = SharedPreferencesService().getToken();
+      if(token.isNotEmpty){
+        Get.find<ProfileController>().getCurrentUser();
+        Get.find<CartItemController>().getCartItem();
+        Get.find<WishListItemController>().getWishListItem();
+      }
     });
   }
 
@@ -51,10 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return GetBuilder<HomeScreenController>(
       builder: (controller) {
         return Scaffold(
-          backgroundColor: whiteClr,
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: false,
+            backgroundColor: const Color(0xFFFFF8DC),
             currentIndex: controller.currentIndex,
             onTap: (int index) => controller.changeIndex(index),
             items: [

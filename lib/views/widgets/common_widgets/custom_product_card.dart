@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:darkak_e_commerce_app/controllers/add_to_wishList_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_product.dart';
+import 'package:darkak_e_commerce_app/views/screens/authentication_screens/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/final_product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,14 +59,20 @@ class CustomProductCard extends StatelessWidget {
                                   fit: BoxFit.cover)),
                           child: InkWell(
                               onTap: () async {
-                                if (_wishListItemController
-                                    .isInWishlist(product.id!)) {
-                                  _wishListItemController
-                                      .removeWishListItem(product.id!);
-                                } else {
-                                  Get.find<AddToWishListController>()
-                                      .addToWishList(product.id!);
+                                String token = SharedPreferencesService().getToken();
+                                if(token.isNotEmpty){
+                                  if (_wishListItemController
+                                      .isInWishlist(product.id!)) {
+                                    _wishListItemController
+                                        .removeWishListItem(product.id!);
+                                  } else {
+                                    Get.find<AddToWishListController>()
+                                        .addToWishList(product.id!);
+                                  }
+                                }else{
+                                  Get.offAll(()=> SignInScreen());
                                 }
+
                               },
                               child: Container(
                                   margin: EdgeInsets.only(top: 8.h, right: 8.w),

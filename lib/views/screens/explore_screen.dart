@@ -5,8 +5,10 @@ import 'package:darkak_e_commerce_app/controllers/category_list_controller.dart'
 import 'package:darkak_e_commerce_app/controllers/category_wised_product_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/explore_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/product_list_controller.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
+import 'package:darkak_e_commerce_app/views/screens/all_brand_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/all_categories_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_product_card.dart';
@@ -33,8 +35,12 @@ class ExploreScreen extends StatelessWidget {
       Get.find<BrandWisedProductListController>();
   final CategoryWisedProductListController _categoryWisedProductListController =
       Get.find<CategoryWisedProductListController>();
-  final ProductListController _productListController = Get.find<ProductListController>();
-  final CategoryListController _categoryListController = Get.find<CategoryListController>();
+  final ProductListController _productListController =
+      Get.find<ProductListController>();
+  final CategoryListController _categoryListController =
+      Get.find<CategoryListController>();
+  final BrandListController _brandListController =
+      Get.find<BrandListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +57,9 @@ class ExploreScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Location', style: Get.textTheme.bodyMedium),
-                      Text('Dhaka North, Banani Road No. 12 - 19',
-                          style:
-                              Get.textTheme.bodySmall!.copyWith(color: greyClr))
+                      Text(SharedPreferencesService().getLocation(),
+                          style: Get.textTheme.bodySmall!
+                              .copyWith(color: greyClr)),
                     ]),
                 actions: [
                   if (controller.showSearchIcon)
@@ -90,7 +96,9 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(()=> AllCategoriesScreen(categoryList: _categoryListController.categoryList));
+                          Get.to(() => AllCategoriesScreen(
+                              categoryList:
+                                  _categoryListController.categoryList));
                         },
                         title: 'Categories'),
                     Gap(8.h),
@@ -112,7 +120,8 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                         Get.to(()=> ProductListingScreen(productList: _productListController.productList));
+                          Get.to(() => ProductListingScreen(
+                              productList: _productListController.productList));
                         },
                         title: 'Best Selling'),
                     Gap(8.h),
@@ -122,9 +131,12 @@ class ExploreScreen extends StatelessWidget {
                           : _buildHorizontalProductList(controller);
                     }),
                     Gap(16.h),
-                    ProductSectorTitle(onTap: () {
-                      Get.to(()=> ProductListingScreen(productList: _productListController.productList));
-                    }, title: 'Featured Brands'),
+                    ProductSectorTitle(
+                        onTap: () {
+                          Get.to(() => AllBrandScreen(
+                              brandList: _brandListController.brandList));
+                        },
+                        title: 'Featured Brands'),
                     Gap(8.h),
                     GetBuilder<BrandListController>(builder: (controller) {
                       return controller.isLoading == true
@@ -134,7 +146,8 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(()=> ProductListingScreen(productList: _productListController.productList));
+                          Get.to(() => ProductListingScreen(
+                              productList: _productListController.productList));
                         },
                         title: 'New Arrival'),
                     Gap(8.h),
@@ -146,7 +159,8 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(()=> ProductListingScreen(productList: _productListController.productList));
+                          Get.to(() => ProductListingScreen(
+                              productList: _productListController.productList));
                         },
                         title: 'Just For You'),
                     Gap(8.h),
@@ -158,7 +172,8 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(()=> ProductListingScreen(productList: _productListController.productList));
+                          Get.to(() => ProductListingScreen(
+                              productList: _productListController.productList));
                         },
                         title: 'Top Trending(Week)'),
                     Gap(8.h),
@@ -170,7 +185,8 @@ class ExploreScreen extends StatelessWidget {
                     Gap(16.h),
                     ProductSectorTitle(
                         onTap: () {
-                          Get.to(()=> ProductListingScreen(productList: _productListController.productList));
+                          Get.to(() => ProductListingScreen(
+                              productList: _productListController.productList));
                         },
                         title: 'Recent Added Products'),
                     Gap(8.h),
@@ -195,7 +211,7 @@ class ExploreScreen extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 _brandWisedProductListController
-                    .filterProductByBrand(brand.id!);
+                    .getFilterProductByBrand(brand.id!);
                 Get.to(() => ProductListingScreen(
                     productList: _brandWisedProductListController.productList));
               },
@@ -231,7 +247,7 @@ class ExploreScreen extends StatelessWidget {
                   )),
             );
           },
-          separatorBuilder: (context, index) => Gap(30.w),
+          separatorBuilder: (context, index) => Gap(16.w),
           itemCount: controller.brandList.length),
     );
   }

@@ -59,11 +59,20 @@ dependencies:
   cached_network_image: ^3.3.1
   lottie: ^3.1.0
   shimmer: ^3.0.0
+  flutter_native_splash: ^2.3.2
+  geolocator: ^11.0.0
+  geocoding: ^3.0.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/app_icon.png"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/app_icon.png
+  android: true
+  ios: true
 
 dev_dependencies:
   flutter_test:

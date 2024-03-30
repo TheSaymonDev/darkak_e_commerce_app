@@ -34,6 +34,14 @@ class SharedPreferencesService {
     _prefs.setString('mobile', userData['user']['mobile'] ?? '');
     _prefs.setString('email', userData['user']['email'] ?? '');
   }
+  
+  void saveScreen(bool homeScreen){
+    _prefs.setBool('showHome', homeScreen);
+  }
+
+  bool getSavedScreen(){
+    return _prefs.getBool('showHome') ?? false;
+  }
 
   void saveToken(String token) {
     _prefs.setString('accessToken', token);
@@ -45,5 +53,13 @@ class SharedPreferencesService {
 
   void clearUserData() {
     _prefs.clear();
+  }
+
+  void saveLocation(String location){
+    _prefs.setString('savedLocation', location);
+  }
+
+  String getLocation(){
+    return _prefs.getString('savedLocation') ?? '';
   }
 }

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class BrandWisedProductListController extends GetxController{
   List<Product> productList = [];
-  void filterProductByBrand(String brandId){
+  void getFilterProductByBrand(String brandId){
     productList = Get.find<ProductListController>().productList.where((product) => product.brand!.id== brandId).toList();
     update();
   }
