@@ -1,4 +1,6 @@
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/forget_otp_verification_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/authentication_controllers/identity_verification_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/timer_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/validator.dart';
 import 'package:darkak_e_commerce_app/views/screens/authentication_screens/set_password_screen.dart';
@@ -12,12 +14,32 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class ForgotOtpVerificationScreen extends StatelessWidget {
+class ForgotOtpVerificationScreen extends StatefulWidget {
   final String? userId;
-  ForgotOtpVerificationScreen({super.key, required this.userId});
+  final String identity;
+  const ForgotOtpVerificationScreen({super.key, required this.userId, required this.identity});
 
+  @override
+  State<ForgotOtpVerificationScreen> createState() =>
+      _ForgotOtpVerificationScreenState();
+}
+
+class _ForgotOtpVerificationScreenState
+    extends State<ForgotOtpVerificationScreen> {
   final otpController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<TimerController>().startTimer();
+  }
+
+  @override
+  void dispose() {
+    Get.find<TimerController>().timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,35 +91,33 @@ class ForgotOtpVerificationScreen extends StatelessWidget {
                         style: Get.textTheme.bodyMedium,
                       ),
                       Gap(8.w),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          'Resend Code',
-                          style: Get.textTheme.titleMedium!
-                              .copyWith(color: orangeClr),
-                        ),
-                      ),
+                      GetBuilder<TimerController>(builder: (controller) {
+                        return Visibility(
+                          visible: controller.showResendButton == false,
+                          replacement: GestureDetector(
+                            onTap: () {
+                              controller.startTimer();
+                              Get.find<IdentityVerificationController>().formOnSubmit(identity: widget.identity);
+                            },
+                            child: Text('Resend Code',
+                                style: Get.textTheme.titleMedium!
+                                    .copyWith(color: orangeClr)),
+                          ),
+                          child: Text(controller.getFormattedDuration(),
+                              style: Get.textTheme.titleMedium!
+                                  .copyWith(color: orangeClr)),
+                        );
+                      }),
                     ],
                   ),
                   Gap(35.h),
                   GetBuilder<ForgetOtpVerificationController>(
-                    builder: (controller) => Visibility(
-                      visible: controller.isLoading == false,
-                      replacement: customCircularProgressIndicator,
-                      child: CustomElevatedButton(
-                          onPressed: () async {
-                            if (formKey.currentState?.validate() ?? false) {
-                              final result = await controller.formOnSubmit(
-                                userId: userId!,
-                              otp: otpController.text.trim());
-                              if (result == true) {
-                               Get.offAll(()=> SetPasswordScreen(userId: userId, otp: otpController.text));
-                              }
-                            }
-                          },
-                          buttonName: 'CONTINUE',
-                          width: double.infinity.w),
-                    ),
+                    builder: (controller) => controller.isLoading
+                        ? customCircularProgressIndicator
+                        : CustomElevatedButton(
+                            onPressed: () => _formOnSubmit(controller),
+                            buttonName: 'CONTINUE',
+                            width: double.infinity.w),
                   )
                 ],
               ),
@@ -108,7 +128,14 @@ class ForgotOtpVerificationScreen extends StatelessWidget {
     );
   }
 
-  void _clearData() {
-    otpController.clear();
+  void _formOnSubmit(ForgetOtpVerificationController controller) async {
+    if (formKey.currentState?.validate() ?? false) {
+      final result = await controller.formOnSubmit(
+          userId: widget.userId!, otp: otpController.text.trim());
+      if (result == true) {
+        Get.off(() =>
+            SetPasswordScreen(userId: widget.userId, otp: otpController.text));
+      }
+    }
   }
 }

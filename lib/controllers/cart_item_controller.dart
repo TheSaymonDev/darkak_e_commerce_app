@@ -1,4 +1,5 @@
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_cart_item.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -12,7 +13,12 @@ class CartItemController extends GetxController {
     isLoading = true;
     update();
     try {
-      final responseData = await ApiService().getApi(Urls.getCartItemUrl, header: Urls.requestHeaderWithToken);
+      String token = SharedPreferencesService().getToken();
+      Map<String, String> headerWithToken = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      };
+      final responseData = await ApiService().getApi(Urls.getCartItemUrl, header: headerWithToken);
       if (responseData != null) {
         List<dynamic> data = responseData;
         if (data.isNotEmpty) {
@@ -24,7 +30,7 @@ class CartItemController extends GetxController {
           update();
         }
       } else {
-        customErrorMessage(message: 'Cart ================Something Went Wrong');
+        customErrorMessage(message: 'Something Went Wrong');
         isLoading = false;
         update();
       }

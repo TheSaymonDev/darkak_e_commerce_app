@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:get/get.dart';
@@ -9,9 +10,14 @@ class AddToWishListController extends GetxController {
   Future<void> addToWishList(String id) async {
     final data = {'productId': id};
     try {
+      String token = SharedPreferencesService().getToken();
+      Map<String, String> headerWithToken = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      };
       final responseData = await ApiService().postApi(
           Urls.addToWishListUrl, data,
-          header: Urls.requestHeaderWithToken);
+          header: headerWithToken);
       if (responseData != null && responseData != 404) {
         customSuccessMessage(message: 'Successfully Product Add To Wishlist');
         Get.find<WishListItemController>().getWishListItem();

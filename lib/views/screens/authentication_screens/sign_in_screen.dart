@@ -43,94 +43,79 @@ class SignInScreen extends StatelessWidget {
                 ),
                 Gap(40.h),
                 CustomCard(
-                    width: double.infinity.w,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                    child: Form(
-                        key: formKey,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Welcome',
-                                style: Get.textTheme.titleLarge!
-                                    .copyWith(fontSize: 30.sp),
-                              ),
-                              Gap(10.h),
-                              Text(
-                                'Sign in to Continue',
-                                style: Get.textTheme.bodyMedium,
-                              ),
-                              Gap(55.h),
-                              CustomTextFormField(
-                                labelText: 'Email or Mobile',
-                                controller: identifierController,
-                                validator: Validators().identifierValidator,
-                              ),
-                              Gap(35.h),
-                              GetBuilder<SignInController>(
-                                builder: (controller) => CustomTextFormField(
-                                  labelText: 'Password',
-                                  controller: passwordController,
-                                  validator: Validators().passwordValidator,
-                                  suffixIcon: Padding(
-                                    padding: EdgeInsets.only(right: 8.w),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          controller.toggleObscure();
-                                        },
-                                        icon: Icon(
-                                          controller.isObscure
-                                              ? Icons.visibility_off
-                                              : Icons.visibility,
-                                          color: blackClr,
-                                          size: 25.sp,
-                                        )),
-                                  ),
-                                  obscureText: controller.isObscure,
-                                ),
-                              ),
-                              Gap(20.h),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(
-                                    () => EmailVerificationScreen(),
-                                  );
-                                },
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    'Forgot Password?',
-                                    style: Get.textTheme.bodyMedium,
-                                  ),
-                                ),
-                              ),
-                              Gap(30.h),
-                              GetBuilder<SignInController>(
-                                builder: (controller) => Visibility(
-                                  visible: controller.isLoading == false,
-                                  replacement: customCircularProgressIndicator,
-                                  child: CustomElevatedButton(
-                                      onPressed: () async {
-                                        if (formKey.currentState?.validate() ??
-                                            false) {
-                                          final result =
-                                              await controller.formOnSubmit(
-                                            identity: identifierController.text.trim(),
-                                            password: passwordController.text.trim(),
-                                          );
-                                          if (result == true) {
-                                           _clearData();
-                                            Get.offAll(
-                                                () => const HomeScreen());
-                                          }
-                                        }
-                                      },
-                                      buttonName: 'SIGN IN',
-                                      width: double.infinity.w),
-                                ),
-                              )
-                            ]))),
+                  width: double.infinity.w,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Welcome',
+                          style: Get.textTheme.titleLarge!
+                              .copyWith(fontSize: 30.sp),
+                        ),
+                        Gap(10.h),
+                        Text(
+                          'Sign in to Continue',
+                          style: Get.textTheme.bodyMedium,
+                        ),
+                        Gap(55.h),
+                        CustomTextFormField(
+                          labelText: 'Email or Mobile',
+                          controller: identifierController,
+                          validator: Validators().identifierValidator,
+                        ),
+                        Gap(35.h),
+                        GetBuilder<SignInController>(
+                          builder: (controller) => CustomTextFormField(
+                            labelText: 'Password',
+                            controller: passwordController,
+                            validator: Validators().passwordValidator,
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.only(right: 8.w),
+                              child: IconButton(
+                                  onPressed: () => controller.toggleObscure(),
+                                  icon: Icon(
+                                    controller.isObscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: blackClr,
+                                    size: 25.sp,
+                                  )),
+                            ),
+                            obscureText: controller.isObscure,
+                          ),
+                        ),
+                        Gap(20.h),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(
+                              () => EmailVerificationScreen(),
+                            );
+                          },
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'Forgot Password?',
+                              style: Get.textTheme.bodyMedium,
+                            ),
+                          ),
+                        ),
+                        Gap(30.h),
+                        GetBuilder<SignInController>(
+                          builder: (controller) => controller.isLoading
+                              ? customCircularProgressIndicator
+                              : CustomElevatedButton(
+                                  onPressed: () => _formOnSubmit(controller),
+                                  buttonName: 'SIGN IN',
+                                  width: double.infinity.w),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 Gap(30.h),
                 Text(
                   '- OR -',
@@ -179,5 +164,18 @@ class SignInScreen extends StatelessWidget {
   void _clearData() {
     identifierController.clear();
     passwordController.clear();
+  }
+
+  void _formOnSubmit(SignInController controller) async {
+    if (formKey.currentState?.validate() ?? false) {
+      final result = await controller.formOnSubmit(
+        identity: identifierController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      if (result == true) {
+        _clearData();
+        Get.offAll(() => const HomeScreen());
+      }
+    }
   }
 }

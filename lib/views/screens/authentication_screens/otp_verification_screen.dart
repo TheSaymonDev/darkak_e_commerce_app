@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
-
   final String? userId;
   OtpVerificationScreen({super.key, required this.userId});
 
@@ -46,9 +45,9 @@ class OtpVerificationScreen extends StatelessWidget {
                   ),
                   Gap(18.h),
                   Text(
-                    'A 6 - Digit PIN has been sent to your email address or mobile number, enter it below to continue',
-                    style: Get.textTheme.bodyMedium!.copyWith(color: greyClr)
-                  ),
+                      'A 6 - Digit PIN has been sent to your email address or mobile number, enter it below to continue',
+                      style:
+                          Get.textTheme.bodyMedium!.copyWith(color: greyClr)),
                   Gap(35.h),
                   PinCodeTextField(
                     validator: Validators().pinValidator,
@@ -74,32 +73,20 @@ class OtpVerificationScreen extends StatelessWidget {
                         onTap: () {},
                         child: Text(
                           'Resend Code',
-                          style:
-                          Get.textTheme.titleMedium!.copyWith(color: orangeClr),
+                          style: Get.textTheme.titleMedium!
+                              .copyWith(color: orangeClr),
                         ),
                       ),
                     ],
                   ),
                   Gap(35.h),
                   GetBuilder<OtpVerificationController>(
-                    builder: (controller) => Visibility(
-                      visible: controller.isLoading == false,
-                      replacement: customCircularProgressIndicator,
-                      child: CustomElevatedButton(
-                          onPressed: () async {
-                            if (formKey.currentState?.validate() ?? false) {
-                              final result = await controller.formOnSubmit(
-                                  userId: userId!,
-                                  otp: otpController.text.trim());
-                              if (result == true) {
-                                _clearData();
-                                Get.offAll(()=> const HomeScreen());
-                              }
-                            }
-                          },
-                          buttonName: 'CONTINUE',
-                          width: double.infinity.w),
-                    ),
+                    builder: (controller) => controller.isLoading
+                        ? customCircularProgressIndicator
+                        : CustomElevatedButton(
+                            onPressed: () => _formOnSubmit(controller),
+                            buttonName: 'CONTINUE',
+                            width: double.infinity.w),
                   )
                 ],
               ),
@@ -112,5 +99,16 @@ class OtpVerificationScreen extends StatelessWidget {
 
   void _clearData() {
     otpController.clear();
+  }
+
+  void _formOnSubmit(OtpVerificationController controller) async {
+    if (formKey.currentState?.validate() ?? false) {
+      final result = await controller.formOnSubmit(
+          userId: userId!, otp: otpController.text.trim());
+      if (result == true) {
+        _clearData();
+        Get.offAll(() => const HomeScreen());
+      }
+    }
   }
 }

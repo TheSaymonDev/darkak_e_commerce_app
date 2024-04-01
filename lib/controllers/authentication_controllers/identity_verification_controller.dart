@@ -12,14 +12,15 @@ class IdentityVerificationController extends GetxController {
   Future<bool> formOnSubmit({required String identity}) async {
       isLoading = true;
       update();
-      final identityVerification =
-          IdentityVerification(identity: identity);
+      final identityVerification = IdentityVerification(identity: identity);
       try {
         final responseData =
             await ApiService().postApi(Urls.identityUrl, identityVerification);
         if (responseData != null && responseData != 404) {
           userId = responseData['userId'];
           customSuccessMessage(message: 'Sent Otp Your Mobile');
+          isLoading=false;
+          update();
           return true;
         } else if (responseData == 404) {
           customErrorMessage(message: 'User Not Found');

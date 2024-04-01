@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_add_to_cart.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -20,9 +21,14 @@ class AddToCartController extends GetxController {
         color: productColor,
         quantity: productQuantity);
     try {
+      String token = SharedPreferencesService().getToken();
+      Map<String, String> headerWithToken = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      };
       final responseData = await ApiService().postApi(
           Urls.addToCartUrl, addToCart,
-          header: Urls.requestHeaderWithToken);
+          header: headerWithToken);
       if (responseData != null && responseData != 404) {
         customSuccessMessage(message: 'Successfully Product Add To Cart');
         isLoading = false;

@@ -49,7 +49,6 @@ class _WishListScreenState extends State<WishListScreen> {
                                   width: 120.w,
                                   alignment: Alignment.topRight,
                                   decoration: BoxDecoration(
-                                    color: Colors.cyan,
                                     borderRadius: BorderRadius.circular(4.r),
                                     image: DecorationImage(
                                       image: NetworkImage(

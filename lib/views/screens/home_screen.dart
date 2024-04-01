@@ -17,7 +17,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({super.key});
 
   @override
@@ -30,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ShopScreen(),
     const CartScreen(),
     const WishListScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
 
   final HomeScreenController _homeScreenController = Get.find<HomeScreenController>();
@@ -39,41 +38,45 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<ProductListController>().getProductList();
-      Get.find<CategoryListController>().getCategoryList();
-      Get.find<BrandListController>().getBrandList();
       String token = SharedPreferencesService().getToken();
-      if(token.isNotEmpty){
+      if (token.isNotEmpty) {
+        Get.find<ProductListController>().getProductList();
+        Get.find<CategoryListController>().getCategoryList();
+        Get.find<BrandListController>().getBrandList();
         Get.find<ProfileController>().getCurrentUser();
         Get.find<CartItemController>().getCartItem();
         Get.find<WishListItemController>().getWishListItem();
+      } else {
+        Get.find<ProductListController>().getProductList();
+        Get.find<CategoryListController>().getCategoryList();
+        Get.find<BrandListController>().getBrandList();
       }
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeScreenController>(
-      builder: (controller) {
-        return Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            showSelectedLabels: false,
-            backgroundColor: const Color(0xFFFFF8DC),
-            currentIndex: controller.currentIndex,
-            onTap: (int index) => controller.changeIndex(index),
-            items: [
-              _buildNavigationBarItem(0, Icons.home_filled, 'Home'),
-              _buildNavigationBarItem(1, Icons.shopping_cart, 'Shop'),
-              _buildNavigationBarItem(2, Icons.shopping_bag, 'Cart'),
-              _buildNavigationBarItem(3, Icons.favorite, 'Favourite'),
-              _buildNavigationBarItem(4, Icons.person, 'Account'),
-            ],
-          ),
-          body: _widgetList.elementAt(controller.currentIndex),
-        );
-      }
-    );
+    return GetBuilder<HomeScreenController>(builder: (controller) {
+      return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          backgroundColor: const Color(0xFFFFF8DC),
+          currentIndex: controller.currentIndex,
+          onTap: (int index) => controller.changeIndex(index),
+          items: [
+            _buildNavigationBarItem(0, Icons.home_filled, 'Home'),
+            _buildNavigationBarItem(1, Icons.shopping_cart, 'Shop'),
+            _buildNavigationBarItem(2, Icons.shopping_bag, 'Cart'),
+            _buildNavigationBarItem(3, Icons.favorite, 'Favourite'),
+            _buildNavigationBarItem(4, Icons.person, 'Account'),
+          ],
+        ),
+        body: _widgetList.elementAt(controller.currentIndex),
+      );
+    });
   }
 
   BottomNavigationBarItem _buildNavigationBarItem(

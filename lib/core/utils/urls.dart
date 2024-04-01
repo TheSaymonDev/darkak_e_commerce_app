@@ -19,7 +19,9 @@ class Urls{
   static const String imgUrl = 'https://api.darkak.com.bd/';
   static const String _baseUrl = "https://api.darkak.com.bd/api/v1";
   static const Map<String, String> requestHeader = {"Content-Type": "application/json"};
-  static Map<String, String> requestHeaderWithToken = {"Content-Type": "application/json", "Authorization":"Bearer ${SharedPreferencesService().getToken()}"};
+
+  static final String _token = SharedPreferencesService().getToken();
+  //static Map<String, String> requestHeaderWithToken = {"Content-Type": "application/json", "Authorization":"Bearer $_token"};
 
   static String signInUrl = '$_baseUrl/users/login';
   static String signUpUrl = '$_baseUrl/users';

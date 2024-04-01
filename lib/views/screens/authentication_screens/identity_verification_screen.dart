@@ -55,25 +55,13 @@ class EmailVerificationScreen extends StatelessWidget {
                   ),
                   Gap(40.h),
                   GetBuilder<IdentityVerificationController>(
-                    builder: (controller) => Visibility(
-                      visible: controller.isLoading == false,
-                      replacement: customCircularProgressIndicator,
-                      child: CustomElevatedButton(
-                          onPressed: () async {
-                            if (formKey.currentState?.validate() ?? false) {
-                              final result = await controller.formOnSubmit(
-                                  identity: identifierController.text.trim());
-                              if (result == true) {
-                                _clearData();
-                                Get.off(() => ForgotOtpVerificationScreen(
-                                    userId: controller.userId));
-                              }
-                            }
-                          },
-                          buttonName: 'SEND',
-                          width: double.infinity.w),
-                    ),
-                  )
+                    builder: (controller) => controller.isLoading
+                        ? customCircularProgressIndicator
+                        : CustomElevatedButton(
+                            onPressed: () => _formOnSubmit(controller),
+                            buttonName: 'SEND',
+                            width: double.infinity.w),
+                  ),
                 ],
               ),
             ),
@@ -83,7 +71,14 @@ class EmailVerificationScreen extends StatelessWidget {
     );
   }
 
-  void _clearData() {
-    identifierController.clear();
+
+  void _formOnSubmit(IdentityVerificationController controller) async {
+    if (formKey.currentState?.validate() ?? false) {
+      final result = await controller.formOnSubmit(
+          identity: identifierController.text.trim());
+      if (result == true) {
+        Get.to(() => ForgotOtpVerificationScreen(userId: controller.userId, identity: identifierController.text.trim(),));
+      }
+    }
   }
 }

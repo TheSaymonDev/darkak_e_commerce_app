@@ -269,6 +269,7 @@ class _CartScreenState extends State<CartScreen> {
                               image: DecorationImage(
                                 image: NetworkImage(
                                     '${Urls.imgUrl}${cartItem.products!.images![0].path}'),
+                                fit: BoxFit.cover
                               ),
                             ),
                           ),

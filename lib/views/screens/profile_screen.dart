@@ -19,54 +19,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({super.key});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
   final ProfileController _profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
     String token = SharedPreferencesService().getToken();
     return token.isNotEmpty ? _buildLoggedProfileScreen : _buildWithOutLoggedProfileScreen;
-  }
-
-  Future<dynamic> _showBottomSheet() {
-    return Get.bottomSheet(
-      CustomBottomSheet(
-        children: [
-          Center(
-            child: Text(
-              'Logout',
-              style: Get.textTheme.titleLarge,
-            ),
-          ),
-          Gap(20.h),
-          Center(
-            child: Text(
-              'Are you sure want to logout?',
-              style: Get.textTheme.bodyLarge,
-            ),
-          ),
-          Gap(50.h),
-          CustomTwoButtons(
-              leftButtonName: 'Cancel',
-              onLeftButtonPressed: () {
-                Get.back();
-              },
-              rightButtonName: 'Logout',
-              onRightButtonPressed: () {
-                SharedPreferencesService().clearUserData();
-                Get.offAll(() => SignInScreen());
-              }),
-          Gap(32.h)
-        ],
-      ),
-    );
   }
 
   Widget get _buildLoggedProfileScreen{
@@ -234,10 +195,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text('Continue Shopping Please Sign In Or Sign Up', style: Get.textTheme.bodyMedium,),
             Gap(16.h),
             CustomOutlinedButton(onPressed: (){
-              Get.offAll(()=> SignInScreen());
+              Get.to(()=> SignInScreen());
             }, buttonName: 'Sign In', buttonWidth: 150.w)
           ],
         ),
+      ),
+    );
+  }
+
+  Future<dynamic> _showBottomSheet() {
+    return Get.bottomSheet(
+      CustomBottomSheet(
+        children: [
+          Center(
+            child: Text(
+              'Logout',
+              style: Get.textTheme.titleLarge,
+            ),
+          ),
+          Gap(20.h),
+          Center(
+            child: Text(
+              'Are you sure want to logout?',
+              style: Get.textTheme.bodyLarge,
+            ),
+          ),
+          Gap(50.h),
+          CustomTwoButtons(
+              leftButtonName: 'Cancel',
+              onLeftButtonPressed: () {
+                Get.back();
+              },
+              rightButtonName: 'Logout',
+              onRightButtonPressed: () {
+                SharedPreferencesService().clearUserData();
+                Get.offAll(() => SignInScreen());
+              }),
+          Gap(32.h)
+        ],
       ),
     );
   }

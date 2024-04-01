@@ -1,4 +1,5 @@
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_product.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -11,8 +12,13 @@ class WishListItemController extends GetxController {
     isLoading = true;
     update();
     try {
+      String token = SharedPreferencesService().getToken();
+      Map<String, String> headerWithToken = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      };
       final responseData = await ApiService().getApi(Urls.getWishListProductUrl,
-          header: Urls.requestHeaderWithToken);
+          header: headerWithToken);
       if (responseData != null) {
         List<dynamic> data = responseData;
         if (data.isNotEmpty) {

@@ -17,8 +17,6 @@ class MyOrderScreen extends StatefulWidget {
 }
 
 class _MyOrderScreenState extends State<MyOrderScreen> {
-
-
   // Helper function to filter orders based on status
   // List<MyOrder> getOrdersByStatus(String status) {
   //   return MyOrder.myOrders
@@ -63,13 +61,14 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
         ),
         body: TabBarView(
           children: [
-            GetBuilder<MyOrderController>(builder: (controller) {
-              return controller.isLoading == true
-                  ? customCircularProgressIndicator
-                  : ActiveOrders(
-                      controller: controller,
-                    );
-            }),
+            GetBuilder<MyOrderController>(
+                builder: (controller) => controller.isLoading
+                    ? customCircularProgressIndicator
+                    : controller.myOrderList.isEmpty
+                        ? Center(
+                            child: Text('No Order',
+                                style: Get.textTheme.titleMedium))
+                        : ActiveOrders(controller: controller)),
             CompletedOrders(),
             CancelledOrders(),
           ],

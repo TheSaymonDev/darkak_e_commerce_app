@@ -12,29 +12,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class SetPasswordScreen extends StatefulWidget {
+class SetPasswordScreen extends StatelessWidget {
   final String? userId;
   final String? otp;
+
   SetPasswordScreen({super.key, required this.userId, required this.otp});
 
-  @override
-  State<SetPasswordScreen> createState() => _SetPasswordScreenState();
-}
-
-class _SetPasswordScreenState extends State<SetPasswordScreen> {
   final formKey = GlobalKey<FormState>();
-
   final newPasswordController = TextEditingController();
-
   final confirmPasswordController = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(widget.otp);
-    print(widget.userId);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +55,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                       suffixIcon: Padding(
                         padding: EdgeInsets.only(right: 8.w),
                         child: IconButton(
-                          onPressed: () {
-                            controller.toggleObscureN();
-                          },
+                          onPressed: () => controller.toggleObscureN(),
                           icon: Icon(
                             controller.isObscureNew
                                 ? Icons.visibility_off
@@ -95,9 +79,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                       suffixIcon: Padding(
                         padding: EdgeInsets.only(right: 8.w),
                         child: IconButton(
-                            onPressed: () {
-                              controller.toggleObscureC();
-                            },
+                            onPressed: () => controller.toggleObscureC(),
                             icon: Icon(
                               controller.isObscureConfirm
                                   ? Icons.visibility_off
@@ -111,26 +93,13 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                   }),
                   Gap(50.h),
                   GetBuilder<SetPasswordController>(
-                    builder: (controller) => controller.isLoading == true
-                        ? customCircularProgressIndicator
-                        : CustomElevatedButton(
-                            onPressed: () async {
-                              if (formKey.currentState?.validate() ?? false) {
-                                final result = await controller.formOnSubmit(
-                                    userId: widget.userId!,
-                                    otp: widget.otp!,
-                                    password:
-                                        newPasswordController.text.trim());
-                                if (result == true) {
-                                  _clearData();
-                                  Get.offAll(SignInScreen());
-                                }
-                              }
-                            },
-                            buttonName: 'DONE',
-                            width: double.infinity.w,
-                          ),
-                  ),
+                      builder: (controller) => controller.isLoading
+                          ? customCircularProgressIndicator
+                          : CustomElevatedButton(
+                              onPressed: () => _formOnSubmit(controller),
+                              buttonName: 'DONE',
+                              width: double.infinity.w,
+                            ))
                 ],
               ),
             ),
@@ -143,5 +112,18 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   void _clearData() {
     newPasswordController.clear();
     confirmPasswordController.clear();
+  }
+
+  void _formOnSubmit(SetPasswordController controller) async {
+    if (formKey.currentState?.validate() ?? false) {
+      final result = await controller.formOnSubmit(
+          userId: userId!,
+          otp: otp!,
+          password: newPasswordController.text.trim());
+      if (result == true) {
+        _clearData();
+        Get.offAll(SignInScreen());
+      }
+    }
   }
 }

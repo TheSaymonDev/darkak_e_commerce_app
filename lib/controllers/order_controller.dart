@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
+import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_order_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -23,9 +24,14 @@ class OrderController extends GetxController {
         delivery: delivery,
         note: 'Deliver This Product');
     try {
+      String token = SharedPreferencesService().getToken();
+      Map<String, String> headerWithToken = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      };
       final responseData = await ApiService().postApi(
           Urls.createOrderUrl, order,
-          header: Urls.requestHeaderWithToken);
+          header: headerWithToken);
       if (responseData != null && responseData != 404) {
         customSuccessMessage(message: 'Successfully Order');
         Get.find<CartItemController>().getCartItem();

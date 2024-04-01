@@ -103,27 +103,12 @@ class SignUpScreen extends StatelessWidget {
                       }),
                       Gap(38.h),
                       GetBuilder<SignUpController>(
-                        builder: (controller) => Visibility(
-                          visible: controller.isLoading == false,
-                          replacement: customCircularProgressIndicator,
-                          child: CustomElevatedButton(
-                              onPressed: () async {
-                                if (formKey.currentState?.validate() ?? false) {
-                                  final result = await controller.formOnSubmit(
-                                      email: emailController.text.trim(),
-                                      mobile: mobileController.text.trim(),
-                                      name: nameController.text.trim(),
-                                      password: passwordController.text.trim());
-                                  if (result == true) {
-                                    _clearData();
-                                    Get.offAll(() => OtpVerificationScreen(
-                                        userId: controller.userId));
-                                  }
-                                }
-                              },
-                              buttonName: 'SIGN UP',
-                              width: double.infinity.w),
-                        ),
+                        builder: (controller) => controller.isLoading
+                            ? customCircularProgressIndicator
+                            : CustomElevatedButton(
+                                onPressed: () => _formOnSubmit(controller),
+                                buttonName: 'SIGN UP',
+                                width: double.infinity.w),
                       )
                     ],
                   ),
@@ -178,5 +163,19 @@ class SignUpScreen extends StatelessWidget {
     nameController.clear();
     mobileController.clear();
     passwordController.clear();
+  }
+
+  _formOnSubmit(SignUpController controller) async {
+    if (formKey.currentState?.validate() ?? false) {
+      final result = await controller.formOnSubmit(
+          email: emailController.text.trim(),
+          mobile: mobileController.text.trim(),
+          name: nameController.text.trim(),
+          password: passwordController.text.trim());
+      if (result == true) {
+        _clearData();
+        Get.offAll(() => OtpVerificationScreen(userId: controller.userId));
+      }
+    }
   }
 }
