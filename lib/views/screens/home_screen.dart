@@ -1,3 +1,4 @@
+import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/brand_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/category_list_controller.dart';
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Get.find<ProfileController>().getCurrentUser();
         Get.find<CartItemController>().getCartItem();
         Get.find<WishListItemController>().getWishListItem();
+        Get.find<AddressViewController>().getAddressList();
       } else {
         Get.find<ProductListController>().getProductList();
         Get.find<CategoryListController>().getCategoryList();

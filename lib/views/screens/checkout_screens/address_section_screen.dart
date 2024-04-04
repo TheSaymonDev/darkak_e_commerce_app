@@ -1,6 +1,5 @@
+import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
-import 'package:darkak_e_commerce_app/core/utils/validator.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_dropdown_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,14 +14,33 @@ class AddressSectionScreen extends StatefulWidget {
 }
 
 class _AddressSectionScreenState extends State<AddressSectionScreen> {
-  List<String> addressList = ['Address 1', 'Address 2', 'Address 3'];
-  String? selectedAddress;
-
-  final List<String> _divisionList = ['Dhaka', 'Chittagong'];
-  final List<String> _districtList = ['Cumilla', 'Feni'];
-  final List<String> _subDistrictList = ['Chandina', 'Devidwar'];
 
   final CheckOutScreenController _checkOutScreenController = Get.find<CheckOutScreenController>();
+
+  final nameController = TextEditingController();
+  final mobileController = TextEditingController();
+  final addressController = TextEditingController();
+  final areaController = TextEditingController();
+  final cityController = TextEditingController();
+  final thanaController = TextEditingController();
+  final zipCodeController = TextEditingController();
+  final stateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkOutScreenController.readAddressModel = Get.find<AddressViewController>().addressList.where((address) => address.shippingAddress==true).firstOrNull;
+    Get.find<CheckOutScreenController>().addressId= _checkOutScreenController.readAddressModel!.id;
+    nameController.text =_checkOutScreenController.readAddressModel!.fullName ?? '';
+    mobileController.text =_checkOutScreenController.readAddressModel!.mobile ?? '';
+    addressController.text =_checkOutScreenController.readAddressModel!.address ?? '';
+    areaController.text =_checkOutScreenController.readAddressModel!.area ?? '';
+    cityController.text =_checkOutScreenController.readAddressModel!.city ?? '';
+    thanaController.text =_checkOutScreenController.readAddressModel!.thana ?? '';
+    zipCodeController.text =_checkOutScreenController.readAddressModel!.zip ?? '';
+    stateController.text =_checkOutScreenController.readAddressModel!.state ?? '';
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,75 +48,64 @@ class _AddressSectionScreenState extends State<AddressSectionScreen> {
       key: _checkOutScreenController.formKey,
       child: Column(
         children: [
-          CustomDropdownButton(
-              items: addressList,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedAddress = newValue;
-                });
-              },
-              labelText: 'Default Address'),
-          Gap(40.h),
           CustomTextFormField(
-            labelText: 'Address Line 1',
-            controller: _checkOutScreenController.addressLine1Controller,
-            validator: Validators().addressLine1Validator,
+              labelText: 'Full Name',
+              controller: nameController,
+            readOnly: true
+           ),
+          Gap(32.h),
+          CustomTextFormField(
+            labelText: 'Mobile',
+            controller: mobileController,
+            keyBoardType: TextInputType.phone,
+            readOnly: true
           ),
-          Gap(35.h),
+          Gap(32.h),
           CustomTextFormField(
-              labelText: 'Address Line 2',
-              controller: _checkOutScreenController.addressLine2Controller),
-          Gap(35.h),
+              labelText: 'Address',
+              controller: addressController,
+            readOnly: true),
+          Gap(32.h),
           Row(
             children: [
               Expanded(
-                child: CustomDropdownButton(
-                    items: _divisionList,
-                    validator: Validators().dropdownValidator,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _checkOutScreenController.selectedDivision = newValue;
-                      });
-                    },
-                    labelText: 'Division'),
+                child: CustomTextFormField(
+                    labelText: 'Area',
+                    controller: areaController,
+                   readOnly: true),
               ),
-              Gap(32.w),
+              Gap(16.w),
               Expanded(
-                child: CustomDropdownButton(
-                    items: _districtList,
-                    validator: Validators().dropdownValidator,
-                    onChanged: (newValue) {
-                      _checkOutScreenController.selectedDistrict = newValue;
-                    },
-                    labelText: 'District'),
+                child: CustomTextFormField(
+                    labelText: 'City',
+                    controller: cityController,
+                    readOnly: true),
               ),
             ],
           ),
-          Gap(35.h),
+          Gap(32.h),
           Row(
             children: [
               Expanded(
-                child: CustomDropdownButton(
-                    items: _subDistrictList,
-                    validator: Validators().dropdownValidator,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _checkOutScreenController.selectedSubDistrict =
-                            newValue;
-                      });
-                    },
-                    labelText: 'Sub-District'),
+                child: CustomTextFormField(
+                    labelText: 'Thana',
+                    controller: thanaController,
+                   readOnly: true),
               ),
-              Gap(32.w),
+              Gap(16.w),
               Expanded(
-                  child: CustomTextFormField(
-                labelText: 'Zip Code',
-                controller: _checkOutScreenController.zipCodeController,
-                keyBoardType: TextInputType.number,
-                validator: Validators().zipCodeValidator,
-              ))
+                child: CustomTextFormField(
+                    labelText: 'Zip Code',
+                    controller: zipCodeController,
+                   readOnly: true),
+              ),
             ],
           ),
+          Gap(32.h),
+          CustomTextFormField(
+              labelText: 'State',
+              controller: stateController,
+             readOnly: true),
         ],
       ),
     );

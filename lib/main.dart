@@ -12,7 +12,7 @@ void main() async {
   await SharedPreferencesService().init();
   final showHome = SharedPreferencesService().getSavedScreen();
   runApp(MyApp(
-    screen: showHome == true ? const HomeScreen() : OnboardingScreen(),
+    screen: showHome == true ? const HomeScreen() : const OnboardingScreen(),
   ));
 }
 

@@ -124,5 +124,12 @@ class Validators{
     }
     return null;
   }
+
+  String? notEmptyValidator(value, message) {
+    if (value!.isEmpty) {
+      return message;
+    }
+    return null;
+  }
 }
 

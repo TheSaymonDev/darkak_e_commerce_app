@@ -35,6 +35,21 @@ class ApiService {
     }
   }
 
+  Future<dynamic> patchApi(String url, dynamic data, {Map<String, String>? header}) async {
+    log(url.toString());
+    log(data.toString());
+    final response = await http.patch(Uri.parse(url), headers: header ?? Urls.requestHeader, body: jsonEncode(data));
+    log(response.statusCode.toString());
+    log(response.body.toString());
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return jsonDecode(response.body);
+    }else if(response.statusCode == 404){
+      return 404;
+    } else {
+      return null;
+    }
+  }
+
   Future<bool> patchMultiPartApi(
     String url,
     Map<String, dynamic>? data, {

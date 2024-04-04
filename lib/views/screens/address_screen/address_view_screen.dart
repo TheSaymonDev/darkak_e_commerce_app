@@ -1,5 +1,5 @@
+import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
-import 'package:darkak_e_commerce_app/models/address_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_edit_delete_buttons.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
@@ -18,9 +18,6 @@ class AddressViewScreen extends StatefulWidget {
 }
 
 class _AddressViewScreenState extends State<AddressViewScreen> {
-
-  int selectedAddressIndex = -1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,89 +37,118 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
         child: Column(
           children: [
             Gap(32.h),
-            Expanded(
-              child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    final address = AddressModel.addressList[index];
-                    return SizedBox(
-                      width: double.infinity.w,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '${address.division}, ${address.district}, ${address.subDistrict}\n${address.addressLine1}',
-                                style: myStyle(
-                                    20.sp, FontWeight.bold, blackClr),
-                              ),
-                              CustomEditDeleteButtons(
-                                isEditable: true,
-                                onTap: () {
-                                  Get.to(()=>const AddressEditableScreen(title: 'Update Address',));
-                                },
-                              ),
-                            ],
-                          ),
-                          Gap(8.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Radio(
-                                    value: index,
-                                    groupValue: selectedAddressIndex,
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        selectedAddressIndex = newValue as int;
-                                      });
-                                    },
-                                    activeColor: orangeClr,
-                                  ),
-                                  Text(
-                                    'Use as the shipping address',
-                                    style: myStyle(
-                                        20.sp, FontWeight.normal, blackClr),
-                                  ),
-                                ],
-                              ),
-                              CustomEditDeleteButtons(
-                                isEditable: false,
-                                onTap: () {
-                                  showDialogBox(
-                                    title: 'Remove',
-                                    middleText: 'Are you sure want to remove?',
-                                    onPressedCancel: () {
-                                      Get.back();
-                                    },
-                                    onPressedConfirm: () {
-                                      setState(() {
-                                        AddressModel.addressList
-                                            .removeAt(index);
-                                        Get.back();
-                                      });
-                                    },
+            GetBuilder<AddressViewController>(
+                builder: (controller) => controller.addressList.isEmpty
+                    ? const Center(
+                        child: Text('No Address Added'),
+                      )
+                    : controller.isLoading
+                        ? customCircularProgressIndicator
+                        : Expanded(
+                            child: ListView.separated(
+                                itemBuilder: (context, index) {
+                                  final address = controller.addressList[index];
+                                  return SizedBox(
+                                    width: double.infinity.w,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('${address.fullName}',
+                                                style:
+                                                    Get.textTheme.titleMedium),
+                                            Text('${address.mobile}',
+                                                style: Get
+                                                    .textTheme.titleMedium!
+                                                    .copyWith(color: greyClr))
+                                          ],
+                                        ),
+                                        Gap(8.h),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                                child: Text(
+                                                    '${address.address}, ${address.area}, ${address.zip}\n${address.thana}, ${address.city}, ${address.state}',
+                                                    style: Get
+                                                        .textTheme.bodyMedium)),
+                                            CustomEditDeleteButtons(
+                                              isEditable: true,
+                                              onTap: () {
+                                                Get.to(() =>
+                                                    AddressEditableScreen(
+                                                      title: 'Update Address',
+                                                      readAddressModel: address,
+                                                    ));
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        Gap(8.h),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Visibility(
+                                              visible:
+                                                  address.shippingAddress ==
+                                                      true,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 16.w,
+                                                    vertical: 8.h),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4.r),
+                                                    color: Colors.orange[100]),
+                                                child: Text('Default Address',
+                                                    style: Get
+                                                        .textTheme.titleSmall),
+                                              ),
+                                            ),
+                                            CustomEditDeleteButtons(
+                                              isEditable: false,
+                                              onTap: () {
+                                                showDialogBox(
+                                                  title: 'Remove',
+                                                  middleText:
+                                                      'Are you sure want to remove?',
+                                                  onPressedCancel: () {
+                                                    Get.back();
+                                                  },
+                                                  onPressedConfirm: () {
+                                                    controller.removeAddress(
+                                                        address.id!);
+                                                    Get.back();
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(
+                                          color: orangeClr.withOpacity(0.3),
+                                          thickness: 1.h,
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
-                              ),
-                            ],
-                          ),
-                          Divider(
-                            color: orangeClr.withOpacity(0.3),
-                            thickness: 1.h,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) => Gap(48.h),
-                  itemCount: AddressModel.addressList.length),
-            ),
+                                separatorBuilder: (context, index) => Gap(48.h),
+                                itemCount: controller.addressList.length),
+                          )),
             Gap(40.h),
             CustomElevatedButton(
                 onPressed: () {
-                  Get.to(() => const AddressEditableScreen(title: 'Add New Address',));
+                  Get.to(() => const AddressEditableScreen(
+                        title: 'Add New Address',
+                      ));
                 },
                 buttonName: 'Add New',
                 width: double.infinity.w),

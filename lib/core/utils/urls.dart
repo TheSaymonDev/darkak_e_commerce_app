@@ -42,4 +42,5 @@ class Urls{
   static String getAllCategoryUrl = '$_baseUrl/categories';
   static String getAllBrandUrl = '$_baseUrl/brands';
   static String getMyOrderUrl = '$_baseUrl/orders';
+  static String addressUrl = '$_baseUrl/address';
 }

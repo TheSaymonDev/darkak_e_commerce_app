@@ -111,26 +111,40 @@ class _SummarySectionScreenState extends State<SummarySectionScreen> {
           'Shipping Address',
           style: Get.textTheme.titleLarge,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: GetBuilder<CheckOutScreenController>(
-                builder: (controller) {
-                  return Text(
-                    '${controller.finalAddress}',
-                    style: Get.textTheme.bodyMedium,
-                  );
-                }
-              ),
-            ),
-            Checkbox(
-              value: true,
-              onChanged: (newValue) {},
-              activeColor: orangeClr,
-              shape: const CircleBorder(),
-            )
-          ],
+        Gap(16.h),
+        GetBuilder<CheckOutScreenController>(
+          builder: (controller) {
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('${controller.readAddressModel!.fullName}',
+                        style: Get.textTheme.titleMedium),
+                    Text('${controller.readAddressModel!.mobile}',
+                        style: Get.textTheme.titleMedium!.copyWith(color: greyClr))
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                          '${controller.readAddressModel!.address}, ${controller.readAddressModel!.area}, ${controller.readAddressModel!.zip}\n${controller.readAddressModel!.thana}, ${controller.readAddressModel!.city}, ${controller.readAddressModel!.state}',
+                          style:
+                          Get.textTheme.bodyMedium),
+                    ),
+                    Checkbox(
+                      value: true,
+                      onChanged: (newValue) {},
+                      activeColor: orangeClr,
+                      shape: const CircleBorder(),
+                    )
+                  ],
+                ),
+              ],
+            );
+          }
         ),
         Divider(
           color: orangeClr.withOpacity(0.3),

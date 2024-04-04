@@ -1,14 +1,15 @@
-import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/services/api_service.dart';
 import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
-import 'package:darkak_e_commerce_app/models/final_order_model.dart';
+import 'package:darkak_e_commerce_app/models/create_address_model.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:get/get.dart';
 
-class OrderController extends GetxController {
+
+class AddressUpdateController extends GetxController {
+  bool shippingAddress = true;
   bool isLoading = false;
-  Future<bool> createOrder({required OrderModel orderModel}) async {
+  Future<bool> formOnSubmit({required String id, required CreateAddressModel updateAddressModel}) async {
     isLoading = true;
     update();
     try {
@@ -17,21 +18,22 @@ class OrderController extends GetxController {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       };
-      final responseData = await ApiService()
-          .postApi(Urls.createOrderUrl, orderModel, header: headerWithToken);
+      final responseData = await ApiService().patchApi(
+          '${Urls.addressUrl}/$id',
+          updateAddressModel,
+          header: headerWithToken);
       if (responseData != null && responseData != 404) {
-        customSuccessMessage(message: 'Successfully Order');
-        Get.find<CartItemController>().getCartItem();
+        customSuccessMessage(message: 'Successfully Address Updated');
         isLoading = false;
         update();
         return true;
       } else if (responseData == 404) {
-        customErrorMessage(message: 'Product Already Ordered');
+        customErrorMessage(message: 'Already Address Updated');
         isLoading = false;
         update();
         return false;
       } else {
-        customErrorMessage(message: 'Something went wrong');
+        customErrorMessage(message: 'Something Went Wrong');
         isLoading = false;
         update();
         return false;
@@ -42,5 +44,10 @@ class OrderController extends GetxController {
       update();
       return false;
     }
+  }
+
+  void toggleShippingAddress(value) {
+    shippingAddress=value;
+    update();
   }
 }

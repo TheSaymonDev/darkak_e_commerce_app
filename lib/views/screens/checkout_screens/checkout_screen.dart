@@ -1,11 +1,13 @@
+import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/order_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/models/final_cart_item.dart';
+import 'package:darkak_e_commerce_app/models/final_order_model.dart';
 import 'package:darkak_e_commerce_app/views/screens/checkout_screens/address_section_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/checkout_screens/delivery_type_section_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/checkout_screens/payment_method_section_screen.dart';
-import 'package:darkak_e_commerce_app/views/screens/checkout_screens/summary_section.dart';
+import 'package:darkak_e_commerce_app/views/screens/checkout_screens/summary_section_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/views/screens/payment_success_screen.dart';
@@ -137,11 +139,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 width: 146.w,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4.r),
-                                  border:
-                                      Border.all(color: orangeClr, width: 2.w),
-                                  color: whiteClr,
-                                ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                    border: Border.all(
+                                        color: orangeClr, width: 2.w),
+                                    color: whiteClr),
                                 child: Text(
                                   'Back',
                                   style: Get.textTheme.titleMedium,
@@ -154,32 +155,32 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               final isLastStep =
                                   _currentStep == _stepList().length - 1;
                               if (isLastStep) {
+                                final order = OrderModel(
+                                    carts: cartIdList,
+                                    address:
+                                        _checkOutScreenController.addressId,
+                                    amount: widget.totalAmount,
+                                    paymentMethod: 'CASH_ON_DELIVERY',
+                                    delivery: _checkOutScreenController
+                                        .selectedOption!.value,
+                                    note: 'Deliver This Product');
+                                print(order.carts);
+                                print(order.address);
+                                print(order.amount);
+                                print(order.paymentMethod);
+                                print(order.delivery);
+                                print(order.note);
                                 final result = await controller.createOrder(
-                                  carts: cartIdList,
-                                  address:
-                                      _checkOutScreenController.finalAddress!,
-                                  amount: widget.totalAmount,
-                                  delivery: _checkOutScreenController
-                                      .selectedOption!.value,
+                                 orderModel: order
                                 );
                                 if (result == true) {
+                                  Get.find<CartItemController>().getCartItem();
                                   Get.to(() => const PaymentSuccessScreen());
                                 }
                               } else {
-                                if (_currentStep == 1) {
-                                  if (_checkOutScreenController
-                                      .formKey.currentState!
-                                      .validate()) {
-                                    _assignAddress();
-                                    setState(() {
-                                      _currentStep++;
-                                    });
-                                  }
-                                } else {
-                                  setState(() {
-                                    _currentStep++;
-                                  });
-                                }
+                                setState(() {
+                                  _currentStep++;
+                                });
                               }
                             },
                             child: Container(
@@ -190,11 +191,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 borderRadius: BorderRadius.circular(4.r),
                                 color: orangeClr,
                               ),
-                              child: Text(
-                                isLastStep ? 'Confirm' : 'Next',
-                                style:
-                                    myStyle(20.sp, FontWeight.bold, whiteClr),
-                              ),
+                              child: Text(isLastStep ? 'Confirm' : 'Next',
+                                  style: Get.textTheme.titleMedium!
+                                      .copyWith(color: whiteClr)),
                             ),
                           ),
                         ],
@@ -208,14 +207,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     );
   }
 
-  void _assignAddress() {
-    final addressLine1 = _checkOutScreenController.addressLine1Controller.text;
-    final addressLine2 = _checkOutScreenController.addressLine2Controller.text;
-    final division = _checkOutScreenController.selectedDivision ?? '';
-    final district = _checkOutScreenController.selectedDistrict ?? '';
-    final subDistrict = _checkOutScreenController.selectedSubDistrict ?? '';
-    final zipCode = _checkOutScreenController.zipCodeController.text;
-    _checkOutScreenController.finalAddress =
-        '$addressLine1, $addressLine2, $division, $district, $subDistrict-$zipCode';
-  }
+  // void _assignAddress() {
+  //   final addressLine1 = _checkOutScreenController.addressLine1Controller.text;
+  //   final addressLine2 = _checkOutScreenController.addressLine2Controller.text;
+  //   final division = _checkOutScreenController.selectedDivision ?? '';
+  //   final district = _checkOutScreenController.selectedDistrict ?? '';
+  //   final subDistrict = _checkOutScreenController.selectedSubDistrict ?? '';
+  //   final zipCode = _checkOutScreenController.zipCodeController.text;
+  //   _checkOutScreenController.finalAddress =
+  //       '$addressLine1, $addressLine2, $division, $district, $subDistrict-$zipCode';
+  // }
 }

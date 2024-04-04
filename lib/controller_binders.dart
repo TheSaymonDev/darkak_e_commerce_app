@@ -1,5 +1,7 @@
 import 'package:darkak_e_commerce_app/controllers/add_to_cart_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/add_to_wishList_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/address_update_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/forget_otp_verification_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/identity_verification_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/authentication_controllers/otp_verification_controller.dart';
@@ -12,6 +14,7 @@ import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/category_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/category_wised_product_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/create_address_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/home_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/my_order_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/onboarding_screen_controller.dart';
@@ -47,5 +50,8 @@ class ControllerBinder extends Bindings {
     Get.put(BrandWisedProductListController());
     Get.put(CategoryWisedProductListController());
     Get.put(MyOrderController());
+    Get.put(CreateAddressController());
+    Get.put(AddressViewController());
+    Get.put(AddressUpdateController());
   }
 }
