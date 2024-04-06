@@ -24,6 +24,7 @@ class ActiveOrders extends StatefulWidget {
 class _ActiveOrdersState extends State<ActiveOrders> {
   @override
   Widget build(BuildContext context) {
+    print(widget.controller.myOrderList.length);
     return Container(
       margin: EdgeInsets.only(top: 16.h),
       height: double.infinity.h,
@@ -37,8 +38,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
               child: Column(
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

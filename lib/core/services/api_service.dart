@@ -105,7 +105,10 @@ class ApiService {
     log(response.body.toString());
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
-    } else {
+    }else if(response.statusCode == 500){
+      return 500;
+    }
+    else {
       return null;
     }
   }

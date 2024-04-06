@@ -21,12 +21,11 @@ class OrderController extends GetxController {
           .postApi(Urls.createOrderUrl, orderModel, header: headerWithToken);
       if (responseData != null && responseData != 404) {
         customSuccessMessage(message: 'Successfully Order');
-        Get.find<CartItemController>().getCartItem();
         isLoading = false;
         update();
         return true;
       } else if (responseData == 404) {
-        customErrorMessage(message: 'Product Already Ordered');
+        customErrorMessage(message: 'Product Stock Out');
         isLoading = false;
         update();
         return false;

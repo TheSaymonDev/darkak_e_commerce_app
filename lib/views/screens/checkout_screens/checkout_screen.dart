@@ -17,10 +17,10 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class CheckOutScreen extends StatefulWidget {
+
   final List<CartItem> cartItemList;
   final int totalAmount;
-  const CheckOutScreen(
-      {super.key, required this.cartItemList, required this.totalAmount});
+  const CheckOutScreen({super.key, required this.cartItemList, required this.totalAmount});
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -103,11 +103,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 connectorColor: const MaterialStatePropertyAll(orangeClr),
                 connectorThickness: 3.h,
                 steps: _stepList(),
-                onStepTapped: (step) {
-                  setState(() {
-                    _currentStep = step;
-                  });
-                },
+                // onStepTapped: (step) {
+                //   setState(() {
+                //     _currentStep = step;
+                //   });
+                // },
                 type: StepperType.horizontal,
                 elevation: 0,
                 currentStep: _currentStep,
@@ -145,7 +145,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                     color: whiteClr),
                                 child: Text(
                                   'Back',
-                                  style: Get.textTheme.titleMedium,
+                                  style: Get.textTheme.titleMedium
                                 ),
                               ),
                             ),
@@ -174,8 +174,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                  orderModel: order
                                 );
                                 if (result == true) {
-                                  Get.find<CartItemController>().getCartItem();
-                                  Get.to(() => const PaymentSuccessScreen());
+                                  Get.off(() => const PaymentSuccessScreen());
                                 }
                               } else {
                                 setState(() {

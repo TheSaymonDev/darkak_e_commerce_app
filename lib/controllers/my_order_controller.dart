@@ -17,8 +17,7 @@ class MyOrderController extends GetxController {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       };
-      final responseData = await ApiService()
-          .getApi(Urls.getMyOrderUrl, header: headerWithToken);
+      final responseData = await ApiService().getApi(Urls.getMyOrderUrl, header: headerWithToken);
       if (responseData != null) {
         List<dynamic> data = responseData;
         if (data.isNotEmpty) {

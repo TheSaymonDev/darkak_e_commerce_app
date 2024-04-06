@@ -10,4 +10,9 @@ class HomeScreenController extends GetxController{
     update();
   }
 
+  void backToHomeScreen(){
+    changeIndex(0);
+    update();
+  }
+
 }

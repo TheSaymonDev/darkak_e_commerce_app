@@ -24,11 +24,13 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
   //       .toList();
   // }
 
+  final MyOrderController _myOrderController = Get.put(MyOrderController());
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Get.find<MyOrderController>().getMyOrderList();
+    _myOrderController.getMyOrderList();
   }
 
   @override

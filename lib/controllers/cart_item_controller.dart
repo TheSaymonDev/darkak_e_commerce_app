@@ -82,4 +82,9 @@ class CartItemController extends GetxController {
     int roundSubTotal = subTotal.round();
     return roundSubTotal;
   }
+
+  void clearCartItems() {
+    cartItemList.clear(); // Clear the cartItemList
+    update(); // Update the UI to reflect the empty cart
+  }
 }

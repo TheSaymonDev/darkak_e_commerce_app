@@ -17,7 +17,15 @@ class AddressViewScreen extends StatefulWidget {
   State<AddressViewScreen> createState() => _AddressViewScreenState();
 }
 
+
 class _AddressViewScreenState extends State<AddressViewScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<AddressViewController>().addressList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

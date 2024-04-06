@@ -27,7 +27,9 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('==================================its working');
     return GetBuilder<CartItemController>(builder: (controller) {
+
       return SafeArea(
           child: controller.isLoading
               ? customCircularProgressIndicator

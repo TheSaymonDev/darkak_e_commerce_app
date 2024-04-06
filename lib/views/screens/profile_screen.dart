@@ -1,3 +1,5 @@
+import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/my_order_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
 import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
@@ -115,7 +117,7 @@ class ProfileScreen extends StatelessWidget {
                     Gap(20.h),
                     GestureDetector(
                       onTap: () {
-                        Get.to(const AddressViewScreen());
+                        Get.to(()=> const AddressViewScreen());
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/shipping-address.svg',
@@ -183,14 +185,14 @@ class ProfileScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Gap(20.h),
-            Text('Welcome To', style: Get.textTheme.titleLarge,),
+            Text('Welcome To', style: Get.textTheme.titleLarge),
             SvgPicture.asset(
               Urls.appLogoSvg,
               height: 86.h,
-              width: 110.w,
+              width: 110.w
             ),
             Gap(8.h),
-            Text('Mart', style: Get.textTheme.titleSmall,),
+            Text('Mart', style: Get.textTheme.titleSmall),
             Gap(32.h),
             Text('Continue Shopping Please Sign In Or Sign Up', style: Get.textTheme.bodyMedium,),
             Gap(16.h),
@@ -210,14 +212,14 @@ class ProfileScreen extends StatelessWidget {
           Center(
             child: Text(
               'Logout',
-              style: Get.textTheme.titleLarge,
+              style: Get.textTheme.titleLarge
             ),
           ),
           Gap(20.h),
           Center(
             child: Text(
               'Are you sure want to logout?',
-              style: Get.textTheme.bodyLarge,
+              style: Get.textTheme.bodyLarge
             ),
           ),
           Gap(50.h),
@@ -229,6 +231,8 @@ class ProfileScreen extends StatelessWidget {
               rightButtonName: 'Logout',
               onRightButtonPressed: () {
                 SharedPreferencesService().clearUserData();
+                Get.find<MyOrderController>().myOrderList.clear();
+                Get.find<AddressViewController>().addressList.clear();
                 Get.offAll(() => SignInScreen());
               }),
           Gap(32.h)
