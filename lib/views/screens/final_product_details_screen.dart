@@ -25,11 +25,11 @@ class FinalProductDetailsScreen extends StatefulWidget {
   const FinalProductDetailsScreen({super.key, required this.product});
 
   @override
-  State<FinalProductDetailsScreen> createState() =>
-      _FinalProductDetailsScreenState();
+  State<FinalProductDetailsScreen> createState() => _FinalProductDetailsScreenState();
 }
 
 class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
+
   final double _height = 400.h;
   List<String> productSizes = [];
   List<String> productColors = [];
@@ -93,7 +93,7 @@ class _FinalProductDetailsScreenState extends State<FinalProductDetailsScreen> {
                                         children: [
                                           Text(
                                             '${widget.product.name}',
-                                            style: Get.textTheme.titleLarge,
+                                            style: Get.textTheme.titleLarge
                                           ),
                                           GetBuilder<WishListItemController>(
                                               builder: (controller) {

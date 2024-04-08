@@ -1,8 +1,10 @@
 import 'package:darkak_e_commerce_app/controllers/add_to_wishList_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/models/final_cart_item.dart';
+import 'package:darkak_e_commerce_app/views/screens/address_screen/address_editable_screen.dart';
 import 'package:darkak_e_commerce_app/views/screens/final_product_details_screen.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
@@ -27,9 +29,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('==================================its working');
     return GetBuilder<CartItemController>(builder: (controller) {
-
       return SafeArea(
           child: controller.isLoading
               ? customCircularProgressIndicator
@@ -91,10 +91,14 @@ class _CartScreenState extends State<CartScreen> {
           const Spacer(),
           CustomElevatedButton(
               onPressed: () {
-                Get.to(() => CheckOutScreen(
-                      cartItemList: _cartItemController.cartItemList,
-                      totalAmount: _cartItemController.calculateSubTotal(),
-                    ));
+               if(Get.find<AddressViewController>().addressList.isNotEmpty){
+                 Get.to(() => CheckOutScreen(
+                   cartItemList: _cartItemController.cartItemList,
+                   totalAmount: _cartItemController.calculateSubTotal(),
+                 ));
+               }else{
+                 Get.to(()=> const AddressEditableScreen(title: Urls.addAddress));
+               }
               },
               buttonName: 'Checkout',
               width: 146.w)

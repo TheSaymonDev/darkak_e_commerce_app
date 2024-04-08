@@ -9,19 +9,16 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class SummarySectionScreen extends StatefulWidget {
-
   final List<CartItem> cartItemList;
   final int totalAmount;
-  const SummarySectionScreen({super.key, required this.cartItemList, required this.totalAmount});
+  const SummarySectionScreen(
+      {super.key, required this.cartItemList, required this.totalAmount});
 
   @override
   State<SummarySectionScreen> createState() => _SummarySectionScreenState();
 }
 
 class _SummarySectionScreenState extends State<SummarySectionScreen> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -63,8 +60,8 @@ class _SummarySectionScreenState extends State<SummarySectionScreen> {
                             children: [
                               Text(
                                   '${Urls.takaSign}${item.products!.offerPrice}',
-                                  style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)
-                              ),
+                                  style: Get.textTheme.bodyMedium!
+                                      .copyWith(color: orangeClr)),
                               Gap(48.w),
                               Row(
                                 children: [
@@ -73,10 +70,7 @@ class _SummarySectionScreenState extends State<SummarySectionScreen> {
                                     color: yellowClr,
                                     size: 20.sp,
                                   ),
-                                  Text(
-                                      '4.5',
-                                      style: Get.textTheme.bodyMedium
-                                  )
+                                  Text('4.5', style: Get.textTheme.bodyMedium)
                                 ],
                               )
                             ],
@@ -88,10 +82,8 @@ class _SummarySectionScreenState extends State<SummarySectionScreen> {
                                 style: Get.textTheme.bodyMedium,
                               ),
                               Gap(48.w),
-                              Text(
-                                  'Quantity: ${item.quantity.toString()}',
-                                  style: Get.textTheme.bodyMedium
-                              )
+                              Text('Quantity: ${item.quantity.toString()}',
+                                  style: Get.textTheme.bodyMedium)
                             ],
                           ),
                         ],
@@ -112,40 +104,37 @@ class _SummarySectionScreenState extends State<SummarySectionScreen> {
           style: Get.textTheme.titleLarge,
         ),
         Gap(16.h),
-        GetBuilder<CheckOutScreenController>(
-          builder: (controller) {
-            return Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('${controller.readAddressModel!.fullName}',
-                        style: Get.textTheme.titleMedium),
-                    Text('${controller.readAddressModel!.mobile}',
-                        style: Get.textTheme.titleMedium!.copyWith(color: greyClr))
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
+        GetBuilder<CheckOutScreenController>(builder: (controller) {
+          return Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(controller.readAddressModel!.fullName ?? '',
+                      style: Get.textTheme.titleMedium),
+                  Text(controller.readAddressModel!.mobile ?? '',
+                      style:
+                          Get.textTheme.titleMedium!.copyWith(color: greyClr))
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
                       child: Text(
-                          '${controller.readAddressModel!.address}, ${controller.readAddressModel!.area}, ${controller.readAddressModel!.zip}\n${controller.readAddressModel!.thana}, ${controller.readAddressModel!.city}, ${controller.readAddressModel!.state}',
-                          style:
-                          Get.textTheme.bodyMedium),
-                    ),
-                    Checkbox(
-                      value: true,
-                      onChanged: (newValue) {},
-                      activeColor: orangeClr,
-                      shape: const CircleBorder(),
-                    )
-                  ],
-                ),
-              ],
-            );
-          }
-        ),
+                          '${controller.readAddressModel!.address ?? ''}, ${controller.readAddressModel!.area ?? ''}, ${controller.readAddressModel!.zip ?? ''}\n${controller.readAddressModel!.thana ?? ''}, ${controller.readAddressModel!.city ?? ''}, ${controller.readAddressModel!.state ?? ''}',
+                          style: Get.textTheme.bodyMedium)),
+                  Checkbox(
+                    value: true,
+                    onChanged: (newValue) {},
+                    activeColor: orangeClr,
+                    shape: const CircleBorder(),
+                  )
+                ],
+              ),
+            ],
+          );
+        }),
         Divider(
           color: orangeClr.withOpacity(0.3),
           thickness: 1.h,
@@ -154,18 +143,10 @@ class _SummarySectionScreenState extends State<SummarySectionScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Delivery charge',
-              style: Get.textTheme.bodyMedium
-            ),
-            Text(
-              '----------------------',
-              style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)
-            ),
-            Text(
-              '${Urls.takaSign}50',
-              style: Get.textTheme.bodyMedium
-            )
+            Text('Delivery charge', style: Get.textTheme.bodyMedium),
+            Text('----------------------',
+                style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)),
+            Text('${Urls.takaSign}50', style: Get.textTheme.bodyMedium)
           ],
         ),
         Gap(16.h),
@@ -173,18 +154,11 @@ class _SummarySectionScreenState extends State<SummarySectionScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Total Amount',
-              style: Get.textTheme.bodyMedium
-            ),
-            Text(
-              '----------------------',
-              style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)
-            ),
-            Text(
-              '${Urls.takaSign}${widget.totalAmount.toString()}',
-              style: Get.textTheme.bodyMedium
-            )
+            Text('Total Amount', style: Get.textTheme.bodyMedium),
+            Text('----------------------',
+                style: Get.textTheme.bodyMedium!.copyWith(color: orangeClr)),
+            Text('${Urls.takaSign}${widget.totalAmount.toString()}',
+                style: Get.textTheme.bodyMedium)
           ],
         ),
         Divider(

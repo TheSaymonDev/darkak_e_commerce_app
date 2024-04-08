@@ -11,7 +11,8 @@ class ReadAddressModel {
   String? thana;
   String? area;
   String? address;
-  String? landmark;
+  String? createdAt;
+  String? updatedAt;
 
   ReadAddressModel(
       {this.id,
@@ -26,7 +27,8 @@ class ReadAddressModel {
         this.thana,
         this.area,
         this.address,
-        this.landmark});
+        this.createdAt,
+        this.updatedAt});
 
   ReadAddressModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -41,7 +43,8 @@ class ReadAddressModel {
     thana = json['thana'];
     area = json['area'];
     address = json['address'];
-    landmark = json['landmark'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
@@ -58,7 +61,9 @@ class ReadAddressModel {
     data['thana'] = thana;
     data['area'] = area;
     data['address'] = address;
-    data['landmark'] = landmark;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
+
 }

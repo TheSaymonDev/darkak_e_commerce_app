@@ -1,4 +1,4 @@
-import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/order_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
@@ -20,7 +20,8 @@ class CheckOutScreen extends StatefulWidget {
 
   final List<CartItem> cartItemList;
   final int totalAmount;
-  const CheckOutScreen({super.key, required this.cartItemList, required this.totalAmount});
+  const CheckOutScreen(
+      {super.key, required this.cartItemList, required this.totalAmount});
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -69,17 +70,30 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   List<String> cartIdList = [];
 
-  getCartId() {
+  _getCartId() {
     for (int i = 0; i < widget.cartItemList.length; i++) {
       CartItem cartItem = widget.cartItemList[i];
       cartIdList.add(cartItem.id!);
     }
   }
 
+  /// 1. Address with `shippingAddress` set to true (if available)
+  /// 2. Address with the latest `createdAt` timestamp (if no shipping address)
+  void _getShippingAddress() {
+    final addressList = Get.find<AddressViewController>().addressList;
+    final shippingAddress = addressList.where((address) => address.shippingAddress == true).firstOrNull;
+    if(shippingAddress != null){
+      _checkOutScreenController.readAddressModel=shippingAddress;
+    }else{
+      _checkOutScreenController.readAddressModel = addressList.toList().asMap().entries.reduce((a, b) => a.value.createdAt!.compareTo(b.value.createdAt!) >= 0 ? a : b).value;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    getCartId();
+    _getCartId();
+    _getShippingAddress();
   }
 
   @override
@@ -103,11 +117,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 connectorColor: const MaterialStatePropertyAll(orangeClr),
                 connectorThickness: 3.h,
                 steps: _stepList(),
-                // onStepTapped: (step) {
-                //   setState(() {
-                //     _currentStep = step;
-                //   });
-                // },
                 type: StepperType.horizontal,
                 elevation: 0,
                 currentStep: _currentStep,
@@ -143,10 +152,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                     border: Border.all(
                                         color: orangeClr, width: 2.w),
                                     color: whiteClr),
-                                child: Text(
-                                  'Back',
-                                  style: Get.textTheme.titleMedium
-                                ),
+                                child: Text('Back',
+                                    style: Get.textTheme.titleMedium),
                               ),
                             ),
                           const Spacer(),
@@ -164,15 +171,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                     delivery: _checkOutScreenController
                                         .selectedOption!.value,
                                     note: 'Deliver This Product');
-                                print(order.carts);
-                                print(order.address);
-                                print(order.amount);
-                                print(order.paymentMethod);
-                                print(order.delivery);
-                                print(order.note);
                                 final result = await controller.createOrder(
-                                 orderModel: order
-                                );
+                                    orderModel: order);
                                 if (result == true) {
                                   Get.off(() => const PaymentSuccessScreen());
                                 }

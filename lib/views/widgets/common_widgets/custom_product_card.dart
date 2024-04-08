@@ -47,52 +47,112 @@ class CustomProductCard extends StatelessWidget {
                               product: product,
                             ));
                       },
-                      child: Container(
-                          height: 230.h,
-                          width: double.infinity.w,
-                          alignment: Alignment.topRight,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.r),
-                              image: DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                      '${Urls.imgUrl}${product.images![0].path}'),
-                                  fit: BoxFit.cover)),
-                          child: InkWell(
-                              onTap: () async {
-                                String token = SharedPreferencesService().getToken();
-                                if(token.isNotEmpty){
-                                  if (_wishListItemController
-                                      .isInWishlist(product.id!)) {
-                                    _wishListItemController
-                                        .removeWishListItem(product.id!);
-                                  } else {
-                                    Get.find<AddToWishListController>()
-                                        .addToWishList(product.id!);
-                                  }
-                                }else{
-                                  Get.offAll(()=> SignInScreen());
-                                }
+                      child: Visibility(
+                        visible: product.quantity != 0,
+                        replacement: Stack(
+                          children: [
+                            Container(
+                                height: 230.h,
+                                width: double.infinity.w,
+                                alignment: Alignment.topRight,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    image: DecorationImage(
+                                        image: CachedNetworkImageProvider(
+                                            '${Urls.imgUrl}${product.images![0].path}'),
+                                        fit: BoxFit.cover)),
+                                child: InkWell(
+                                    onTap: () async {
+                                      String token = SharedPreferencesService().getToken();
+                                      if(token.isNotEmpty){
+                                        if (_wishListItemController
+                                            .isInWishlist(product.id!)) {
+                                          _wishListItemController
+                                              .removeWishListItem(product.id!);
+                                        } else {
+                                          Get.find<AddToWishListController>()
+                                              .addToWishList(product.id!);
+                                        }
+                                      }else{
+                                        Get.offAll(()=> SignInScreen());
+                                      }
 
-                              },
-                              child: Container(
-                                  margin: EdgeInsets.only(top: 8.h, right: 8.w),
-                                  height: 32.h,
-                                  width: 32.w,
-                                  alignment: Alignment.center,
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle, color: whiteClr),
-                                  child: GetBuilder<WishListItemController>(
-                                      builder: (controller) {
-                                    return Icon(
-                                        controller.isInWishlist(product.id!)
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        size: 24.sp,
-                                        color:
-                                            controller.isInWishlist(product.id!)
-                                                ? orangeClr
-                                                : greyClr);
-                                  }))))),
+                                    },
+                                    child: Container(
+                                        margin: EdgeInsets.only(top: 8.h, right: 8.w),
+                                        height: 32.h,
+                                        width: 32.w,
+                                        alignment: Alignment.center,
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle, color: whiteClr),
+                                        child: GetBuilder<WishListItemController>(
+                                            builder: (controller) {
+                                              return Icon(
+                                                  controller.isInWishlist(product.id!)
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
+                                                  size: 24.sp,
+                                                  color:
+                                                  controller.isInWishlist(product.id!)
+                                                      ? orangeClr
+                                                      : greyClr);
+                                            })))),
+                            Container(
+                              height: 230.h,
+                              width: double.infinity.w,
+                              color: Colors.white60,
+                              alignment: Alignment.center,
+                              child: Text('Stock Out', style: Get.textTheme.titleMedium!.copyWith(color: orangeClr)),
+                            )
+                          ],
+                        ),
+                        child: Container(
+                            height: 230.h,
+                            width: double.infinity.w,
+                            alignment: Alignment.topRight,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                image: DecorationImage(
+                                    image: CachedNetworkImageProvider(
+                                        '${Urls.imgUrl}${product.images![0].path}'),
+                                    fit: BoxFit.cover)),
+                            child: InkWell(
+                                onTap: () async {
+                                  String token = SharedPreferencesService().getToken();
+                                  if(token.isNotEmpty){
+                                    if (_wishListItemController
+                                        .isInWishlist(product.id!)) {
+                                      _wishListItemController
+                                          .removeWishListItem(product.id!);
+                                    } else {
+                                      Get.find<AddToWishListController>()
+                                          .addToWishList(product.id!);
+                                    }
+                                  }else{
+                                    Get.offAll(()=> SignInScreen());
+                                  }
+
+                                },
+                                child: Container(
+                                    margin: EdgeInsets.only(top: 8.h, right: 8.w),
+                                    height: 32.h,
+                                    width: 32.w,
+                                    alignment: Alignment.center,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle, color: whiteClr),
+                                    child: GetBuilder<WishListItemController>(
+                                        builder: (controller) {
+                                      return Icon(
+                                          controller.isInWishlist(product.id!)
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          size: 24.sp,
+                                          color:
+                                              controller.isInWishlist(product.id!)
+                                                  ? orangeClr
+                                                  : greyClr);
+                                    })))),
+                      )),
                   Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),

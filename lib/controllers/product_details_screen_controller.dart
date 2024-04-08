@@ -1,3 +1,4 @@
+import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsScreenController extends GetxController {
@@ -30,6 +31,8 @@ class ProductDetailsScreenController extends GetxController {
   void incrementQuantity(int alertQuantity) {
     if (alertQuantity != quantity) {
       quantity++;
+    }else{
+      customErrorMessage(message: 'Out of Stock This Product');
     }
     update();
   }

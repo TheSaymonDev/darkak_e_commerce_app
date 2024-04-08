@@ -1,4 +1,3 @@
-import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/checkout_screen_controller.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,6 @@ class _AddressSectionScreenState extends State<AddressSectionScreen> {
   @override
   void initState() {
     super.initState();
-    _checkOutScreenController.readAddressModel = Get.find<AddressViewController>().addressList.where((address) => address.shippingAddress==true).firstOrNull;
     Get.find<CheckOutScreenController>().addressId= _checkOutScreenController.readAddressModel!.id;
     nameController.text =_checkOutScreenController.readAddressModel!.fullName ?? '';
     mobileController.text =_checkOutScreenController.readAddressModel!.mobile ?? '';
@@ -44,70 +42,74 @@ class _AddressSectionScreenState extends State<AddressSectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _checkOutScreenController.formKey,
-      child: Column(
-        children: [
-          CustomTextFormField(
-              labelText: 'Full Name',
-              controller: nameController,
-            readOnly: true
-           ),
-          Gap(32.h),
-          CustomTextFormField(
-            labelText: 'Mobile',
-            controller: mobileController,
-            keyBoardType: TextInputType.phone,
-            readOnly: true
-          ),
-          Gap(32.h),
-          CustomTextFormField(
-              labelText: 'Address',
-              controller: addressController,
-            readOnly: true),
-          Gap(32.h),
-          Row(
+    return GetBuilder<CheckOutScreenController>(
+      builder: (controller) {
+        return Form(
+          key: controller.formKey,
+          child: Column(
             children: [
-              Expanded(
-                child: CustomTextFormField(
-                    labelText: 'Area',
-                    controller: areaController,
-                   readOnly: true),
+              CustomTextFormField(
+                  labelText: 'Full Name',
+                  controller: nameController,
+                readOnly: true
+               ),
+              Gap(32.h),
+              CustomTextFormField(
+                labelText: 'Mobile',
+                controller: mobileController,
+                keyBoardType: TextInputType.phone,
+                readOnly: true
               ),
-              Gap(16.w),
-              Expanded(
-                child: CustomTextFormField(
-                    labelText: 'City',
-                    controller: cityController,
-                    readOnly: true),
+              Gap(32.h),
+              CustomTextFormField(
+                  labelText: 'Address',
+                  controller: addressController,
+                readOnly: true),
+              Gap(32.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFormField(
+                        labelText: 'Area',
+                        controller: areaController,
+                       readOnly: true),
+                  ),
+                  Gap(16.w),
+                  Expanded(
+                    child: CustomTextFormField(
+                        labelText: 'City',
+                        controller: cityController,
+                        readOnly: true),
+                  ),
+                ],
               ),
+              Gap(32.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFormField(
+                        labelText: 'Thana',
+                        controller: thanaController,
+                       readOnly: true),
+                  ),
+                  Gap(16.w),
+                  Expanded(
+                    child: CustomTextFormField(
+                        labelText: 'Zip Code',
+                        controller: zipCodeController,
+                       readOnly: true),
+                  ),
+                ],
+              ),
+              Gap(32.h),
+              CustomTextFormField(
+                  labelText: 'State',
+                  controller: stateController,
+                 readOnly: true),
             ],
           ),
-          Gap(32.h),
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextFormField(
-                    labelText: 'Thana',
-                    controller: thanaController,
-                   readOnly: true),
-              ),
-              Gap(16.w),
-              Expanded(
-                child: CustomTextFormField(
-                    labelText: 'Zip Code',
-                    controller: zipCodeController,
-                   readOnly: true),
-              ),
-            ],
-          ),
-          Gap(32.h),
-          CustomTextFormField(
-              labelText: 'State',
-              controller: stateController,
-             readOnly: true),
-        ],
-      ),
+        );
+      }
     );
   }
 }

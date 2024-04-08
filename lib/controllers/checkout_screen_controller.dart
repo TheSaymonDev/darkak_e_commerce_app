@@ -11,9 +11,7 @@ class CheckOutScreenController extends GetxController{
   }
 
   ReadAddressModel? readAddressModel;
-
   String? addressId;
   final formKey = GlobalKey<FormState>();
-
   String? finalAddress;
 }

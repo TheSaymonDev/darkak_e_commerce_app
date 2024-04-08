@@ -1,6 +1,9 @@
 import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/my_order_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/controllers/profile_screen_controller.dart';
+import 'package:darkak_e_commerce_app/controllers/wishlist_item_controller.dart';
 import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
 import 'package:darkak_e_commerce_app/core/utils/urls.dart';
@@ -79,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
                           Text(
                             controller.user?.name ??
                                 'Fetching Profile...', // Use ?? for default value
-                            style: Get.textTheme.titleLarge,
+                            style: Get.textTheme.titleLarge
                           ),
                           Gap(4.h),
                           Text(
@@ -233,6 +236,9 @@ class ProfileScreen extends StatelessWidget {
                 SharedPreferencesService().clearUserData();
                 Get.find<MyOrderController>().myOrderList.clear();
                 Get.find<AddressViewController>().addressList.clear();
+                Get.find<ProductListController>().productList.clear();
+                Get.find<CartItemController>().cartItemList.clear();
+                Get.find<WishListItemController>().wishListItem.clear();
                 Get.offAll(() => SignInScreen());
               }),
           Gap(32.h)

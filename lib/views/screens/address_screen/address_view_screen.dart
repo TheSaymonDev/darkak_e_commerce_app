@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+import 'package:darkak_e_commerce_app/core/utils/urls.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_edit_delete_buttons.dart';
 import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_elevated_button.dart';
@@ -47,11 +48,13 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
             Gap(32.h),
             GetBuilder<AddressViewController>(
                 builder: (controller) => controller.addressList.isEmpty
-                    ? const Center(
-                        child: Text('No Address Added'),
-                      )
+                    ? const Expanded(
+                      child: Center(
+                          child: Text('No Address Added'),
+                        ),
+                    )
                     : controller.isLoading
-                        ? customCircularProgressIndicator
+                        ? Center(child: customCircularProgressIndicator)
                         : Expanded(
                             child: ListView.separated(
                                 itemBuilder: (context, index) {
@@ -90,7 +93,7 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
                                               onTap: () {
                                                 Get.to(() =>
                                                     AddressEditableScreen(
-                                                      title: 'Update Address',
+                                                      title: Urls.updateAddress,
                                                       readAddressModel: address,
                                                     ));
                                               },
@@ -155,7 +158,7 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
             CustomElevatedButton(
                 onPressed: () {
                   Get.to(() => const AddressEditableScreen(
-                        title: 'Add New Address',
+                        title: Urls.addAddress,
                       ));
                 },
                 buttonName: 'Add New',

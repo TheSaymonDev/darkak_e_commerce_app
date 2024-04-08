@@ -16,6 +16,9 @@ class Urls{
 
   static String lockPng = '$_imagePath/lock.png';
 
+  static const String addAddress = 'Add New Address';
+  static const String updateAddress = 'Update Address';
+
   static const String imgUrl = 'https://api.darkak.com.bd/';
   static const String _baseUrl = "https://api.darkak.com.bd/api/v1";
   static const Map<String, String> requestHeader = {"Content-Type": "application/json"};
