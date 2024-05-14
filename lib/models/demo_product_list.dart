@@ -1,16 +1,16 @@
-import 'package:darkak_e_commerce_app/core/utils/urls.dart';
+import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/models/demo_product_model.dart';
 import 'package:darkak_e_commerce_app/models/product_review_model.dart';
 
 List<ProductModel> demoProductList = [
   ProductModel(
       productID: '1',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Saree',
       productPrice: 400,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -18,12 +18,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '2',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'T-Shirt',
       productPrice: 500,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -31,12 +31,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '3',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Pant',
       productPrice: 600,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -44,12 +44,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '1',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Saree',
       productPrice: 400,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -57,12 +57,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '2',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'T-Shirt',
       productPrice: 500,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -70,12 +70,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '3',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Pant',
       productPrice: 600,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -83,12 +83,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '1',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Saree',
       productPrice: 400,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -96,12 +96,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '2',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'T-Shirt',
       productPrice: 500,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -109,12 +109,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '3',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Pant',
       productPrice: 600,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -122,12 +122,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '1',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Saree',
       productPrice: 400,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -135,12 +135,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '2',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'T-Shirt',
       productPrice: 500,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -148,12 +148,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '3',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Pant',
       productPrice: 600,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -161,12 +161,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '1',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Saree',
       productPrice: 400,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -174,12 +174,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '2',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'T-Shirt',
       productPrice: 500,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -187,12 +187,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '3',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Pant',
       productPrice: 600,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -200,12 +200,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '1',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Saree',
       productPrice: 400,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -213,12 +213,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '2',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'T-Shirt',
       productPrice: 500,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -226,12 +226,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '3',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Pant',
       productPrice: 600,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -239,12 +239,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '1',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Saree',
       productPrice: 400,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -252,12 +252,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '2',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'T-Shirt',
       productPrice: 500,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,
@@ -265,12 +265,12 @@ List<ProductModel> demoProductList = [
       productRating: 4.5),
   ProductModel(
       productID: '3',
-      productImagePath: Urls.watchImage,
+      productImagePath: AppUrls.watchImage,
       productName: 'Pant',
       productPrice: 600,
       productDescription:
       'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
-      imagesPath: List.generate(4, (index) => Urls.watchImage),
+      imagesPath: List.generate(4, (index) => AppUrls.watchImage),
       color: ['Red', 'Blue', 'Black', 'Orange'],
       attributes: ['S', 'M', 'L', 'XL', 'XXL'],
       customerReviews: ProductReviewModel.productReviewList,

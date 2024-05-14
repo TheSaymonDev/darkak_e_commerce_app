@@ -1,13 +1,13 @@
-import 'package:darkak_e_commerce_app/core/utils/colors.dart';
-import 'package:darkak_e_commerce_app/core/utils/urls.dart';
+import 'package:darkak_e_commerce_app/utils/app_colors.dart';
+import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/models/product_review_model.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_bottom_sheet.dart';
-import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
-import 'package:darkak_e_commerce_app/views/widgets/product_details_screen_widgets/custom_coupon_code.dart';
-import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
-import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
-import 'package:darkak_e_commerce_app/views/screens/review_screen.dart';
-import 'package:darkak_e_commerce_app/views/screens/store_screen.dart';
+import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_bottom_sheet.dart';
+import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
+import 'package:darkak_e_commerce_app/widgets/product_details_screen_widgets/custom_coupon_code.dart';
+import 'package:darkak_e_commerce_app/widgets/styles.dart';
+import 'package:darkak_e_commerce_app/screens/home_screen/home_screen.dart';
+import 'package:darkak_e_commerce_app/screens/review_screen/review_screen.dart';
+import 'package:darkak_e_commerce_app/screens/store_screen/store_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -558,7 +558,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             style: myStyle(15.sp, FontWeight.normal, greyClr),
                           ),
                           Text(
-                            '${Urls.takaSign}${calculateTotal()}',
+                            '${AppUrls.takaSign}${calculateTotal()}',
                             style: myStyle(20.sp, FontWeight.bold, orangeClr),
                           ),
                         ],

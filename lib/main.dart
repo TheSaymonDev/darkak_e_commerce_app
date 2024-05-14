@@ -1,8 +1,8 @@
 import 'package:darkak_e_commerce_app/controller_binders.dart';
-import 'package:darkak_e_commerce_app/core/services/shared_preferences_service.dart';
-import 'package:darkak_e_commerce_app/core/utils/colors.dart';
-import 'package:darkak_e_commerce_app/views/screens/home_screen.dart';
-import 'package:darkak_e_commerce_app/views/screens/onboarding_screen.dart';
+import 'package:darkak_e_commerce_app/services/shared_preferences_service.dart';
+import 'package:darkak_e_commerce_app/utils/app_colors.dart';
+import 'package:darkak_e_commerce_app/screens/home_screen/home_screen.dart';
+import 'package:darkak_e_commerce_app/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

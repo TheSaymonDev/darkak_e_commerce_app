@@ -1,8 +1,8 @@
-// import 'package:darkak_e_commerce_app/core/utils/colors.dart';
+// import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 // import 'package:darkak_e_commerce_app/models/see_all_categories_model.dart';
-// import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
-// import 'package:darkak_e_commerce_app/views/widgets/common_widgets/custom_card.dart';
-// import 'package:darkak_e_commerce_app/views/widgets/styles.dart';
+// import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
+// import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
+// import 'package:darkak_e_commerce_app/widgets/styles.dart';
 // import 'package:darkak_e_commerce_app/views/screens/product_listing_screen.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
