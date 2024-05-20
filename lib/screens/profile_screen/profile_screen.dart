@@ -1,3 +1,4 @@
+import 'package:darkak_e_commerce_app/screens/address_view_screen/bindings/address_view_binding.dart';
 import 'package:darkak_e_commerce_app/screens/address_view_screen/controller/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/screens/cart_screen/controller/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/screens/my_order_screen/controller/my_order_controller.dart';
@@ -120,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
                     Gap(20.h),
                     GestureDetector(
                       onTap: () {
-                        Get.to(()=> const AddressViewScreen());
+                        Get.to(()=> const AddressViewScreen(), binding: AddressViewBinding());
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/shipping-address.svg',

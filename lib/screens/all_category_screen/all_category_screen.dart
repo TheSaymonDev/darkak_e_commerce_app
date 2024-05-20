@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/products.dart';
 import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/add_to_wishList_controller.dart';
 import 'package:darkak_e_commerce_app/screens/all_category_screen/controller/category_wised_product_list_controller.dart';
 import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/wishlist_item_controller.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/screens/explore_screen/model/final_category.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/final_product.dart';
 import 'package:darkak_e_commerce_app/screens/product_details_screen/product_details_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
@@ -14,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+
+import '../shop_screen/model/product.dart';
 
 class AllCategoryScreen extends StatefulWidget {
   final List<Category> categoryList;
@@ -167,7 +167,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
     );
   }
 
-  Positioned buildWishListIcon(Products cProduct) {
+  Positioned buildWishListIcon(Product cProduct) {
     return Positioned(
         right: 0,
         child: InkWell(

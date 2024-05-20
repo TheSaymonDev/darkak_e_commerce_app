@@ -4,7 +4,6 @@ import 'package:darkak_e_commerce_app/screens/cart_screen/controller/cart_item_c
 import 'package:darkak_e_commerce_app/screens/checkout_screens/checkout_screen.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/cart_screen/model/final_cart_item.dart';
 import 'package:darkak_e_commerce_app/screens/address_management_screen/address_management_screen.dart';
 import 'package:darkak_e_commerce_app/screens/product_details_screen/product_details_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_elevated_button.dart';
@@ -15,6 +14,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
+import 'model/cart_item.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:darkak_e_commerce_app/screens/address_management_screen/controller/address_update_controller.dart';
 import 'package:darkak_e_commerce_app/screens/address_view_screen/controller/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/screens/address_management_screen/controller/create_address_controller.dart';
-import 'package:darkak_e_commerce_app/screens/address_view_screen/model/shipping_address.dart';
+import 'package:darkak_e_commerce_app/screens/address_view_screen/model/address.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_validator.dart';
 import 'package:darkak_e_commerce_app/screens/address_management_screen/model/create_address_model.dart';
@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 
 class AddressManagementScreen extends StatefulWidget {
   final String title;
-  final ShippingAddress? shippingAddress;
+  final Address? shippingAddress;
   const AddressManagementScreen(
       {super.key, required this.title, this.shippingAddress});
 

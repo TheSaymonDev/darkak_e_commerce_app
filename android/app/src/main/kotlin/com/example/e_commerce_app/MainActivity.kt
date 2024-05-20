@@ -1,4 +1,4 @@
-package com.example.darkak_e_commerce_app
+package com.shwapnoduar.darkakmart
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -28,14 +28,14 @@ class _StepAddressWidgetState extends State<StepAddressWidget> {
   @override
   void initState() {
     super.initState();
-    nameController.text = _stepAddressController.readAddressModel!.fullName!;
-    mobileController.text = _stepAddressController.readAddressModel!.mobile!;
-    addressController.text = _stepAddressController.readAddressModel!.address!;
-    areaController.text = _stepAddressController.readAddressModel!.area!;
-    cityController.text = _stepAddressController.readAddressModel!.city!;
-    thanaController.text = _stepAddressController.readAddressModel!.thana!;
-    zipCodeController.text = _stepAddressController.readAddressModel!.zip!;
-    stateController.text = _stepAddressController.readAddressModel!.state!;
+    nameController.text = _stepAddressController.readAddress!.fullName!;
+    mobileController.text = _stepAddressController.readAddress!.mobile!;
+    addressController.text = _stepAddressController.readAddress!.address!;
+    areaController.text = _stepAddressController.readAddress!.area!;
+    cityController.text = _stepAddressController.readAddress!.city!;
+    thanaController.text = _stepAddressController.readAddress!.thana!;
+    zipCodeController.text = _stepAddressController.readAddress!.zip!;
+    stateController.text = _stepAddressController.readAddress!.state!;
   }
 
   @override

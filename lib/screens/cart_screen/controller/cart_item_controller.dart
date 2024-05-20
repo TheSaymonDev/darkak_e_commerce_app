@@ -1,8 +1,9 @@
 import 'package:darkak_e_commerce_app/services/api_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/cart_screen/model/final_cart_item.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
 import 'package:get/get.dart';
+
+import '../model/cart_item.dart';
 
 class CartItemController extends GetxController {
   bool isLoading = false;

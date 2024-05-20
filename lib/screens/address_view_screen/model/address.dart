@@ -1,4 +1,4 @@
-class ShippingAddress {
+class Address {
   String? id;
   String? type;
   String? country;
@@ -17,7 +17,7 @@ class ShippingAddress {
   String? createdAt;
   String? updatedAt;
 
-  ShippingAddress(
+  Address(
       {this.id,
         this.type,
         this.country,
@@ -36,7 +36,7 @@ class ShippingAddress {
         this.createdAt,
         this.updatedAt});
 
-  ShippingAddress.fromJson(Map<String, dynamic> json) {
+  Address.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     country = json['country'];

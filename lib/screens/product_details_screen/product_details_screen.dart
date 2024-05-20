@@ -1,6 +1,4 @@
 import 'package:darkak_e_commerce_app/screens/cart_screen/controller/add_to_cart_controller.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/final_product.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/products.dart';
 import 'package:darkak_e_commerce_app/screens/shop_screen/model/sizes.dart';
 import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/add_to_wishList_controller.dart';
 import 'package:darkak_e_commerce_app/screens/product_details_screen/controller/product_details_screen_controller.dart';
@@ -23,8 +21,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
+import '../shop_screen/model/product.dart';
+
 class ProductDetailsScreen extends StatefulWidget {
-  final Products product;
+  final Product product;
   const ProductDetailsScreen({super.key, required this.product});
 
   @override
@@ -41,7 +41,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   getSizes() {
     for (int i = 0; i < widget.product.sizes!.length; i++) {
       // Access the size object at the current index
-      ProductSizes productSize = widget.product.sizes![i];
+      Sizes productSize = widget.product.sizes![i];
       // Add the size name to the sizes list
       productSizes.add(productSize.name!); // Assuming name is non-null
     }
@@ -49,7 +49,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   getColors() {
     for (int i = 0; i < widget.product.colors!.length; i++) {
-      ProductColors productColor = widget.product.colors![i];
+      ColorsP productColor = widget.product.colors![i];
       productColors.add(productColor.name!);
     }
   }

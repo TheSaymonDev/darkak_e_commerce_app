@@ -18,9 +18,7 @@ class AddressViewScreen extends StatefulWidget {
   State<AddressViewScreen> createState() => _AddressViewScreenState();
 }
 
-
 class _AddressViewScreenState extends State<AddressViewScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -47,14 +45,14 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
           children: [
             Gap(32.h),
             GetBuilder<AddressViewController>(
-                builder: (controller) => controller.addressList.isEmpty
-                    ? const Expanded(
-                      child: Center(
-                          child: Text('No Address Added'),
-                        ),
-                    )
-                    : controller.isLoading
-                        ? Center(child: customCircularProgressIndicator)
+                builder: (controller) => controller.isLoading
+                    ? Center(child: customCircularProgressIndicator)
+                    : controller.addressList.isEmpty
+                        ? const Expanded(
+                            child: Center(
+                              child: Text('No Address Added'),
+                            ),
+                          )
                         : Expanded(
                             child: ListView.separated(
                                 itemBuilder: (context, index) {
@@ -93,7 +91,8 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
                                               onTap: () {
                                                 Get.to(() =>
                                                     AddressManagementScreen(
-                                                      title: AppUrls.updateAddress,
+                                                      title:
+                                                          AppUrls.updateAddress,
                                                       shippingAddress: address,
                                                     ));
                                               },

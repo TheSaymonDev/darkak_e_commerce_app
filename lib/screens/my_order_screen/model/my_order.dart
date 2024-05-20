@@ -1,5 +1,6 @@
-import 'package:darkak_e_commerce_app/screens/cart_screen/model/final_cart_item.dart';
+import 'package:darkak_e_commerce_app/screens/address_view_screen/model/address.dart';
 import 'package:darkak_e_commerce_app/screens/profile_screen/model/user.dart';
+import '../../cart_screen/model/cart_item.dart';
 
 class MyOrder {
   String? id;
@@ -100,129 +101,6 @@ class MyOrder {
     data['type'] = type;
     data['cancellationReason'] = cancellationReason;
     data['cancelledBy'] = cancelledBy;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    return data;
-  }
-}
-
-
-class Images {
-  String? id;
-  String? filename;
-  String? originalname;
-  String? path;
-  String? destination;
-  String? mimetype;
-  int? size;
-
-  Images(
-      {this.id,
-        this.filename,
-        this.originalname,
-        this.path,
-        this.destination,
-        this.mimetype,
-        this.size});
-
-  Images.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    filename = json['filename'];
-    originalname = json['originalname'];
-    path = json['path'];
-    destination = json['destination'];
-    mimetype = json['mimetype'];
-    size = json['size'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['filename'] = filename;
-    data['originalname'] = originalname;
-    data['path'] = path;
-    data['destination'] = destination;
-    data['mimetype'] = mimetype;
-    data['size'] = size;
-    return data;
-  }
-}
-
-class Address {
-  String? id;
-  String? type;
-  String? country;
-  String? fullName;
-  String? mobile;
-  String? state;
-  bool? billingAddress;
-  bool? shippingAddress;
-  String? zip;
-  String? district;
-  String? city;
-  String? thana;
-  String? area;
-  String? address;
-  String? landmark;
-  String? createdAt;
-  String? updatedAt;
-
-  Address(
-      {this.id,
-        this.type,
-        this.country,
-        this.fullName,
-        this.mobile,
-        this.state,
-        this.billingAddress,
-        this.shippingAddress,
-        this.zip,
-        this.district,
-        this.city,
-        this.thana,
-        this.area,
-        this.address,
-        this.landmark,
-        this.createdAt,
-        this.updatedAt});
-
-  Address.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    type = json['type'];
-    country = json['country'];
-    fullName = json['full_name'];
-    mobile = json['mobile'];
-    state = json['state'];
-    billingAddress = json['billingAddress'];
-    shippingAddress = json['shippingAddress'];
-    zip = json['zip'];
-    district = json['district'];
-    city = json['city'];
-    thana = json['thana'];
-    area = json['area'];
-    address = json['address'];
-    landmark = json['landmark'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['type'] = type;
-    data['country'] = country;
-    data['full_name'] = fullName;
-    data['mobile'] = mobile;
-    data['state'] = state;
-    data['billingAddress'] = billingAddress;
-    data['shippingAddress'] = shippingAddress;
-    data['zip'] = zip;
-    data['district'] = district;
-    data['city'] = city;
-    data['thana'] = thana;
-    data['area'] = area;
-    data['address'] = address;
-    data['landmark'] = landmark;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     return data;

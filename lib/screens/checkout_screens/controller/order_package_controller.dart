@@ -32,7 +32,7 @@ class OrderPackageController extends GetxController{
   }
 
   void  getPackageData(){
-    if(Get.find<StepAddressController>().readAddressModel!.city == 'Dhaka'){
+    if(Get.find<StepAddressController>().readAddress!.city == 'Dhaka'){
       final insideD = packages.where((package) => package.coverage == 'Inside Dhaka').toList();
       orderPackage  = insideD.where((element) => element.shippingCharge == 90).firstOrNull;
       deliveryCharge = orderPackage!.shippingCharge;

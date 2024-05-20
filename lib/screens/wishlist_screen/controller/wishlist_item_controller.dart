@@ -1,13 +1,13 @@
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/products.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/final_product.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
 import 'package:get/get.dart';
 
+import '../../shop_screen/model/product.dart';
+
 class WishListItemController extends GetxController {
   bool isLoading = false;
-  List<Products> wishListItems = [];
+  List<Product> wishListItems = [];
   // Future<void> getWishListItem() async {
   //   isLoading = true;
   //   update();
@@ -48,7 +48,7 @@ class WishListItemController extends GetxController {
       final response = await ApiService().get(url: AppUrls.getWishListProductUrl, headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         List<dynamic> data = response.data;
-        wishListItems = data.map((item) => Products.fromJson(item)).toList();
+        wishListItems = data.map((item) => Product.fromJson(item)).toList();
         isLoading = false;
         update();
       } else {

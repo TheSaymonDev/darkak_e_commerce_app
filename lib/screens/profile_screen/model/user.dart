@@ -1,11 +1,11 @@
-import 'package:darkak_e_commerce_app/screens/address_view_screen/model/shipping_address.dart';
+import 'package:darkak_e_commerce_app/screens/address_view_screen/model/address.dart';
 
 class User {
   String? id;
   String? name;
   String? mobile;
   String? role;
-  ShippingAddress? shippingAddress;
+  Address? shippingAddress;
   String? alterNativeName;
   String? alterNativeNumber;
   String? maritalStatus;
@@ -70,7 +70,7 @@ class User {
     mobile = json['mobile'];
     role = json['role'];
     shippingAddress = json['shippingAddress'] != null
-        ? ShippingAddress.fromJson(json['shippingAddress'])
+        ? Address.fromJson(json['shippingAddress'])
         : null;
     alterNativeName = json['alterNativeName'];
     alterNativeNumber = json['alterNativeNumber'];

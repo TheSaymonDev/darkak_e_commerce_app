@@ -7,7 +7,6 @@ import 'package:darkak_e_commerce_app/screens/checkout_screens/widgets/step_deli
 import 'package:darkak_e_commerce_app/screens/checkout_screens/widgets/step_payment_method_widget.dart';
 import 'package:darkak_e_commerce_app/screens/checkout_screens/widgets/step_summary_widget.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
-import 'package:darkak_e_commerce_app/screens/cart_screen/model/final_cart_item.dart';
 import 'package:darkak_e_commerce_app/screens/checkout_screens/model/create_order.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
@@ -16,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+
+import '../cart_screen/model/cart_item.dart';
 
 class CheckOutScreen extends StatefulWidget {
 
@@ -85,7 +86,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   void initState() {
     super.initState();
     Get.find<StepAddressController>().getShippingAddress();
-    _addressId = Get.find<StepAddressController>().readAddressModel!.id;
+    _addressId = Get.find<StepAddressController>().readAddress!.id;
     Get.find<OrderPackageController>().getPackageData();
     _getCartIdAndPackageCode();
   }

@@ -1,13 +1,12 @@
-import 'package:darkak_e_commerce_app/screens/address_view_screen/model/shipping_address.dart';
+import 'package:darkak_e_commerce_app/screens/address_view_screen/model/address.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/address_management_screen/model/read_address_model.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
 import 'package:get/get.dart';
 
 class AddressViewController extends GetxController{
   bool isLoading = false;
-  List<ShippingAddress> addressList = [];
+  List<Address> addressList = [];
   // Future<void> getAddressList() async {
   //   isLoading = true;
   //   update();
@@ -47,7 +46,7 @@ class AddressViewController extends GetxController{
       final response = await ApiService().get(url: AppUrls.addressUrl, headers: AppUrls.getHeaderWithToken);
       if (response.success) {
         List<dynamic> data = response.data;
-        addressList = data.map((item) => ShippingAddress.fromJson(item)).toList();
+        addressList = data.map((item) => Address.fromJson(item)).toList();
         isLoading = false;
         update();
       } else {

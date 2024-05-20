@@ -1,10 +1,10 @@
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/images.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/final_product.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../shop_screen/model/images.dart';
 
 class ProductViewPage extends StatefulWidget {
   const ProductViewPage(

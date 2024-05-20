@@ -36,7 +36,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
     return Scaffold(
       backgroundColor: whiteClr,
       appBar: AppbarTextviewWithBack(
-        onPressedBack: () {},
+        onPressedBack: () {
+          Get.back();
+        },
         title: 'Review & Rating',
       ),
       body: Container(

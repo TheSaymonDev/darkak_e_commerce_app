@@ -3,11 +3,12 @@ import 'package:darkak_e_commerce_app/screens/checkout_screens/controller/order_
 import 'package:darkak_e_commerce_app/screens/checkout_screens/controller/step_address_controller.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/cart_screen/model/final_cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+
+import '../../cart_screen/model/cart_item.dart';
 
 class StepSummaryWidget extends StatefulWidget {
   final List<CartItem> cartItemList;
@@ -113,9 +114,9 @@ class _StepSummaryWidgetState extends State<StepSummaryWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(controller.readAddressModel!.fullName ?? '',
+                  Text(controller.readAddress!.fullName ?? '',
                       style: Get.textTheme.titleMedium),
-                  Text(controller.readAddressModel!.mobile ?? '',
+                  Text(controller.readAddress!.mobile ?? '',
                       style:
                           Get.textTheme.titleMedium!.copyWith(color: greyClr))
                 ],
@@ -125,7 +126,7 @@ class _StepSummaryWidgetState extends State<StepSummaryWidget> {
                 children: [
                   Expanded(
                       child: Text(
-                          '${controller.readAddressModel!.address ?? ''}, ${controller.readAddressModel!.area ?? ''}, ${controller.readAddressModel!.zip ?? ''}\n${controller.readAddressModel!.thana ?? ''}, ${controller.readAddressModel!.city ?? ''}, ${controller.readAddressModel!.state ?? ''}',
+                          '${controller.readAddress!.address ?? ''}, ${controller.readAddress!.area ?? ''}, ${controller.readAddress!.zip ?? ''}\n${controller.readAddress!.thana ?? ''}, ${controller.readAddress!.city ?? ''}, ${controller.readAddress!.state ?? ''}',
                           style: Get.textTheme.bodyMedium)),
                   Checkbox(
                     value: true,
