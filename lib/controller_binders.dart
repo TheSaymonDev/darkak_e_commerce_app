@@ -2,6 +2,7 @@ import 'package:darkak_e_commerce_app/screens/cart_screen/controller/add_to_cart
 import 'package:darkak_e_commerce_app/screens/checkout_screens/controller/order_package_controller.dart';
 import 'package:darkak_e_commerce_app/screens/checkout_screens/controller/step_address_controller.dart';
 import 'package:darkak_e_commerce_app/screens/checkout_screens/controller/step_delivery_type_controller.dart';
+import 'package:darkak_e_commerce_app/screens/support_screen/controller/help_and_support_controller.dart';
 import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/add_to_wishList_controller.dart';
 import 'package:darkak_e_commerce_app/screens/address_management_screen/controller/address_update_controller.dart';
 import 'package:darkak_e_commerce_app/screens/address_view_screen/controller/address_view_controller.dart';
@@ -61,5 +62,6 @@ class ControllerBinder extends Bindings {
     Get.put(StepDeliveryTypeController());
     Get.put(StepAddressController());
     Get.put(OrderPackageController());
+    Get.put(HelpAndSupportController());
   }
 }

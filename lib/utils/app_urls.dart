@@ -13,6 +13,7 @@ class AppUrls{
   static String cashOnDeliveryLottie = '$_lottiePath/cash_on_delivery.json';
 
   static const String appLogoSvg = 'assets/images/app_logo.svg';
+  static const String companyLogoPng = 'assets/images/company_logo.png';
 
   static String lockPng = '$_imagePath/lock.png';
 

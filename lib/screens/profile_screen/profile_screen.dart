@@ -1,7 +1,9 @@
+import 'package:darkak_e_commerce_app/screens/about_screen/about_screen.dart';
 import 'package:darkak_e_commerce_app/screens/address_view_screen/bindings/address_view_binding.dart';
 import 'package:darkak_e_commerce_app/screens/address_view_screen/controller/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/screens/cart_screen/controller/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/screens/my_order_screen/controller/my_order_controller.dart';
+import 'package:darkak_e_commerce_app/screens/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:darkak_e_commerce_app/screens/shop_screen/controller/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/screens/profile_screen/controller/profile_screen_controller.dart';
 import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/wishlist_item_controller.dart';
@@ -18,7 +20,7 @@ import 'package:darkak_e_commerce_app/widgets/profile_screen_widgets/profile_ite
 import 'package:darkak_e_commerce_app/screens/address_view_screen/address_view_screen.dart';
 import 'package:darkak_e_commerce_app/screens/my_order_screen/my_order_screen.dart';
 import 'package:darkak_e_commerce_app/screens/profile_update_screen/profile_update_screen.dart';
-import 'package:darkak_e_commerce_app/screens/support_screen/support_screen.dart';
+import 'package:darkak_e_commerce_app/screens/support_screen/help_and_support_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -118,7 +120,7 @@ class ProfileScreen extends StatelessWidget {
                         title: 'Edit Profile',
                       ),
                     ),
-                    Gap(20.h),
+                    Gap(16.h),
                     GestureDetector(
                       onTap: () {
                         Get.to(()=> const AddressViewScreen(), binding: AddressViewBinding());
@@ -128,7 +130,7 @@ class ProfileScreen extends StatelessWidget {
                         title: 'Shipping Address',
                       ),
                     ),
-                    Gap(20.h),
+                    Gap(16.h),
                     GestureDetector(
                       onTap: () {
                         Get.to(() => const MyOrderScreen());
@@ -138,17 +140,28 @@ class ProfileScreen extends StatelessWidget {
                         title: 'My Order',
                       ),
                     ),
-                    Gap(20.h),
+                    Gap(16.h),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const SupportPage());
+                        Get.to(() => PrivacyPolicyScreen());
+                      },
+                      child: const ProfileItemButton(
+                        iconUrl: 'assets/images/support.svg',
+                        title: 'Privacy Policy',
+                      ),
+                    ),
+                    Gap(16.h),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => const HelpAndSupportScreen());
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/support.svg',
                         title: 'Help & Support',
                       ),
                     ),
-                    Gap(20.h),
+                    Gap(16.h),
+
                     ProfileItemButton(
                         iconUrl: 'assets/images/notifications.svg',
                         title: 'Notifications',
@@ -160,7 +173,17 @@ class ProfileScreen extends StatelessWidget {
                                   },
                                   value: controller.isNotification);
                             })),
-                    Gap(20.h),
+                    Gap(16.h),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => const AboutScreen());
+                      },
+                      child: const ProfileItemButton(
+                        iconUrl: 'assets/images/support.svg',
+                        title: 'About Us',
+                      ),
+                    ),
+                    Gap(16.h),
                     GestureDetector(
                       onTap: () {
                         _showBottomSheet();

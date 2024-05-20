@@ -1,3 +1,4 @@
+import 'package:darkak_e_commerce_app/screens/support_screen/controller/help_and_support_controller.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
@@ -8,8 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class SupportPage extends StatelessWidget {
-  const SupportPage({super.key});
+class HelpAndSupportScreen extends StatelessWidget {
+  const HelpAndSupportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,10 @@ class SupportPage extends StatelessWidget {
               child: Column(
                 children: [
                   _buildListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Get.find<HelpAndSupportController>()
+                          .makePhoneCall('+8801915665089');
+                    },
                     iconPath: 'assets/images/customer_service.svg',
                     title: 'Customer Service',
                   ),
@@ -43,7 +47,10 @@ class SupportPage extends StatelessWidget {
                     thickness: 1.h,
                   ),
                   _buildListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Get.find<HelpAndSupportController>()
+                            .launchInBrowser(Uri.parse('http://darkak.com.bd'));
+                      },
                       iconPath: 'assets/images/website.svg',
                       title: 'Website'),
                   Divider(
@@ -51,7 +58,10 @@ class SupportPage extends StatelessWidget {
                     thickness: 1.h,
                   ),
                   _buildListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Get.find<HelpAndSupportController>()
+                            .launchInBrowser(Uri.parse('https://www.linkedin.com/company/darkak'));
+                      },
                       iconPath: 'assets/images/linkedin.svg',
                       title: 'Linkedin'),
                   Divider(
@@ -67,7 +77,10 @@ class SupportPage extends StatelessWidget {
                     thickness: 1.h,
                   ),
                   _buildListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Get.find<HelpAndSupportController>()
+                            .launchInBrowser(Uri.parse('https://www.facebook.com/darkakmart'));
+                      },
                       iconPath: 'assets/images/facebook_2.svg',
                       title: 'Facebook'),
                 ],
