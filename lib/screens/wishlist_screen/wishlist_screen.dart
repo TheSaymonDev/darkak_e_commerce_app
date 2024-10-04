@@ -1,4 +1,4 @@
-import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/screens/wishlist_screen/controllers/wishlist_item_controller.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/screens/product_details_screen/product_details_screen.dart';
@@ -10,21 +10,16 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class WishListScreen extends StatefulWidget {
+class WishListScreen extends StatelessWidget {
   const WishListScreen({super.key});
 
-  @override
-  State<WishListScreen> createState() => _WishListScreenState();
-}
-
-class _WishListScreenState extends State<WishListScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WishListItemController>(builder: (controller) {
       return SafeArea(
         child: controller.isLoading
             ? customCircularProgressIndicator
-            : controller.wishListItems.isEmpty
+            : controller.wishListItemsData.isEmpty
                 ? Center(child: Lottie.asset(AppUrls.emptyWishListLottie))
                 : Container(
                     height: double.infinity,
@@ -34,11 +29,11 @@ class _WishListScreenState extends State<WishListScreen> {
                       scrollDirection: Axis.vertical,
                       padding: EdgeInsets.only(top: 16.h),
                       itemBuilder: (context, index) {
-                        final product = controller.wishListItems[index];
+                        final product = controller.wishListItemsData[index];
                         return GestureDetector(
                           onTap: () {
-                            Get.to(() =>
-                                ProductDetailsScreen(product: product));
+                            // Get.to(() =>
+                            //     ProductDetailsScreen(product: product));
                           },
                           child: CustomCard(
                             width: double.infinity.w,
@@ -125,7 +120,7 @@ class _WishListScreenState extends State<WishListScreen> {
                         );
                       },
                       separatorBuilder: (context, index) => Gap(8.h),
-                      itemCount: controller.wishListItems.length,
+                      itemCount: controller.wishListItemsData.length,
                     ),
                   ),
       );

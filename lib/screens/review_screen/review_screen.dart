@@ -61,7 +61,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                 allowHalfRating: true,
                 itemCount: 5,
                 itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => Icon(
+                itemBuilder: (context, _) => const Icon(
                   Icons.star,
                   color: yellowClr,
                 ),
@@ -130,7 +130,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                               height: 60.h,
                               width: 60.w,
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: orangeClr,
                               ),
@@ -152,7 +152,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
               CustomElevatedButton(
                   onPressed: () {
                     customSnackMessage(title: 'Review Send Successful');
-                    Get.to(()=> HomeScreen());
+                    Get.to(()=>  HomeScreen());
                   },
                   buttonName: 'Send Review',
                   width: double.infinity.w),

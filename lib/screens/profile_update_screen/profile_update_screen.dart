@@ -1,7 +1,7 @@
-import 'package:darkak_e_commerce_app/screens/profile_update_screen/controller/profile_update_controller.dart';
+import 'package:darkak_e_commerce_app/screens/profile_update_screen/controllers/profile_update_controller.dart';
+import 'package:darkak_e_commerce_app/screens/profile_update_screen/model/profile_update_model.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/home_screen/home_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_bottom_sheet.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_elevated_button.dart';
@@ -17,20 +17,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ProfileUpdateScreen extends StatefulWidget {
-  final String? id;
-  final String? imgUrl;
-  final String? name;
-  final String? dob;
-  final String? dom;
-  final String? mobile;
-  const ProfileUpdateScreen(
-      {super.key,
-      required this.id,
-      required this.imgUrl,
-      required this.name,
-      required this.dob,
-      required this.dom,
-      required this.mobile});
+  const ProfileUpdateScreen({
+    super.key,
+  });
 
   @override
   State<ProfileUpdateScreen> createState() => _ProfileUpdateScreenState();
@@ -39,45 +28,25 @@ class ProfileUpdateScreen extends StatefulWidget {
 class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   final passwordController1 = TextEditingController();
   bool _isObscure = false;
-  final ProfileUpdateController _profileUpdateController =
-      Get.put(ProfileUpdateController());
+  final _profileUpdateController = Get.find<ProfileUpdateController>();
 
-  @override
-  void initState() {
-    super.initState();
-    nameController.text = widget.name!;
-    mobileNumberController.text = widget.mobile!;
-    passwordController.text = '***********';
-    if (widget.dob != null) {
-      dateOfBirthController.text = formatDate(widget.dob!);
-    } else {
-      dateOfBirthController.clear();
-    }
-    if (widget.dom != null) {
-      dateOfMarriageController.text = formatDate(widget.dom!);
-    } else {
-      dateOfMarriageController.clear();
-    }
-  }
-
-  String formatDate(String dobString) {
-    try {
-      final date = DateTime.parse(dobString);
-      final formatter = DateFormat('yyyy-MM-dd');
-      return formatter.format(date);
-    } catch (error) {
-      // Handle parsing error (optional)
-      print("Error parsing date: $error");
-      return dobString; // Or return a default value
-    }
-  }
-
-  final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final dateOfBirthController = TextEditingController();
-  final dateOfMarriageController = TextEditingController();
-  final mobileNumberController = TextEditingController();
-  final passwordController = TextEditingController();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   nameController.text = widget.name!;
+  //   mobileNumberController.text = widget.mobile!;
+  //   passwordController.text = '***********';
+  //   if (widget.dob != null) {
+  //     dateOfBirthController.text = formatDate(widget.dob!);
+  //   } else {
+  //     dateOfBirthController.clear();
+  //   }
+  //   if (widget.dom != null) {
+  //     dateOfMarriageController.text = formatDate(widget.dom!);
+  //   } else {
+  //     dateOfMarriageController.clear();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -95,14 +64,14 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
           child: Form(
-            key: formKey,
+            key: _profileUpdateController.formKey,
             child: Column(
               children: [
                 _buildImage,
                 Gap(64.h),
                 CustomTextFormField(
                   labelText: 'Full Name',
-                  controller: nameController,
+                  controller: _profileUpdateController.nameController,
                   validator: AppValidators().nameValidator,
                 ),
                 Gap(35.h),
@@ -111,12 +80,14 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     Expanded(
                       child: CustomTextFormField(
                         labelText: 'Date of Birth',
-                        controller: dateOfBirthController,
+                        controller:
+                            _profileUpdateController.dateOfBirthController,
                         readOnly: true,
                         validator: AppValidators().dobValidator,
                         suffixIcon: IconButton(
                             onPressed: () {
-                              dateSelection(dateOfBirthController);
+                              dateSelection(_profileUpdateController
+                                  .dateOfBirthController);
                             },
                             icon: Icon(
                               Icons.calendar_month,
@@ -129,13 +100,18 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     Expanded(
                       child: CustomTextFormField(
                         labelText: 'Date of Marriage',
-                        controller: dateOfMarriageController,
+                        controller:
+                            _profileUpdateController.dateOfMarriageController,
                         readOnly: true,
-                        validator: (value) => AppValidators().domValidator(value!,
-                            DateTime.parse(dateOfBirthController.text.trim())),
+                        validator: (value) => AppValidators().domValidator(
+                            value!,
+                            DateTime.parse(_profileUpdateController
+                                .dateOfBirthController.text
+                                .trim())),
                         suffixIcon: IconButton(
                             onPressed: () async {
-                              dateSelection(dateOfMarriageController);
+                              dateSelection(_profileUpdateController
+                                  .dateOfMarriageController);
                             },
                             icon: Icon(
                               Icons.calendar_month,
@@ -149,14 +125,14 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 Gap(35.h),
                 CustomTextFormField(
                   labelText: 'Mobile Number',
-                  controller: mobileNumberController,
+                  controller: _profileUpdateController.mobileNumberController,
                   keyBoardType: TextInputType.phone,
                   readOnly: true,
                 ),
                 Gap(35.h),
                 CustomTextFormField(
                   labelText: 'Password',
-                  controller: passwordController,
+                  controller: _profileUpdateController.passwordController,
                   validator: AppValidators().passwordValidator,
                   readOnly: true,
                   obscureText: true,
@@ -166,7 +142,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   alignment: Alignment.topRight,
                   child: GestureDetector(
                     onTap: () {
-                      _showBottomSheet();
+                      //_showBottomSheet();
                     },
                     child: Text(
                       'Change password?',
@@ -185,17 +161,17 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                             Get.back();
                           },
                           onRightButtonPressed: () async {
-                            if (formKey.currentState?.validate() ?? false) {
-                              final result = await controller.updateProfile(
-                                  id: widget.id!,
-                                  name: nameController.text.trim(),
-                                  dob: dateOfBirthController.text.trim(),
-                                  marriageDate:
-                                      dateOfMarriageController.text.trim());
-                              if (result == true) {
-                                _clearData();
-                                Get.off(() => const HomeScreen());
-                              }
+                            if (controller.formKey.currentState!.validate()) {
+                              await controller.updateProfile(
+                                profileUpdateData: ProfileUpdateModel(
+                                    name: controller.nameController.text,
+                                    dob: controller.dateOfBirthController.text
+                                        .trim(),
+                                    marriageDate: controller
+                                        .dateOfMarriageController.text
+                                        .trim()),
+                                id: controller.id,
+                              );
                             }
                           });
                 }),
@@ -218,10 +194,11 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
               child: GetBuilder<ProfileUpdateController>(builder: (controller) {
                 return CircleAvatar(
                     backgroundColor: orangeClr,
-                    backgroundImage: controller.image != null
-                        ? FileImage(controller.image!)
-                        : widget.imgUrl != null
-                            ? NetworkImage('${AppUrls.imgUrl}${widget.imgUrl}')
+                    backgroundImage: controller.imageFile != null
+                        ? FileImage(controller.imageFile!)
+                        : _profileUpdateController.imgUrl != null
+                            ? NetworkImage(
+                                '${AppUrls.imgUrl}${_profileUpdateController.imgUrl}')
                             : const AssetImage(
                                     'assets/images/profile-photo.png')
                                 as ImageProvider);
@@ -252,110 +229,102 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     }
   }
 
-  Future<dynamic> _showBottomSheet() {
-    return Get.bottomSheet(
-      CustomBottomSheet(
-        children: [
-          Text(
-            'Change password',
-            style: myStyle(30.sp, FontWeight.bold, blackClr),
-          ),
-          Gap(50.h),
-          CustomTextFormField(
-            labelText: 'Old Password',
-            controller: passwordController,
-            validator: AppValidators().passwordValidator,
-            suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 8.w),
-              child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _isObscure = !_isObscure;
-                    });
-                  },
-                  icon: Icon(
-                    _isObscure ? Icons.visibility_off : Icons.visibility,
-                    color: blackClr,
-                    size: 25.sp,
-                  )),
-            ),
-            obscureText: _isObscure,
-          ),
-          Gap(8.h),
-          Align(
-            alignment: Alignment.topRight,
-            child: GestureDetector(
-              onTap: () {
-                Get.to(() => IdentityVerificationScreen());
-              },
-              child: Text(
-                'Forgot Password?',
-                style: myStyle(20.sp, FontWeight.bold, orangeClr),
-              ),
-            ),
-          ),
-          Gap(30.h),
-          CustomTextFormField(
-            labelText: 'New Password',
-            controller: passwordController,
-            validator: AppValidators().passwordValidator,
-            readOnly: true,
-            suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 8.w),
-              child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _isObscure = !_isObscure;
-                    });
-                  },
-                  icon: Icon(
-                    _isObscure ? Icons.visibility_off : Icons.visibility,
-                    color: blackClr,
-                    size: 25.sp,
-                  )),
-            ),
-            obscureText: _isObscure,
-          ),
-          Gap(35.h),
-          CustomTextFormField(
-            labelText: 'Confirm Password',
-            controller: passwordController,
-            validator: AppValidators().passwordValidator,
-            readOnly: true,
-            suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 8.w),
-              child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _isObscure = !_isObscure;
-                    });
-                  },
-                  icon: Icon(
-                    _isObscure ? Icons.visibility_off : Icons.visibility,
-                    color: blackClr,
-                    size: 25.sp,
-                  )),
-            ),
-            obscureText: _isObscure,
-          ),
-          Gap(40.h),
-          CustomElevatedButton(
-              onPressed: () {
-                Get.back();
-              },
-              buttonName: 'Change Password',
-              width: double.infinity.w),
-          Gap(32.h)
-        ],
-      ),
-    );
-  }
-
-  void _clearData() {
-    nameController.clear();
-    dateOfBirthController.clear();
-    dateOfMarriageController.clear();
-    mobileNumberController.clear();
-    passwordController.clear();
-  }
+  // Future<dynamic> _showBottomSheet() {
+  //   return Get.bottomSheet(
+  //     CustomBottomSheet(
+  //       children: [
+  //         Text(
+  //           'Change password',
+  //           style: myStyle(30.sp, FontWeight.bold, blackClr),
+  //         ),
+  //         Gap(50.h),
+  //         CustomTextFormField(
+  //           labelText: 'Old Password',
+  //           controller: passwordController,
+  //           validator: AppValidators().passwordValidator,
+  //           suffixIcon: Padding(
+  //             padding: EdgeInsets.only(right: 8.w),
+  //             child: IconButton(
+  //                 onPressed: () {
+  //                   setState(() {
+  //                     _isObscure = !_isObscure;
+  //                   });
+  //                 },
+  //                 icon: Icon(
+  //                   _isObscure ? Icons.visibility_off : Icons.visibility,
+  //                   color: blackClr,
+  //                   size: 25.sp,
+  //                 )),
+  //           ),
+  //           obscureText: _isObscure,
+  //         ),
+  //         Gap(8.h),
+  //         Align(
+  //           alignment: Alignment.topRight,
+  //           child: GestureDetector(
+  //             onTap: () {
+  //               Get.to(() => IdentityVerificationScreen());
+  //             },
+  //             child: Text(
+  //               'Forgot Password?',
+  //               style: myStyle(20.sp, FontWeight.bold, orangeClr),
+  //             ),
+  //           ),
+  //         ),
+  //         Gap(30.h),
+  //         CustomTextFormField(
+  //           labelText: 'New Password',
+  //           controller: passwordController,
+  //           validator: AppValidators().passwordValidator,
+  //           readOnly: true,
+  //           suffixIcon: Padding(
+  //             padding: EdgeInsets.only(right: 8.w),
+  //             child: IconButton(
+  //                 onPressed: () {
+  //                   setState(() {
+  //                     _isObscure = !_isObscure;
+  //                   });
+  //                 },
+  //                 icon: Icon(
+  //                   _isObscure ? Icons.visibility_off : Icons.visibility,
+  //                   color: blackClr,
+  //                   size: 25.sp,
+  //                 )),
+  //           ),
+  //           obscureText: _isObscure,
+  //         ),
+  //         Gap(35.h),
+  //         CustomTextFormField(
+  //           labelText: 'Confirm Password',
+  //           controller: passwordController,
+  //           validator: AppValidators().passwordValidator,
+  //           readOnly: true,
+  //           suffixIcon: Padding(
+  //             padding: EdgeInsets.only(right: 8.w),
+  //             child: IconButton(
+  //                 onPressed: () {
+  //                   setState(() {
+  //                     _isObscure = !_isObscure;
+  //                   });
+  //                 },
+  //                 icon: Icon(
+  //                   _isObscure ? Icons.visibility_off : Icons.visibility,
+  //                   color: blackClr,
+  //                   size: 25.sp,
+  //                 )),
+  //           ),
+  //           obscureText: _isObscure,
+  //         ),
+  //         Gap(40.h),
+  //         CustomElevatedButton(
+  //             onPressed: () {
+  //               Get.back();
+  //             },
+  //             buttonName: 'Change Password',
+  //             width: double.infinity.w),
+  //         Gap(32.h)
+  //       ],
+  //     ),
+  //   );
+  // }
 }

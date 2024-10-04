@@ -63,9 +63,9 @@ Future<dynamic> showDialogBox({
 }) {
   return Get.defaultDialog(
     title: title,
-    titleStyle: myStyle(25.sp, FontWeight.bold, blackClr),
+    titleStyle: Get.textTheme.titleLarge,
     middleText: middleText,
-    middleTextStyle: myStyle(20.sp, FontWeight.normal, blackClr),
+    middleTextStyle: Get.textTheme.bodyMedium,
     backgroundColor: whiteClr,
     barrierDismissible: false,
     radius: 15.r,
@@ -74,13 +74,13 @@ Future<dynamic> showDialogBox({
           onPressed: onPressedCancel,
           child: Text(
             'No',
-            style: myStyle(20.sp, FontWeight.bold, blackClr),
+            style: Get.textTheme.titleMedium,
           )),
       TextButton(
           onPressed: onPressedConfirm,
           child: Text(
             'Yes',
-            style: myStyle(20.sp, FontWeight.bold, orangeClr),
+            style: Get.textTheme.titleMedium!.copyWith(color: orangeClr)
           )),
     ],
   );

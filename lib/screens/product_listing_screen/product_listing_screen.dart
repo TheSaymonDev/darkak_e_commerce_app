@@ -1,3 +1,4 @@
+import 'package:darkak_e_commerce_app/screens/product_listing_screen/controllers/product_listing_controller.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_searchview_with_back.dart';
@@ -9,12 +10,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import '../shop_screen/model/product.dart';
 
 class ProductListingScreen extends StatelessWidget {
-  const ProductListingScreen({super.key, required this.productList});
+  ProductListingScreen({super.key});
 
-  final List<Product> productList;
+  final _productListingController = Get.find<ProductListingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +55,10 @@ class ProductListingScreen extends StatelessWidget {
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
         return CustomProductCard(
-          product: productList[index],
+          product: _productListingController.productListData[index],
         );
       },
-      itemCount: productList.length,
+      itemCount: _productListingController.productListData.length,
     );
   }
 

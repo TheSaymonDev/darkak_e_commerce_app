@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:darkak_e_commerce_app/screens/my_order_screen/controller/my_order_controller.dart';
+import 'package:darkak_e_commerce_app/screens/my_order_screen/controllers/my_order_controller.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
@@ -24,7 +24,7 @@ class ActiveOrders extends StatefulWidget {
 class _ActiveOrdersState extends State<ActiveOrders> {
   @override
   Widget build(BuildContext context) {
-    print(widget.controller.myOrderList.length);
+    print(widget.controller.myOrderListData.length);
     return Container(
       margin: EdgeInsets.only(top: 16.h),
       height: double.infinity.h,
@@ -32,7 +32,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: ListView.separated(
           itemBuilder: (context, index) {
-            final myOrder = widget.controller.myOrderList[index];
+            final myOrder = widget.controller.myOrderListData[index];
             return CustomCard(
               width: double.infinity.w,
               child: Column(
@@ -57,8 +57,8 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                         ),
                         IconButton(
                           onPressed: () {
-                            Get.to(() => OrderDetailsScreen(
-                                myOrder: myOrder, orderStatus: 'Active'));
+                            // Get.to(() => OrderDetailsScreen(
+                            //     myOrder: myOrder, orderStatus: 'Active'));
                           },
                           icon: Icon(
                             Icons.keyboard_arrow_right_outlined,
@@ -84,7 +84,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                             borderRadius: BorderRadius.circular(4.r),
                             image: DecorationImage(
                                 image: CachedNetworkImageProvider(
-                                    '${AppUrls.imgUrl}${myOrder.cartItem!.products!.images![0].path}'),
+                                    '${AppUrls.imgUrl}${myOrder.cartItem!.productsData!.images![0].path}'),
                                 fit: BoxFit.cover),
                           ),
                         ),
@@ -93,7 +93,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${myOrder.cartItem!.products!.name}',
+                              Text('${myOrder.cartItem!.productsData!.name}',
                                   style: Get.textTheme.bodyLarge),
                               SizedBox(
                                 height: 20.h,
@@ -116,7 +116,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                      '${AppUrls.takaSign}${myOrder.cartItem!.products!.offerPrice}',
+                                      '${AppUrls.takaSign}${myOrder.cartItem!.productsData!.offerPrice}',
                                       style: Get.textTheme.bodyMedium!
                                           .copyWith(color: orangeClr)),
                                   CustomCard(
@@ -177,7 +177,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
             );
           },
           separatorBuilder: (context, index) => Gap(10.h),
-          itemCount: widget.controller.myOrderList.length),
+          itemCount: widget.controller.myOrderListData.length),
     );
   }
 }

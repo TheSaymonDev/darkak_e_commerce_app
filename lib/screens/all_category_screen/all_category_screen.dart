@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/add_to_wishList_controller.dart';
-import 'package:darkak_e_commerce_app/screens/all_category_screen/controller/category_wised_product_list_controller.dart';
-import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/screens/all_category_screen/controllers/category_wised_product_list_controller.dart';
+import 'package:darkak_e_commerce_app/screens/shop_screen/models/product_model.dart';
+import 'package:darkak_e_commerce_app/screens/wishlist_screen/controllers/add_to_wishList_controller.dart';
+import 'package:darkak_e_commerce_app/screens/wishlist_screen/controllers/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/screens/wishlist_screen/models/add_to_wishlist_model.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/explore_screen/model/final_category.dart';
-import 'package:darkak_e_commerce_app/screens/product_details_screen/product_details_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
 import 'package:flutter/material.dart';
@@ -13,27 +13,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-import '../shop_screen/model/product.dart';
-
 class AllCategoryScreen extends StatefulWidget {
-  final List<Category> categoryList;
-  const AllCategoryScreen({super.key, required this.categoryList});
+  const AllCategoryScreen({super.key});
 
   @override
   State<AllCategoryScreen> createState() => _AllCategoryScreenState();
 }
 
 class _AllCategoryScreenState extends State<AllCategoryScreen> {
-  final WishListItemController _wishListItemController =
-      Get.find<WishListItemController>();
+  final _wishListItemController = Get.find<WishListItemController>();
+
+  final _allCategoryController = Get.find<CategoryWisedProductListController>();
 
   int _currentIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-    Get.find<CategoryWisedProductListController>()
-        .getFilterProductByCategory(widget.categoryList[0].id!);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Get.find<CategoryWisedProductListController>()
+  //       .getFilterProductByCategory(_allCategoryController.categoryData[0].id!);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +52,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
               width: 118.w,
               child: ListView.separated(
                   itemBuilder: (context, index) {
-                    final category = widget.categoryList[index];
+                    final category = _allCategoryController.categoryData[index];
                     return InkWell(
                       onTap: () {
                         setState(
@@ -70,7 +68,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                         width: 118.w,
                         color: _currentIndex == index
                             ? whiteClr
-                            : greyClr.withOpacity(0.2),
+                            : greyClr.withValues(alpha: 0.2),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -80,9 +78,17 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                               width: 26.w,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 4.h),
-                              child: CachedNetworkImage(
-                                  imageUrl:
-                                      '${AppUrls.imgUrl}${category.image!.path}'),
+                              child: category.image != null
+                                  ? CachedNetworkImage(
+                                      imageUrl:
+                                          '${AppUrls.imgUrl}${category.image!.path}',
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(), // Optional: Loading indicator
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons
+                                              .error), // Optional: Error icon
+                                    )
+                                  : const Icon(Icons.image_not_supported),
                             ),
                             Gap(4.h),
                             Text(
@@ -97,7 +103,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                     );
                   },
                   separatorBuilder: (context, index) => Gap(0.h),
-                  itemCount: widget.categoryList.length),
+                  itemCount: _allCategoryController.categoryData.length),
             ),
             GetBuilder<CategoryWisedProductListController>(
                 builder: (controller) {
@@ -114,8 +120,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                     return InkWell(
                       borderRadius: BorderRadius.circular(8.r),
                       onTap: () {
-                        Get.to(
-                            () => ProductDetailsScreen(product: cProduct));
+                        // Get.to(() => ProductDetailsScreen(product: cProduct));
                       },
                       child: CustomCard(
                         child: Column(
@@ -129,9 +134,15 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(4.r),
                                       image: DecorationImage(
-                                          image: CachedNetworkImageProvider(
-                                              '${AppUrls.imgUrl}${cProduct.images![0].path}'),
-                                          fit: BoxFit.cover),
+                                        image: cProduct.images != null &&
+                                                cProduct.images!.isNotEmpty
+                                            ? CachedNetworkImageProvider(
+                                                '${AppUrls.imgUrl}${cProduct.images![0].path}')
+                                            : const AssetImage(
+                                                    'assets/images/placeholder.png')
+                                                as ImageProvider, // Placeholder image
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   buildWishListIcon(cProduct),
@@ -141,8 +152,12 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                             Gap(8.h),
                             Padding(
                               padding: EdgeInsets.only(left: 8.w),
-                              child: Text('${cProduct.name}',
-                                  style: Get.textTheme.titleSmall),
+                              child: Text(
+                                '${cProduct.name}',
+                                style: Get.textTheme.titleSmall,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             Gap(4.h),
                             Padding(
@@ -167,7 +182,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
     );
   }
 
-  Positioned buildWishListIcon(Product cProduct) {
+  Positioned buildWishListIcon(ProductModel cProduct) {
     return Positioned(
         right: 0,
         child: InkWell(
@@ -175,7 +190,9 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
               if (_wishListItemController.isInWishlist(cProduct.id!)) {
                 _wishListItemController.removeWishListItem(cProduct.id!);
               } else {
-                Get.find<AddToWishListController>().addToWishList(cProduct.id!);
+                Get.find<AddToWishlistController>().addToWishlist(
+                    addToWishlistData:
+                        AddToWishlistModel(productId: cProduct.id!));
               }
             },
             child: Container(

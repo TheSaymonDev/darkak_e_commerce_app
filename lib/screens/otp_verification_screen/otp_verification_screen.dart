@@ -1,10 +1,9 @@
-import 'package:darkak_e_commerce_app/screens/otp_verification_screen/controller/otp_verification_controller.dart';
-import 'package:darkak_e_commerce_app/screens/otp_verification_screen/controller/resend_otp_controller.dart';
-import 'package:darkak_e_commerce_app/screens/otp_verification_screen/controller/timer_controller.dart';
-import 'package:darkak_e_commerce_app/screens/otp_verification_screen/model/otp_verification.dart';
-import 'package:darkak_e_commerce_app/screens/otp_verification_screen/model/resend_otp.dart';
-import 'package:darkak_e_commerce_app/screens/set_password_screen/set_password_screen.dart';
-import 'package:darkak_e_commerce_app/screens/sign_in_screen/sign_in_screen.dart';
+import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/screens/otp_verification_screen/controllers/otp_verification_controller.dart';
+import 'package:darkak_e_commerce_app/screens/otp_verification_screen/controllers/resend_otp_controller.dart';
+import 'package:darkak_e_commerce_app/screens/otp_verification_screen/controllers/timer_controller.dart';
+import 'package:darkak_e_commerce_app/screens/otp_verification_screen/models/otp_verification_model.dart';
+import 'package:darkak_e_commerce_app/screens/otp_verification_screen/models/resend_otp_model.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/utils/app_validator.dart';
@@ -18,33 +17,10 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class OtpVerificationScreen extends StatefulWidget {
-  final bool isForgetOTP;
-  final String? userId;
-  const OtpVerificationScreen(
-      {super.key, required this.userId, this.isForgetOTP = false});
+class OtpVerificationScreen extends StatelessWidget {
+  OtpVerificationScreen({super.key});
 
-  @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
-}
-
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-  final _otpController = TextEditingController();
-
-  final formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Get.find<TimerController>().startTimer();
-  }
-
-  @override
-  void dispose() {
-    Get.find<TimerController>().timer.cancel();
-    super.dispose();
-  }
+  final _otpVerificationController = Get.find<OtpVerificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +38,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             width: double.infinity.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Form(
-              key: formKey,
+              key: _otpVerificationController.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -78,7 +54,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   Gap(35.h),
                   PinCodeTextField(
                     validator: AppValidators().pinValidator,
-                    controller: _otpController,
+                    controller: _otpVerificationController.otpController,
                     appContext: context,
                     length: 6,
                     obscureText: false,
@@ -98,13 +74,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       Gap(8.w),
                       GetBuilder<TimerController>(
                         builder: (controller) {
-                          print(controller.getFormattedDuration());
                           return controller.showResendButton
                               ? GestureDetector(
                                   onTap: () {
                                     Get.find<ResendOTPController>().resendOTP(
-                                        resendOTP:
-                                            ResendOTP(userId: widget.userId));
+                                        resendOtpData: ResendOtpModel(
+                                            userId: _otpVerificationController
+                                                .userId));
                                   },
                                   child: Text('Resend Code',
                                       style: Get.textTheme.titleMedium!
@@ -119,7 +95,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   ),
                   Gap(35.h),
                   Visibility(
-                    visible: widget.isForgetOTP,
+                    visible: _otpVerificationController.isForgetOTP,
                     replacement: GetBuilder<OtpVerificationController>(
                       builder: (controller) => controller.isLoading
                           ? customCircularProgressIndicator
@@ -147,32 +123,31 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  void _clearData() {
-    _otpController.clear();
-  }
-
   void _registerFormOnSubmit(OtpVerificationController controller) async {
-    if (formKey.currentState?.validate() ?? false) {
+    if (controller.formKey.currentState!.validate()) {
       final result = await controller.verifyOTP(
-        url: AppUrls.otpVerificationUrl,
-          otpVerification: OtpVerification(
-              userId: widget.userId!, otp: _otpController.text.trim()));
+          url: AppUrls.otpVerificationUrl,
+          otpVerificationData: OtpVerificationModel(
+              userId: controller.userId,
+              otp: controller.otpController.text.trim()));
       if (result == true) {
-        _clearData();
-        Get.offAll(() => SignInScreen());
+        Get.offAllNamed(AppRoutes.signInScreen);
       }
     }
   }
 
   void _forgetFormOnSubmit(OtpVerificationController controller) async {
-    if (formKey.currentState?.validate() ?? false) {
+    if (controller.formKey.currentState!.validate()) {
       final result = await controller.verifyOTP(
-        url: AppUrls.forgetOtpVerificationUrl,
-          otpVerification: OtpVerification(
-              userId: widget.userId!, otp: _otpController.text.trim()));
+          url: AppUrls.forgetOtpVerificationUrl,
+          otpVerificationData: OtpVerificationModel(
+              userId: controller.userId,
+              otp: controller.otpController.text.trim()));
       if (result == true) {
-        Get.off(() => SetPasswordScreen(
-            userId: widget.userId, otp: _otpController.text.trim()));
+        Get.offNamed(AppRoutes.setPasswordScreen, arguments: {
+          'userId': controller.userId,
+          'otp': controller.otpController.text.trim()
+        });
       }
     }
   }

@@ -1,16 +1,13 @@
-import 'package:darkak_e_commerce_app/screens/cart_screen/controller/add_to_cart_controller.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/sizes.dart';
-import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/add_to_wishList_controller.dart';
-import 'package:darkak_e_commerce_app/screens/product_details_screen/controller/product_details_screen_controller.dart';
-import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/screens/product_details_screen/controllers/add_to_cart_controller.dart';
+import 'package:darkak_e_commerce_app/screens/product_details_screen/controllers/product_details_controller.dart';
+import 'package:darkak_e_commerce_app/screens/product_details_screen/model/add_to_cart_model.dart';
+import 'package:darkak_e_commerce_app/screens/wishlist_screen/controllers/add_to_wishList_controller.dart';
+import 'package:darkak_e_commerce_app/screens/wishlist_screen/controllers/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/screens/wishlist_screen/models/add_to_wishlist_model.dart';
 import 'package:darkak_e_commerce_app/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/model/colors.dart';
-import 'package:darkak_e_commerce_app/screens/sign_in_screen/sign_in_screen.dart';
-import 'package:darkak_e_commerce_app/screens/product_view_screen/product_view_screen.dart';
-import 'package:darkak_e_commerce_app/screens/review_screen/review_screen.dart';
-import 'package:darkak_e_commerce_app/screens/store_screen/store_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_bottom_sheet.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/widgets/product_details_screen_widgets/custom_coupon_code.dart';
@@ -21,51 +18,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-import '../shop_screen/model/product.dart';
-
-class ProductDetailsScreen extends StatefulWidget {
-  final Product product;
-  const ProductDetailsScreen({super.key, required this.product});
-
-  @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
-}
-
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+class ProductDetailsScreen extends StatelessWidget {
+  ProductDetailsScreen({super.key});
 
   final double _height = 400.h;
-  List<String> productSizes = [];
-  List<String> productColors = [];
+
   final double productRating = 4.5;
 
-  getSizes() {
-    for (int i = 0; i < widget.product.sizes!.length; i++) {
-      // Access the size object at the current index
-      Sizes productSize = widget.product.sizes![i];
-      // Add the size name to the sizes list
-      productSizes.add(productSize.name!); // Assuming name is non-null
-    }
-  }
-
-  getColors() {
-    for (int i = 0; i < widget.product.colors!.length; i++) {
-      ColorsP productColor = widget.product.colors![i];
-      productColors.add(productColor.name!);
-    }
-  }
-
-  final ProductDetailsScreenController _productDetailsScreenController =
-      Get.find<ProductDetailsScreenController>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getSizes();
-    getColors();
-    _productDetailsScreenController.selectedSize = productSizes[0];
-    _productDetailsScreenController.selectedColor = productColors[0];
-  }
+  final _productDetailsController = Get.find<ProductDetailsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +55,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            '${widget.product.name}',
-                                            style: Get.textTheme.titleLarge
-                                          ),
+                                              '${_productDetailsController.product.name}',
+                                              style: Get.textTheme.titleLarge),
                                           GetBuilder<WishListItemController>(
                                               builder: (controller) {
                                             return InkWell(
@@ -109,30 +68,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                           .getToken();
                                                   if (token.isNotEmpty) {
                                                     if (controller.isInWishlist(
-                                                        widget.product.id!)) {
-                                                      controller
-                                                          .removeWishListItem(
-                                                              widget
-                                                                  .product.id!);
+                                                        _productDetailsController
+                                                            .product.id!)) {
+                                                      controller.removeWishListItem(
+                                                          _productDetailsController
+                                                              .product.id!);
                                                     } else {
                                                       Get.find<
-                                                              AddToWishListController>()
-                                                          .addToWishList(widget
-                                                              .product.id!);
+                                                              AddToWishlistController>()
+                                                          .addToWishlist(
+                                                              addToWishlistData:
+                                                                  AddToWishlistModel(
+                                                                      productId: _productDetailsController
+                                                                          .product
+                                                                          .id!));
                                                     }
                                                   } else {
-                                                    Get.offAll(
-                                                        () => SignInScreen());
+                                                    Get.offAllNamed(
+                                                        AppRoutes.signInScreen);
                                                   }
                                                 },
                                                 child: Icon(
                                                     controller.isInWishlist(
-                                                            widget.product.id!)
+                                                            _productDetailsController
+                                                                .product.id!)
                                                         ? Icons.favorite
                                                         : Icons.favorite_border,
                                                     size: 24.sp,
-                                                    color: controller
-                                                            .isInWishlist(widget
+                                                    color: controller.isInWishlist(
+                                                            _productDetailsController
                                                                 .product.id!)
                                                         ? orangeClr
                                                         : greyClr));
@@ -153,7 +117,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       Gap(8.h),
                                       InkWell(
                                           onTap: () {
-                                            Get.to(() => const ReviewScreen());
+                                            Get.toNamed(AppRoutes.reviewScreen);
                                           },
                                           child: Text('Write your review',
                                               style: Get.textTheme.bodyMedium!
@@ -169,7 +133,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       width: double.infinity.w,
                       decoration: BoxDecoration(color: whiteClr, boxShadow: [
                         BoxShadow(
-                            color: blackClr.withOpacity(0.2),
+                            color: blackClr.withValues(alpha: 0.2),
                             spreadRadius: 1,
                             blurRadius: 5,
                             offset: const Offset(0, -3) // Offset for top shadow
@@ -187,18 +151,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       Text('Price',
                                           style: Get.textTheme.bodySmall!
                                               .copyWith(color: greyClr)),
-                                      GetBuilder<
-                                              ProductDetailsScreenController>(
+                                      GetBuilder<ProductDetailsController>(
                                           builder: (controller) {
                                         return Text(
-                                            '${AppUrls.takaSign}${controller.calculateTotal(widget.product.offerPrice!)}',
+                                            '${AppUrls.takaSign}${controller.calculateTotal(controller.product.offerPrice!)}',
                                             style: Get.textTheme.titleMedium!
                                                 .copyWith(color: orangeClr));
                                       })
                                     ])),
                             InkWell(
                                 onTap: () {
-                                  Get.to(() => const StorePage());
+                                  //Get.to(() => const StorePage());
                                 },
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -209,45 +172,49 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           style: Get.textTheme.bodyMedium)
                                     ])),
                             GetBuilder<AddToCartController>(
-                                builder: (controller) {
-                              return Visibility(
-                                visible: controller.isLoading == false,
-                                replacement: customCircularProgressIndicator,
-                                child: InkWell(
-                                    onTap: () {
-                                      String token =
-                                          SharedPreferencesService().getToken();
-                                      if (token.isNotEmpty) {
-                                        controller.addToCart(
-                                            productId: widget.product.id!,
-                                            productSize:
-                                                _productDetailsScreenController
-                                                    .selectedSize!,
-                                            productColor:
-                                                _productDetailsScreenController
-                                                    .selectedColor!,
-                                            productQuantity:
-                                                _productDetailsScreenController
-                                                    .quantity
-                                                    .toString());
-                                      } else {
-                                        Get.offAll(SignInScreen());
-                                      }
-                                    },
-                                    focusColor: whiteClr,
-                                    child: Container(
-                                        width: 146.w,
-                                        height: 50.h,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(6.r),
-                                            color: orangeClr),
-                                        child: Text('Add to cart',
-                                            style: Get.textTheme.titleMedium!
-                                                .copyWith(color: whiteClr)))),
-                              );
-                            })
+                                builder: (controller) => controller.isLoading
+                                    ? customCircularProgressIndicator
+                                    : InkWell(
+                                        onTap: () {
+                                          String token =
+                                              SharedPreferencesService()
+                                                  .getToken();
+                                          if (token.isNotEmpty) {
+                                            controller.addToCart(
+                                              addToCartData: AddToCartModel(
+                                                  productId:
+                                                      _productDetailsController
+                                                          .product.id!,
+                                                  size:
+                                                      _productDetailsController
+                                                          .selectedSize!,
+                                                  color:
+                                                      _productDetailsController
+                                                          .selectedColor!,
+                                                  quantity:
+                                                      _productDetailsController
+                                                          .quantity
+                                                          .toString()),
+                                            );
+                                          } else {
+                                            Get.offAllNamed(
+                                                AppRoutes.signInScreen);
+                                          }
+                                        },
+                                        focusColor: whiteClr,
+                                        child: Container(
+                                            width: 146.w,
+                                            height: 50.h,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(6.r),
+                                                color: orangeClr),
+                                            child: Text('Add to cart',
+                                                style: Get
+                                                    .textTheme.titleMedium!
+                                                    .copyWith(
+                                                        color: whiteClr)))))
                           ]))
                 ]))));
   }
@@ -257,17 +224,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         minHeight: 200.h,
         maxHeight: _height,
         child: GestureDetector(onTap: () {
-          Get.to(() => ProductViewPage(
-              imagePath: widget.product
-                  .images![_productDetailsScreenController.selectedImg].path,
-              imagesPath: widget.product.images));
-        }, child:
-            GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+          Get.toNamed(AppRoutes.productViewScreen, arguments: {
+            'imagePath': _productDetailsController
+                .product.images![_productDetailsController.selectedImg].path,
+            'imagesPath': _productDetailsController.product.images
+          });
+        }, child: GetBuilder<ProductDetailsController>(builder: (controller) {
           return Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: NetworkImage(
-                          '${AppUrls.imgUrl}${widget.product.images![controller.selectedImg].path}'),
+                          '${AppUrls.imgUrl}${controller.product.images![controller.selectedImg].path}'),
                       fit: BoxFit.cover)),
               child: LayoutBuilder(
                   builder: (context, constraints) => Column(
@@ -327,15 +294,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       children: [
         Text('Details', style: Get.textTheme.titleMedium),
         Gap(8.h),
-        GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+        GetBuilder<ProductDetailsController>(builder: (controller) {
           return Text(
               controller.isExpanded == true
-                  ? '${widget.product.longDesc}'
-                  : '${widget.product.shortDesc}',
+                  ? '${controller.product.longDesc}'
+                  : '${controller.product.shortDesc}',
               style: Get.textTheme.bodyMedium);
         }),
         Gap(8.h),
-        GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+        GetBuilder<ProductDetailsController>(builder: (controller) {
           return GestureDetector(
               onTap: () => controller.toggleDes(),
               child: Text(controller.isExpanded ? 'Show Less' : 'Show More',
@@ -348,7 +315,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Column get buildProductAttributes {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+        GetBuilder<ProductDetailsController>(builder: (controller) {
           return CustomCard(
               width: 160.w,
               height: 40.h,
@@ -361,13 +328,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 const Spacer(),
                 FittedBox(
                   child: CustomDropdown(
-                      items: productSizes,
+                      items: controller.productSizes,
                       onChanged: (newValue) =>
                           controller.productSizeChange(newValue)),
                 )
               ]));
         }),
-        GetBuilder<ProductDetailsScreenController>(builder: (controller) {
+        GetBuilder<ProductDetailsController>(builder: (controller) {
           return CustomCard(
               width: 160.w,
               height: 40.h,
@@ -380,7 +347,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 const Spacer(),
                 FittedBox(
                   child: CustomDropdown(
-                      items: productColors,
+                      items: controller.productColors,
                       onChanged: (newValue) =>
                           controller.productColorChange(newValue)),
                 )
@@ -398,16 +365,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 children: [
                   InkWell(
                       onTap: () =>
-                          _productDetailsScreenController.decrementQuantity(),
+                          _productDetailsController.decrementQuantity(),
                       child: Icon(Icons.remove, size: 20.sp, color: greyClr)),
-                  GetBuilder<ProductDetailsScreenController>(
-                      builder: (controller) {
+                  GetBuilder<ProductDetailsController>(builder: (controller) {
                     return Text('${controller.quantity}',
                         style: Get.textTheme.titleSmall);
                   }),
                   InkWell(
-                      onTap: () => _productDetailsScreenController
-                          .incrementQuantity(widget.product.alertQuantity!),
+                      onTap: () => _productDetailsController.incrementQuantity(
+                          _productDetailsController.product.alertQuantity!),
                       child: Icon(Icons.add, size: 20.sp, color: greyClr))
                 ])),
         CustomCard(
@@ -441,8 +407,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => GestureDetector(
-                onTap: () =>
-                    _productDetailsScreenController.imageSelection(index),
+                onTap: () => _productDetailsController.imageSelection(index),
                 child: Container(
                     height: 80.h,
                     width: 90.w,
@@ -450,10 +415,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         borderRadius: BorderRadius.circular(16.r),
                         image: DecorationImage(
                             image: NetworkImage(
-                                '${AppUrls.imgUrl}${widget.product.images![index].path}'),
+                                '${AppUrls.imgUrl}${_productDetailsController.product.images![index].path}'),
                             fit: BoxFit.cover)))),
             separatorBuilder: (context, index) => Gap(8.w),
-            itemCount: widget.product.images!.length));
+            itemCount: _productDetailsController.product.images!.length));
   }
 }
 

@@ -1,16 +1,14 @@
-import 'package:darkak_e_commerce_app/screens/sign_in_screen/controller/sign_in_controller.dart';
-import 'package:darkak_e_commerce_app/screens/sign_in_screen/model/sign_in.dart';
+import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/screens/sign_in_screen/controllers/sign_in_controller.dart';
+import 'package:darkak_e_commerce_app/screens/sign_in_screen/models/sign_in_model.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/home_screen/home_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_text_form_field.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
 import 'package:darkak_e_commerce_app/utils/app_validator.dart';
 import 'package:darkak_e_commerce_app/widgets/auth_widgets/custom_sign_in_with_button.dart';
-import 'package:darkak_e_commerce_app/screens/identity_verification_screen/identity_verification_screen.dart';
-import 'package:darkak_e_commerce_app/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,9 +18,7 @@ import 'package:get/get.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
 
-  final _formKey = GlobalKey<FormState>();
-  final _identifierController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _signInController = Get.find<SignInController>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +44,7 @@ class SignInScreen extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   child: Form(
-                    key: _formKey,
+                    key: _signInController.formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -65,14 +61,14 @@ class SignInScreen extends StatelessWidget {
                         Gap(55.h),
                         CustomTextFormField(
                           labelText: 'Email or Mobile',
-                          controller: _identifierController,
+                          controller: _signInController.identifierController,
                           validator: AppValidators().identifierValidator,
                         ),
                         Gap(35.h),
                         GetBuilder<SignInController>(
                           builder: (controller) => CustomTextFormField(
                             labelText: 'Password',
-                            controller: _passwordController,
+                            controller: _signInController.passwordController,
                             validator: AppValidators().passwordValidator,
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(right: 8.w),
@@ -92,9 +88,7 @@ class SignInScreen extends StatelessWidget {
                         Gap(20.h),
                         GestureDetector(
                           onTap: () {
-                            Get.to(
-                              () => IdentityVerificationScreen(),
-                            );
+                           Get.toNamed(AppRoutes.identityVerificationScreen);
                           },
                           child: Align(
                             alignment: Alignment.centerRight,
@@ -143,7 +137,7 @@ class SignInScreen extends StatelessWidget {
                     Gap(8.w),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => SignUpScreen());
+                        Get.toNamed(AppRoutes.signUpScreen);
                       },
                       child: Text(
                         'Create Account',
@@ -163,19 +157,19 @@ class SignInScreen extends StatelessWidget {
   }
 
   void _clearData() {
-    _identifierController.clear();
-    _passwordController.clear();
+    _signInController.identifierController.clear();
+    _signInController.passwordController.clear();
   }
 
   void _formOnSubmit(SignInController controller) async {
-    if (_formKey.currentState?.validate() ?? false) {
+    if (controller.formKey.currentState!.validate()) {
       final result = await controller.signInUser(
-          signIn: SignIn(
-              identity: _identifierController.text.trim(),
-              password: _passwordController.text.trim()));
+          signInData: SignInModel(
+              identity: controller.identifierController.text.trim(),
+              password: controller.passwordController.text.trim()));
       if (result == true) {
         _clearData();
-        Get.offAll(() => const HomeScreen());
+        Get.offAllNamed(AppRoutes.homeScreen);
       }
     }
   }

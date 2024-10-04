@@ -1,8 +1,8 @@
-import 'package:darkak_e_commerce_app/screens/set_password_screen/controller/set_password_controller.dart';
-import 'package:darkak_e_commerce_app/screens/set_password_screen/model/set_password.dart';
+import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/screens/set_password_screen/controllers/set_password_controller.dart';
+import 'package:darkak_e_commerce_app/screens/set_password_screen/models/set_password_model.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_validator.dart';
-import 'package:darkak_e_commerce_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_elevated_button.dart';
@@ -14,14 +14,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class SetPasswordScreen extends StatelessWidget {
-  final String? userId;
-  final String? otp;
+  SetPasswordScreen({super.key});
 
-  SetPasswordScreen({super.key, required this.userId, required this.otp});
-
-  final _formKey = GlobalKey<FormState>();
-  final _newPasswordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  final _setPasswordController = Get.find<SetPasswordController>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +34,7 @@ class SetPasswordScreen extends StatelessWidget {
             width: double.infinity.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Form(
-              key: _formKey,
+              key: _setPasswordController.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,7 +46,7 @@ class SetPasswordScreen extends StatelessWidget {
                   GetBuilder<SetPasswordController>(builder: (controller) {
                     return CustomTextFormField(
                       labelText: 'New Password',
-                      controller: _newPasswordController,
+                      controller: _setPasswordController.newPasswordController,
                       validator: AppValidators().passwordValidator,
                       suffixIcon: Padding(
                         padding: EdgeInsets.only(right: 8.w),
@@ -73,10 +68,11 @@ class SetPasswordScreen extends StatelessWidget {
                   GetBuilder<SetPasswordController>(builder: (controller) {
                     return CustomTextFormField(
                       labelText: 'Confirm Password',
-                      controller: _confirmPasswordController,
+                      controller:
+                          _setPasswordController.confirmPasswordController,
                       validator: (value) => AppValidators()
-                          .confirmPasswordValidator(
-                              value, _newPasswordController),
+                          .confirmPasswordValidator(value,
+                              _setPasswordController.newPasswordController),
                       suffixIcon: Padding(
                         padding: EdgeInsets.only(right: 8.w),
                         child: IconButton(
@@ -111,20 +107,20 @@ class SetPasswordScreen extends StatelessWidget {
   }
 
   void _clearData() {
-    _newPasswordController.clear();
-    _confirmPasswordController.clear();
+    _setPasswordController.newPasswordController.clear();
+    _setPasswordController.confirmPasswordController.clear();
   }
 
   void _formOnSubmit(SetPasswordController controller) async {
-    if (_formKey.currentState?.validate() ?? false) {
+    if (controller.formKey.currentState!.validate()) {
       final result = await controller.setNewPassword(
-          setPassword: SetPassword(
-              userId: userId!,
-              password: _newPasswordController.text.trim(),
-              otp: otp!));
+          setPasswordData: SetPasswordModel(
+              userId: controller.userId,
+              password: controller.newPasswordController.text.trim(),
+              otp: controller.otp));
       if (result == true) {
         _clearData();
-        Get.offAll(SignInScreen());
+       Get.offAllNamed(AppRoutes.signInScreen);
       }
     }
   }

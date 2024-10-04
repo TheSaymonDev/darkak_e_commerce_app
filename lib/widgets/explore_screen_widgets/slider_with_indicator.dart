@@ -1,5 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:darkak_e_commerce_app/screens/explore_screen/controller/explore_screen_controller.dart';
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
+import 'package:darkak_e_commerce_app/screens/explore_screen/controllers/explore_screen_controller.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/models/product_offer_model.dart';
 import 'package:darkak_e_commerce_app/screens/store_screen/store_screen.dart';
@@ -20,7 +21,7 @@ class SliderWithIndicator extends StatelessWidget {
             itemCount: ProductOfferModel.productOfferList.length,
             itemBuilder: (context, index, realIndex) => GestureDetector(
                 onTap: () {
-                  Get.to(() => const StorePage());
+                  // Get.to(() => const StorePage());
                 },
                 child: Container(
                     height: double.infinity.h,
@@ -47,7 +48,7 @@ class SliderWithIndicator extends StatelessWidget {
           count: 3,
           effect: WormEffect(
             activeDotColor: orangeClr,
-            dotColor: orangeClr.withOpacity(0.3),
+            dotColor: orangeClr.withValues(alpha: 0.3),
             dotHeight: 10.h,
             dotWidth: 10.w,
           ),

@@ -1,29 +1,17 @@
-import 'package:darkak_e_commerce_app/screens/address_view_screen/controller/address_view_controller.dart';
+import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/screens/address_view_screen/controllers/address_view_controller.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
-import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_edit_delete_buttons.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
-import 'package:darkak_e_commerce_app/screens/address_management_screen/address_management_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class AddressViewScreen extends StatefulWidget {
+class AddressViewScreen extends StatelessWidget {
   const AddressViewScreen({super.key});
-
-  @override
-  State<AddressViewScreen> createState() => _AddressViewScreenState();
-}
-
-class _AddressViewScreenState extends State<AddressViewScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Get.find<AddressViewController>().addressList;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +35,7 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
             GetBuilder<AddressViewController>(
                 builder: (controller) => controller.isLoading
                     ? Center(child: customCircularProgressIndicator)
-                    : controller.addressList.isEmpty
+                    : controller.addressListData.isEmpty
                         ? const Expanded(
                             child: Center(
                               child: Text('No Address Added'),
@@ -56,7 +44,7 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
                         : Expanded(
                             child: ListView.separated(
                                 itemBuilder: (context, index) {
-                                  final address = controller.addressList[index];
+                                  final address = controller.addressListData[index];
                                   return SizedBox(
                                     width: double.infinity.w,
                                     child: Column(
@@ -89,12 +77,7 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
                                             CustomEditDeleteButtons(
                                               isEditable: true,
                                               onTap: () {
-                                                Get.to(() =>
-                                                    AddressManagementScreen(
-                                                      title:
-                                                          AppUrls.updateAddress,
-                                                      shippingAddress: address,
-                                                    ));
+                                                Get.toNamed(AppRoutes.addressUpdateScreen, arguments: {'shippingAddressData': address});
                                               },
                                             ),
                                           ],
@@ -143,7 +126,7 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
                                           ],
                                         ),
                                         Divider(
-                                          color: orangeClr.withOpacity(0.3),
+                                          color: orangeClr.withValues(alpha: 0.3),
                                           thickness: 1.h,
                                         ),
                                       ],
@@ -151,14 +134,12 @@ class _AddressViewScreenState extends State<AddressViewScreen> {
                                   );
                                 },
                                 separatorBuilder: (context, index) => Gap(48.h),
-                                itemCount: controller.addressList.length),
+                                itemCount: controller.addressListData.length),
                           )),
             Gap(40.h),
             CustomElevatedButton(
                 onPressed: () {
-                  Get.to(() => const AddressManagementScreen(
-                        title: AppUrls.addAddress,
-                      ));
+                  Get.toNamed(AppRoutes.addressCreateScreen);
                 },
                 buttonName: 'Add New',
                 width: double.infinity.w),

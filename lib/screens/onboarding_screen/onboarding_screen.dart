@@ -1,9 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:darkak_e_commerce_app/screens/onboarding_screen/controller/onboarding_screen_controller.dart';
+import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/screens/onboarding_screen/controllers/onboarding_controller.dart';
 import 'package:darkak_e_commerce_app/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/home_screen/home_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +12,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -67,8 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (_locationPermissionGranted) {
       await _getCurrentLocation();
     }
-    Get.offAll(const HomeScreen(
-    ));
+    Get.offAllNamed(AppRoutes.homeScreen);
   }
 
   @override

@@ -60,7 +60,7 @@ class FixedSearchBar extends StatelessWidget {
         ),
         Gap(8.h),
         CustomSearchTextFormField(onTap: (){
-          Get.to(()=>const SearchProductScreen());
+          // Get.to(()=>const SearchProductScreen());
         }, readOnly: true,),
       ],
     );

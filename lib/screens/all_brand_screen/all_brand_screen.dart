@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:darkak_e_commerce_app/screens/all_brand_screen/controller/brand_wised_product_controller.dart';
+import 'package:darkak_e_commerce_app/screens/all_brand_screen/controllers/brand_wised_product_controller.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/explore_screen/model/final_brand.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_card.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_product_card.dart';
@@ -13,8 +12,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class AllBrandScreen extends StatefulWidget {
-  final List<Brand> brandList;
-  const AllBrandScreen({super.key, required this.brandList});
+  const AllBrandScreen({super.key});
 
   @override
   State<AllBrandScreen> createState() => _AllBrandScreenState();
@@ -23,12 +21,7 @@ class AllBrandScreen extends StatefulWidget {
 class _AllBrandScreenState extends State<AllBrandScreen> {
   int _currentIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    Get.find<BrandWisedProductListController>()
-        .getFilterProductByBrand(widget.brandList[0].id!);
-  }
+  final _allBrandController = Get.find<BrandWisedProductListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +43,7 @@ class _AllBrandScreenState extends State<AllBrandScreen> {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    final brand = widget.brandList[index];
+                    final brand = _allBrandController.brandListData[index];
                     return InkWell(
                       onTap: () {
                         _currentIndex = index;
@@ -70,10 +63,17 @@ class _AllBrandScreenState extends State<AllBrandScreen> {
                               SizedBox(
                                 height: 40.h,
                                 width: 40.w,
-                                child: CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      '${AppUrls.imgUrl}${brand.image!.path}'),
-                                ),
+                                child: brand.image != null
+                                    ? CachedNetworkImage(
+                                        imageUrl:
+                                            '${AppUrls.imgUrl}${brand.image!.path}',
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(), // Optional: Loading indicator
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons
+                                                .error), // Optional: Error icon
+                                      )
+                                    : const Icon(Icons.image_not_supported),
                               ),
                               Gap(26.w),
                               Column(
@@ -94,7 +94,7 @@ class _AllBrandScreenState extends State<AllBrandScreen> {
                     );
                   },
                   separatorBuilder: (context, index) => Gap(16.w),
-                  itemCount: widget.brandList.length,
+                  itemCount: _allBrandController.brandListData.length,
                 )),
             Gap(16.h),
             GetBuilder<BrandWisedProductListController>(builder: (controller) {
@@ -107,10 +107,10 @@ class _AllBrandScreenState extends State<AllBrandScreen> {
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     return CustomProductCard(
-                      product: controller.productList[index],
+                      product: controller.productListData[index],
                     );
                   },
-                  itemCount: controller.productList.length,
+                  itemCount: controller.productListData.length,
                 ),
               );
             })

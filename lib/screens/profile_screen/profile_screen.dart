@@ -1,26 +1,14 @@
-import 'package:darkak_e_commerce_app/screens/about_screen/about_screen.dart';
-import 'package:darkak_e_commerce_app/screens/address_view_screen/bindings/address_view_binding.dart';
-import 'package:darkak_e_commerce_app/screens/address_view_screen/controller/address_view_controller.dart';
-import 'package:darkak_e_commerce_app/screens/cart_screen/controller/cart_item_controller.dart';
-import 'package:darkak_e_commerce_app/screens/my_order_screen/controller/my_order_controller.dart';
-import 'package:darkak_e_commerce_app/screens/privacy_policy_screen/privacy_policy_screen.dart';
-import 'package:darkak_e_commerce_app/screens/shop_screen/controller/product_list_controller.dart';
-import 'package:darkak_e_commerce_app/screens/profile_screen/controller/profile_screen_controller.dart';
-import 'package:darkak_e_commerce_app/screens/wishlist_screen/controller/wishlist_item_controller.dart';
+import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/screens/profile_screen/controllers/profile_screen_controller.dart';
 import 'package:darkak_e_commerce_app/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
-import 'package:darkak_e_commerce_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_bottom_sheet.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_flutter_switch.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_outlined_button.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_shimmer.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_two_buttons.dart';
 import 'package:darkak_e_commerce_app/widgets/profile_screen_widgets/profile_item_button.dart';
-import 'package:darkak_e_commerce_app/screens/address_view_screen/address_view_screen.dart';
-import 'package:darkak_e_commerce_app/screens/my_order_screen/my_order_screen.dart';
-import 'package:darkak_e_commerce_app/screens/profile_update_screen/profile_update_screen.dart';
-import 'package:darkak_e_commerce_app/screens/support_screen/help_and_support_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,15 +18,17 @@ import 'package:get/get.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
-  final ProfileController _profileController = Get.find<ProfileController>();
+  final _profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
     String token = SharedPreferencesService().getToken();
-    return token.isNotEmpty ? _buildLoggedProfileScreen : _buildWithOutLoggedProfileScreen;
+    return token.isNotEmpty
+        ? _buildLoggedProfileScreen
+        : _buildWithOutLoggedProfileScreen;
   }
 
-  Widget get _buildLoggedProfileScreen{
+  Widget get _buildLoggedProfileScreen {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -57,22 +47,22 @@ class ProfileScreen extends StatelessWidget {
                         builder: (controller) {
                           return controller.isLoading == true
                               ? CustomShimmer(
-                            height: 110.h,
-                            width: 110.w,
-                            isCircle: true,
-                          )
+                                  height: 110.h,
+                                  width: 110.w,
+                                  isCircle: true,
+                                )
                               : CircleAvatar(
-                            backgroundColor: orangeClr,
-                            backgroundImage: controller
-                                .user?.profileImage?.path ==
-                                null
-                                ? const AssetImage(
-                              'assets/images/profile-photo.png',
-                            )
-                                : NetworkImage(
-                                '${AppUrls.imgUrl}${controller.user!.profileImage!.path}')
-                            as ImageProvider,
-                          );
+                                  backgroundColor: orangeClr,
+                                  backgroundImage: controller
+                                              .user!.profileImage ==
+                                          null
+                                      ? const AssetImage(
+                                          'assets/images/profile-photo.png',
+                                        )
+                                      : NetworkImage(
+                                              '${AppUrls.imgUrl}${controller.user!.profileImage!.path}')
+                                          as ImageProvider,
+                                );
                         },
                       )),
                   Gap(16.w),
@@ -83,10 +73,9 @@ class ProfileScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            controller.user?.name ??
-                                'Fetching Profile...', // Use ?? for default value
-                            style: Get.textTheme.titleLarge
-                          ),
+                              controller.user?.name ??
+                                  'Fetching Profile...', // Use ?? for default value
+                              style: Get.textTheme.titleLarge),
                           Gap(4.h),
                           Text(
                             controller.user?.email ?? '',
@@ -106,14 +95,8 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => ProfileUpdateScreen(
-                          id: _profileController.user!.id,
-                          imgUrl: _profileController.user?.profileImage?.path,
-                          name: _profileController.user!.name,
-                          dob: _profileController.user!.dob,
-                          dom: _profileController.user!.marriageDate,
-                          mobile: _profileController.user!.mobile,
-                        ));
+                        Get.toNamed(AppRoutes.profileUpdateScreen,
+                            arguments: {'userData': _profileController.user});
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/profile-edit.svg',
@@ -123,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                     Gap(16.h),
                     GestureDetector(
                       onTap: () {
-                        Get.to(()=> const AddressViewScreen(), binding: AddressViewBinding());
+                        Get.toNamed(AppRoutes.addressViewScreen);
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/shipping-address.svg',
@@ -133,7 +116,7 @@ class ProfileScreen extends StatelessWidget {
                     Gap(16.h),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const MyOrderScreen());
+                        Get.toNamed(AppRoutes.myOrderScreen);
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/my-order.svg',
@@ -143,7 +126,7 @@ class ProfileScreen extends StatelessWidget {
                     Gap(16.h),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => PrivacyPolicyScreen());
+                        Get.toNamed(AppRoutes.privacyPolicyScreen);
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/support.svg',
@@ -153,7 +136,7 @@ class ProfileScreen extends StatelessWidget {
                     Gap(16.h),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const HelpAndSupportScreen());
+                       Get.toNamed(AppRoutes.helpAndSupportScreen);
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/support.svg',
@@ -161,22 +144,21 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Gap(16.h),
-
                     ProfileItemButton(
                         iconUrl: 'assets/images/notifications.svg',
                         title: 'Notifications',
                         widget: GetBuilder<ProfileController>(
                             builder: (controller) {
-                              return CustomFlutterSwitch(
-                                  onToggle: (newValue) {
-                                    controller.toggleNotification(newValue);
-                                  },
-                                  value: controller.isNotification);
-                            })),
+                          return CustomFlutterSwitch(
+                              onToggle: (newValue) {
+                                controller.toggleNotification(newValue);
+                              },
+                              value: controller.isNotification);
+                        })),
                     Gap(16.h),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const AboutScreen());
+                       Get.toNamed(AppRoutes.aboutScreen);
                       },
                       child: const ProfileItemButton(
                         iconUrl: 'assets/images/support.svg',
@@ -203,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget get _buildWithOutLoggedProfileScreen{
+  Widget get _buildWithOutLoggedProfileScreen {
     return SafeArea(
       child: SizedBox(
         width: double.infinity.w,
@@ -213,19 +195,21 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Gap(20.h),
             Text('Welcome To', style: Get.textTheme.titleLarge),
-            SvgPicture.asset(
-              AppUrls.appLogoSvg,
-              height: 86.h,
-              width: 110.w
-            ),
+            SvgPicture.asset(AppUrls.appLogoSvg, height: 86.h, width: 110.w),
             Gap(8.h),
             Text('Mart', style: Get.textTheme.titleSmall),
             Gap(32.h),
-            Text('Continue Shopping Please Sign In Or Sign Up', style: Get.textTheme.bodyMedium,),
+            Text(
+              'Continue Shopping Please Sign In Or Sign Up',
+              style: Get.textTheme.bodyMedium,
+            ),
             Gap(16.h),
-            CustomOutlinedButton(onPressed: (){
-              Get.to(()=> SignInScreen());
-            }, buttonName: 'Sign In', buttonWidth: 150.w)
+            CustomOutlinedButton(
+                onPressed: () {
+                  Get.offAllNamed(AppRoutes.signInScreen);
+                },
+                buttonName: 'Sign In',
+                buttonWidth: 150.w)
           ],
         ),
       ),
@@ -237,17 +221,12 @@ class ProfileScreen extends StatelessWidget {
       CustomBottomSheet(
         children: [
           Center(
-            child: Text(
-              'Logout',
-              style: Get.textTheme.titleLarge
-            ),
+            child: Text('Logout', style: Get.textTheme.titleLarge),
           ),
           Gap(20.h),
           Center(
-            child: Text(
-              'Are you sure want to logout?',
-              style: Get.textTheme.bodyLarge
-            ),
+            child: Text('Are you sure want to logout?',
+                style: Get.textTheme.bodyLarge),
           ),
           Gap(50.h),
           CustomTwoButtons(
@@ -258,12 +237,7 @@ class ProfileScreen extends StatelessWidget {
               rightButtonName: 'Logout',
               onRightButtonPressed: () {
                 SharedPreferencesService().clearUserData();
-                Get.find<MyOrderController>().myOrderList.clear();
-                Get.find<AddressViewController>().addressList.clear();
-                Get.find<ProductListController>().products.clear();
-                Get.find<CartItemController>().cartItems.clear();
-                Get.find<WishListItemController>().wishListItems.clear();
-                Get.offAll(() => SignInScreen());
+                Get.offAllNamed(AppRoutes.signInScreen);
               }),
           Gap(32.h)
         ],

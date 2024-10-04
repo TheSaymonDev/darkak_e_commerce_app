@@ -8,6 +8,45 @@ import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
 class ApiService {
+
+  Future<ApiResponse<dynamic>> get({
+    required String url,
+    Map<String, String>? headers,
+  }) async {
+    developer.log(url.toString());
+    developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: headers ?? AppUrls.requestHeader,
+    );
+
+    developer.log('Status Code: ${response.statusCode}');
+    developer.log('Body: ${response.body}');
+
+    return _handleApiResponse(response);
+  }
+
+  Future<ApiResponse<dynamic>> post({
+    required String url,
+    required dynamic data,
+    Map<String, String>? headers,
+  }) async {
+    developer.log(url.toString());
+    developer.log('Data: $data');
+    developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers ?? AppUrls.requestHeader,
+      body: jsonEncode(data),
+    );
+
+    developer.log('Status Code: ${response.statusCode}');
+    developer.log('Body: ${response.body}');
+    return _handleApiResponse(response);
+  }
+
   Future<dynamic> getApi(String url, {Map<String, String>? header}) async {
     log(url.toString());
     log('token is =${header.toString()}');
@@ -22,22 +61,22 @@ class ApiService {
     }
   }
 
-  Future<dynamic> postApi(String url, dynamic data,
-      {Map<String, String>? header}) async {
-    log(url.toString());
-    log(data.toString());
-    final response = await http.post(Uri.parse(url),
-        headers: header ?? AppUrls.requestHeader, body: jsonEncode(data));
-    log(response.statusCode.toString());
-    log(response.body.toString());
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return jsonDecode(response.body);
-    } else if (response.statusCode == 404) {
-      return 404;
-    } else {
-      return null;
-    }
-  }
+  // Future<dynamic> postApi(String url, dynamic data,
+  //     {Map<String, String>? header}) async {
+  //   log(url.toString());
+  //   log(data.toString());
+  //   final response = await http.post(Uri.parse(url),
+  //       headers: header ?? AppUrls.requestHeader, body: jsonEncode(data));
+  //   log(response.statusCode.toString());
+  //   log(response.body.toString());
+  //   if (response.statusCode == 200 || response.statusCode == 201) {
+  //     return jsonDecode(response.body);
+  //   } else if (response.statusCode == 404) {
+  //     return 404;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   Future<dynamic> patchApi(String url, dynamic data,
       {Map<String, String>? header}) async {
@@ -151,25 +190,25 @@ class ApiService {
 
 
 
-  Future<dynamic> deleteApi(String url) async {
-    log(url.toString());
-    String token = SharedPreferencesService().getToken();
-    Map<String, String> headerWithToken = {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer $token"
-    };
-    final response =
-        await http.delete(Uri.parse(url), headers: headerWithToken);
-    log(response.statusCode.toString());
-    log(response.body.toString());
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else if (response.statusCode == 500) {
-      return 500;
-    } else {
-      return null;
-    }
-  }
+  // Future<dynamic> deleteApi(String url) async {
+  //   log(url.toString());
+  //   String token = SharedPreferencesService().getToken();
+  //   Map<String, String> headerWithToken = {
+  //     "Content-Type": "application/json",
+  //     "Authorization": "Bearer $token"
+  //   };
+  //   final response =
+  //       await http.delete(Uri.parse(url), headers: headerWithToken);
+  //   log(response.statusCode.toString());
+  //   log(response.body.toString());
+  //   if (response.statusCode == 200) {
+  //     return jsonDecode(response.body);
+  //   } else if (response.statusCode == 500) {
+  //     return 500;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   Future<ApiResponse<dynamic>> delete(
       {required String url, required Map<String, String>? headers}) async {
@@ -182,50 +221,13 @@ class ApiService {
     return _handleApiResponse(response);
   }
 
-  Future<ApiResponse<dynamic>> get({
-    required String url,
-    Map<String, String>? headers,
-  }) async {
-    developer.log(url.toString());
-    developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
-
-    final response = await http.get(
-      Uri.parse(url),
-      headers: headers ?? AppUrls.requestHeader,
-    );
-
-    developer.log('Status Code: ${response.statusCode}');
-    developer.log('Body: ${response.body}');
-
-    return _handleApiResponse(response);
-  }
-
-  Future<ApiResponse<dynamic>> post({
-    required String url,
-    required dynamic data,
-    Map<String, String>? headers,
-  }) async {
-    developer.log(url.toString());
-    developer.log('Data: $data');
-    developer.log('Headers: ${headers?.toString() ?? AppUrls.requestHeader}');
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: headers ?? AppUrls.requestHeader,
-      body: jsonEncode(data),
-    );
-
-    developer.log('Status Code: ${response.statusCode}');
-    developer.log('Body: ${response.body}');
-    return _handleApiResponse(response);
-  }
 
   ApiResponse<dynamic> _handleApiResponse(http.Response response) {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ApiResponse.success(data: jsonDecode(response.body));
     } else {
       return ApiResponse.error(
-          statusCode: response.statusCode, message: jsonDecode(response.body));
+          status: response.statusCode, message: jsonDecode(response.body));
     }
   }
 }

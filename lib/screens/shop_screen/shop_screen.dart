@@ -1,6 +1,6 @@
-import 'package:darkak_e_commerce_app/screens/shop_screen/controller/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/models/product_query_model.dart';
 import 'package:darkak_e_commerce_app/screens/search_product_screen/search_product_screen.dart';
+import 'package:darkak_e_commerce_app/screens/shop_screen/controllers/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_filtering_and_sorting.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_product_card.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_product_card_shimmer.dart';
@@ -32,7 +32,7 @@ class ShopScreenState extends State<ShopScreen> {
             Gap(16.h),
             CustomSearchTextFormField(
               onTap: () {
-                Get.to(() => const SearchProductScreen());
+               // Get.to(() => const SearchProductScreen());
               },
               readOnly: true,
             ),
@@ -63,10 +63,10 @@ class ShopScreenState extends State<ShopScreen> {
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
         return CustomProductCard(
-          product: controller.products[index],
+          product: controller.productsData[index],
         );
       },
-      itemCount: controller.products.length,
+      itemCount: controller.productsData.length,
     );
   }
 

@@ -1,6 +1,6 @@
-import 'package:darkak_e_commerce_app/screens/identity_verification_screen/controller/identity_verification_controller.dart';
-import 'package:darkak_e_commerce_app/screens/identity_verification_screen/model/identity_verification.dart';
-import 'package:darkak_e_commerce_app/screens/otp_verification_screen/otp_verification_screen.dart';
+import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/screens/identity_verification_screen/controllers/identity_verification_controller.dart';
+import 'package:darkak_e_commerce_app/screens/identity_verification_screen/models/identity_verification_model.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_validator.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
@@ -16,8 +16,8 @@ import 'package:get/get.dart';
 class IdentityVerificationScreen extends StatelessWidget {
   IdentityVerificationScreen({super.key});
 
-  final _identifierController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _identityVerificationController =
+      Get.find<IdentityVerificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class IdentityVerificationScreen extends StatelessWidget {
             width: double.infinity.w,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Form(
-              key: _formKey,
+              key: _identityVerificationController.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,7 +51,8 @@ class IdentityVerificationScreen extends StatelessWidget {
                   Gap(50.h),
                   CustomTextFormField(
                     labelText: 'Email or Mobile',
-                    controller: _identifierController,
+                    controller:
+                        _identityVerificationController.identifierController,
                     validator: AppValidators().identifierValidator,
                   ),
                   Gap(40.h),
@@ -73,12 +74,13 @@ class IdentityVerificationScreen extends StatelessWidget {
   }
 
   void _formOnSubmit(IdentityVerificationController controller) async {
-    if (_formKey.currentState?.validate() ?? false) {
+    if (controller.formKey.currentState!.validate()) {
       final result = await controller.identityVerify(
-          identityVerification:
-              IdentityVerification(identity: _identifierController.text.trim()));
+          identityVerificationData: IdentityVerificationModel(
+              identity: controller.identifierController.text.trim()));
       if (result == true) {
-        Get.to(() => OtpVerificationScreen(userId: controller.userId, isForgetOTP: true,));
+        Get.toNamed(AppRoutes.otpVerificationScreen,
+            arguments: {'userId': controller.userId, 'isForgetOTP': true});
       }
     }
   }

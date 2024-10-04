@@ -1,8 +1,8 @@
-import 'package:darkak_e_commerce_app/screens/my_order_screen/controller/my_order_controller.dart';
+import 'package:darkak_e_commerce_app/screens/my_order_screen/controllers/my_order_controller.dart';
+import 'package:darkak_e_commerce_app/screens/my_order_screen/widgets/active_orders.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/widgets/common_widgets/custom_appbar/appbar_textview_with_back.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
-import 'package:darkak_e_commerce_app/screens/my_order_screen/widgets/active_orders.dart';
 import 'package:darkak_e_commerce_app/screens/my_order_screen/widgets/cancelled_orders.dart';
 import 'package:darkak_e_commerce_app/screens/my_order_screen/widgets/completed_orders.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
   //       .toList();
   // }
 
-  final MyOrderController _myOrderController = Get.put(MyOrderController());
+  final  _myOrderController = Get.put(MyOrderController());
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
             indicatorWeight: 6.h,
             indicatorColor: orangeClr,
             padding: EdgeInsets.symmetric(vertical: 0.h),
-            dividerColor: orangeClr.withOpacity(0.5),
+            dividerColor: orangeClr.withValues(alpha: 0.5),
             dividerHeight: 2.h,
             tabs: const [
               Text('Active'),
@@ -66,7 +66,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
             GetBuilder<MyOrderController>(
                 builder: (controller) => controller.isLoading
                     ? customCircularProgressIndicator
-                    : controller.myOrderList.isEmpty
+                    : controller.myOrderListData.isEmpty
                         ? Center(
                             child: Text('No Order',
                                 style: Get.textTheme.titleMedium))
