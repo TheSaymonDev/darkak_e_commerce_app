@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/screens/address_view_screen/models/address_model.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
+import 'package:darkak_e_commerce_app/services/connectivity_service.dart';
 import 'package:darkak_e_commerce_app/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
@@ -10,6 +11,11 @@ class AddressViewController extends GetxController {
   List<AddressModel> addressListData = [];
 
   Future<void> getAddressList() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(
+          message: 'Please check your internet connection');
+      return;
+    }
     _setLoading(false);
     try {
       final response = await ApiService()
@@ -37,6 +43,11 @@ class AddressViewController extends GetxController {
   }
 
   Future<void> removeAddress(String id) async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(
+          message: 'Please check your internet connection');
+      return;
+    }
     try {
       final response = await ApiService().delete(
           url: '${AppUrls.addressUrl}/$id',

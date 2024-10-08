@@ -1,6 +1,7 @@
 import 'package:darkak_e_commerce_app/screens/otp_verification_screen/controllers/timer_controller.dart';
 import 'package:darkak_e_commerce_app/screens/otp_verification_screen/models/otp_verification_model.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
+import 'package:darkak_e_commerce_app/services/connectivity_service.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,11 @@ class OtpVerificationController extends GetxController {
   Future<bool> verifyOTP(
       {required OtpVerificationModel otpVerificationData,
       required String url}) async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(
+          message: 'Please check your internet connection');
+      return false;
+    }
     _setLoading(true);
     try {
       final response =

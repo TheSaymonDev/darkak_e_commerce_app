@@ -1,6 +1,7 @@
 import 'package:darkak_e_commerce_app/screens/shop_screen/controllers/product_list_controller.dart';
 import 'package:darkak_e_commerce_app/screens/shop_screen/models/product_model.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
+import 'package:darkak_e_commerce_app/services/connectivity_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/screens/explore_screen/model/brand_model.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
@@ -11,6 +12,11 @@ class BrandListController extends GetxController{
   List<BrandModel> brandsData = [];
 
   Future<void> getBrandList() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(
+          message: 'Please check your internet connection');
+      return;
+    }
    _setLoading(true);
     try {
       final response = await ApiService().get(url: AppUrls.getAllBrandUrl);

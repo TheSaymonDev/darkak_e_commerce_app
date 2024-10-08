@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/screens/set_password_screen/models/set_password_model.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
+import 'package:darkak_e_commerce_app/services/connectivity_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,11 @@ class SetPasswordController extends GetxController {
 
   Future<bool> setNewPassword(
       {required SetPasswordModel setPasswordData}) async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(
+          message: 'Please check your internet connection');
+      return false;
+    }
     _setLoading(true);
     try {
       final response = await ApiService()

@@ -22,4 +22,5 @@ class AppRoutes {
   static const checkoutScreen = '/checkout_screen';
   static const paymentSuccessScreen = '/payment_success_screen';
   static const myOrderScreen = '/my_order_screen';
+  static const noInternetScreen = '/no_internet_screen';
 }

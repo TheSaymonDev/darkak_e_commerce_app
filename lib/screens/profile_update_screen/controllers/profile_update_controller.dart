@@ -3,6 +3,7 @@ import 'package:darkak_e_commerce_app/screens/profile_screen/controllers/profile
 import 'package:darkak_e_commerce_app/screens/profile_screen/models/user_model.dart';
 import 'package:darkak_e_commerce_app/screens/profile_update_screen/model/profile_update_model.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
+import 'package:darkak_e_commerce_app/services/connectivity_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_const_functions.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
@@ -43,6 +44,11 @@ class ProfileUpdateController extends GetxController {
     required String id,
    required ProfileUpdateModel profileUpdateData
   }) async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(
+          message: 'Please check your internet connection');
+      return false;
+    }
    _setLoading(true);
     final data = {
       'name': profileUpdateData.name,

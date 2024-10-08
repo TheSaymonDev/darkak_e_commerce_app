@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/routes/app_pages.dart';
 import 'package:darkak_e_commerce_app/routes/app_routes.dart';
+import 'package:darkak_e_commerce_app/services/connectivity_service.dart';
 import 'package:darkak_e_commerce_app/services/shared_preferences_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_colors.dart';
 import 'package:darkak_e_commerce_app/utils/app_initial_bindings.dart';
@@ -11,9 +12,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesService().init();
   final showHome = SharedPreferencesService().getSavedScreen();
+  final hasInternet = await ConnectivityService.isConnected();
   runApp(MyApp(
-    initialRoute: showHome == true ? AppRoutes.homeScreen  :  AppRoutes.onboardingScreen,
-  ));
+      initialRoute: hasInternet
+          ? (showHome == true
+              ? AppRoutes.homeScreen
+              : AppRoutes.onboardingScreen)
+          : AppRoutes.noInternetScreen));
 }
 
 class MyApp extends StatelessWidget {

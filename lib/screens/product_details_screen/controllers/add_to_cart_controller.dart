@@ -1,6 +1,7 @@
 import 'package:darkak_e_commerce_app/screens/cart_screen/controllers/cart_item_controller.dart';
 import 'package:darkak_e_commerce_app/screens/product_details_screen/model/add_to_cart_model.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
+import 'package:darkak_e_commerce_app/services/connectivity_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,11 @@ import 'package:get/get.dart';
 class AddToCartController extends GetxController {
   bool isLoading = false;
   Future<bool> addToCart({required AddToCartModel addToCartData}) async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(
+          message: 'Please check your internet connection');
+      return false;
+    }
     _setLoading(true);
     try {
       final response =

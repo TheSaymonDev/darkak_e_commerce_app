@@ -22,6 +22,8 @@ import 'package:darkak_e_commerce_app/screens/identity_verification_screen/bindi
 import 'package:darkak_e_commerce_app/screens/identity_verification_screen/identity_verification_screen.dart';
 import 'package:darkak_e_commerce_app/screens/my_order_screen/bindings/my_order_binding.dart';
 import 'package:darkak_e_commerce_app/screens/my_order_screen/my_order_screen.dart';
+import 'package:darkak_e_commerce_app/screens/no_internet_screen/bindings/no_internet_binding.dart';
+import 'package:darkak_e_commerce_app/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:darkak_e_commerce_app/screens/onboarding_screen/bindings/onboarding_binding.dart';
 import 'package:darkak_e_commerce_app/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:darkak_e_commerce_app/screens/otp_verification_screen/bindings/otp_verification_binding.dart';
@@ -142,5 +144,9 @@ class AppPages {
         name: AppRoutes.myOrderScreen,
         page: () => const MyOrderScreen(),
         binding: MyOrderBinding()),
+    GetPage(
+        name: AppRoutes.noInternetScreen,
+        page: () => const NoInternetScreen(),
+        binding: NoInternetBinding()),
   ];
 }

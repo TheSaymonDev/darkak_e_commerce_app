@@ -1,5 +1,6 @@
 import 'package:darkak_e_commerce_app/screens/my_order_screen/models/my_order_model.dart';
 import 'package:darkak_e_commerce_app/services/api_service.dart';
+import 'package:darkak_e_commerce_app/services/connectivity_service.dart';
 import 'package:darkak_e_commerce_app/utils/app_urls.dart';
 import 'package:darkak_e_commerce_app/widgets/styles.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,11 @@ class MyOrderController extends GetxController {
   List<MyOrderModel> myOrderListData = [];
 
   Future<void> getMyOrderList() async {
+    if (!await ConnectivityService.isConnected()) {
+      customErrorMessage(
+          message: 'Please check your internet connection');
+      return;
+    }
     isLoading = true;
     update();
     try {
